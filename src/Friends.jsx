@@ -17,8 +17,8 @@ class Friends extends Component {
       })
   }
   render(){
-    const main = this.state.loading ? <h2>Makin' Friends...</h2> : <div>
-        <h2>These are your Volunteers</h2>
+    const main = this.state.loading ? <h2>Making Friends...</h2> : <div>
+        <h2>These are your volunteers</h2>
         <ul>
           {this.state.volunteers.map(volunteer => {
             return <li key={volunteer.vol_name}>{volunteer.vol_name} - {volunteer.vol_email}</li>
