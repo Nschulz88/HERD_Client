@@ -1,25 +1,18 @@
 {
-  "name": "herd",
+  "name": "herd_client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "ajv": "^6.4.0",
     "body-parser-json": "^1.9.2",
     "compression": "^1.7.2",
-    "express": "^4.16.3",
     "heroku": "^7.0.22",
-    "knex": "^0.14.6",
-    "knex-logger": "^0.1.0",
     "morgan": "^1.9.0",
-    "pg": "^7.4.1",
-    "pg-native": "^2.2.0",
-    "postgresql": "0.0.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4",
-    "wget": "0.0.1"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
