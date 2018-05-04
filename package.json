@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/googlemaps": "^3.30.8",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^16.3.13",
     "ajv": "^6.4.0",
     "body-parser-json": "^1.9.2",
     "compression": "^1.7.2",
+    "google-map-react": "^1.0.0",
+    "google-maps-react": "^2.0.2",
     "heroku": "^7.0.22",
     "morgan": "^1.9.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-google-maps": "^9.4.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4"
@@ -19,6 +25,9 @@
     "build": "react-scripts build && cp -a ./build/* ../friends_server/public/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "google-maps": "^3.2.1"
   },
   "proxy": "http://localhost:3001"
 }
