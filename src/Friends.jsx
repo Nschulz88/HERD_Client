@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getFriends} from './friends-data-svc';
+import {getVolunteers} from './friends-data-svc';
 
 class Friends extends Component {
   constructor(props){
@@ -9,19 +9,19 @@ class Friends extends Component {
     }
   }
   componentDidMount(){
-    getFriends()
-      .then((friends) => {
+    getVolunteers()
+      .then((volunteers) => {
         this.setState({
-          loading: false, friends: friends
+          loading: false, volunteers: volunteers
         });
       })
   }
   render(){
     const main = this.state.loading ? <h2>Makin' Friends...</h2> : <div>
-        <h2>These are your friends</h2>
+        <h2>These are your Volunteers</h2>
         <ul>
-          {this.state.friends.map(friend => {
-            return <li key={friend.id}>{friend.name}</li>
+          {this.state.volunteers.map(volunteer => {
+            return <li key={volunteer.vol_name}>{volunteer.vol_name} - {volunteer.vol_email}</li>
           })}
           </ul>
       </div>
