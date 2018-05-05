@@ -1,0 +1,75 @@
+div.Login {		
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 80px;
+	margin-bottom: 20px;
+
+	color: black;
+	width: 380px;
+	background-color: lightgray;
+	border-radius: 5px;
+}
+.Login .login-content {
+	padding: 20px;
+	border-radius: 5px;
+	border: 1px solid darkslategray;
+}
+.Login .login-header {
+	border-bottom: none;   
+	position: relative;
+	justify-content: center;
+}
+.Login h4 {
+	text-align: center;
+	font-size: 26px;
+	margin-top: 35px;
+}
+.Login .form-control:focus {
+	border-color: black;
+}
+.Login .form-control, .Login .btn {
+	min-height: 40px;
+	border-radius: 5px; 
+}
+	
+.Login .login-footer {
+	text-align: center;
+	justify-content: center;
+	margin: 25px 0px 0px;
+	font-size: 15px;
+}
+.Login .login-footer a {
+	color: #999;
+}		
+.Login .avatar {
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: -108px;
+	width: 95px;
+	height: 95px;
+	border-radius: 50%;
+	z-index: 9;
+	background: #FFDEAD;
+	padding: 15px;
+	box-shadow: 0px 3px 3px darkslategray; 
+}
+.Login .avatar img {
+	width: 100%;
+}
+.Login.login-dialog {
+	margin-top: 80px;
+}
+.Login .btn {
+	color: #636363;
+	border-radius: 5px;
+	background: #FFDEAD;
+	text-decoration: none;
+	transition: all 0.4s;
+	border: none;
+}
+.Login .btn:hover, .Login .btn:focus {
+	background: #D9B073;
+	outline: none;
+}
