@@ -5,15 +5,29 @@ import "./Login_Register.css";
 
 
 class Register extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-    username:'',
-    password:''
-    }
-   }
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      username: '',
+      password: '',
+      full_name: '',
+      organization: '',
+      password_conf: '',
+    };
+  }
+
+  handleChange(e) {
+    var key = e.target.id
+    this.setState({
+      [key]: e.target.value
+    });
+  }
+
   render() {
-    console.log('Logging from Register...', this.props);
+    console.log(this.state)
     return (
       <div className="Login">
           <div className="login-content">
@@ -24,37 +38,56 @@ class Register extends Component {
               <div>
                 <h4>Become a HERD. member</h4>
               </div>
-            </div>				
-              <FormGroup name="full_name" bsSize="large">
+            </div>
+            <form>
+              <FormGroup
+                name="vol_org"
+                bsSize="small"
+              >
+              <FormControl
+                  type="radio"
+                  name="optradio"
+                  value="vol"
+                />Volunteer
                 <FormControl
-                  autofocus
+                  type="radio"
+                  name="optradio"
+                  value="org"
+                />Organizer
+                <FormControl
                   type="text"
-                  value=""
+                  id="full_name"
                   placeholder="Full name"
+                  value={this.state.full_name}
+                  onChange={this.handleChange}
                 />
-              </FormGroup>
-              <FormGroup name="email" bsSize="large">
                 <FormControl
                   type="email"
+                  id="username"
                   placeholder="E-mail"
+                  value={this.state.email}
+                  onChange={this.handleChange}
                 />
-              </FormGroup>
-              <FormGroup name="organization" bsSize="large">
                 <FormControl
                   type="text"
+                  id="organization"
                   placeholder="Organization"
+                  value={this.state.organization}
+                  onChange={this.handleChange}
                 />
-              </FormGroup>
-              <FormGroup name="password" bsSize="large">
                 <FormControl
                   type="password"
                   placeholder="Password"
+                  id="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
                 />
-              </FormGroup>
-              <FormGroup name="password_confirmation" bsSize="large">
                 <FormControl
                   type="password"
+                  id="password_conf"
                   placeholder="Password Confirmation"
+                  value={this.state.password_conf}
+                  onChange={this.handleChange}
                 />
               </FormGroup>
               <Button
@@ -62,11 +95,12 @@ class Register extends Component {
                 bsSize="large"
                 type="submit"
               >
-                Login
+                Register
               </Button>
-              <div class="login-footer">
-                <a href="/login">I already have an account</a>
-              </div>
+            </form>
+            <div class="login-footer">
+              <a href="/login">I already have an account</a>
+            </div>
           </div>
       </div>
     );
