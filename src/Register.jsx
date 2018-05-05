@@ -9,6 +9,8 @@ class Register extends Component {
     super(props, context);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleRadio = this.handleRadio.bind(this);
+    this.toggleEnable = this.toggleEnable.bind(this);
 
     this.state = {
       username: '',
@@ -16,6 +18,7 @@ class Register extends Component {
       full_name: '',
       organization: '',
       password_conf: '',
+      vol_org: '',
     };
   }
 
@@ -26,8 +29,24 @@ class Register extends Component {
     });
   }
 
+  handleRadio(e) {
+    this.setState({
+      vol_org: e.target.id
+    });
+  }
+
+  toggleEnable(){
+    var disable = "true"
+    if(this.state.password === this.state.password_conf && this.state.password_conf !== ''){
+      disable = "false"
+    }
+    return disable
+  }
+
+
   render() {
     console.log(this.state)
+    console.log(this.toggleEnable())
     return (
       <div className="Login">
           <div className="login-content">
@@ -44,15 +63,19 @@ class Register extends Component {
                 name="vol_org"
                 bsSize="small"
               >
-              <FormControl
-                  type="radio"
-                  name="optradio"
-                  value="vol"
+                <FormControl
+                    type="radio"
+                    name="optradio"
+                    id="vol"
+                    value={this.state.vol_org}
+                    onChange={this.handleRadio}
                 />Volunteer
                 <FormControl
                   type="radio"
+                  id="org"
                   name="optradio"
-                  value="org"
+                  value={this.state.vol_org}
+                  onChange={this.handleRadio}
                 />Organizer
                 <FormControl
                   type="text"
@@ -90,13 +113,14 @@ class Register extends Component {
                   onChange={this.handleChange}
                 />
               </FormGroup>
-              <Button
-                block
-                bsSize="large"
-                type="submit"
-              >
-                Register
-              </Button>
+                <Button
+                  block
+                  bsSize="large"
+                  type="submit"
+                  disabled={this.toggleEnable()}
+                >
+                  Register
+                </Button>
             </form>
             <div class="login-footer">
               <a href="/login">I already have an account</a>
