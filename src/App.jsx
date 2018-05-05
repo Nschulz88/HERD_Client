@@ -4,7 +4,7 @@ import './App.css';
 import './index.css';
 
 import Login from "./Login";
-import Friends from './Friends';
+import Companies from './Companies';
 import Home from "./Home";
 import Register from "./Register";
 
@@ -25,7 +25,7 @@ class App extends Component {
         <div class = "Logo">HERD. <p class="titles"><Link to='/login'>Login</Link> | <Link to='/register'>Register</Link> | <Link to='/companies'>Companies</Link></p>
         <Route exact path='/' component={Home}/>
         <Route path='/login' component={Login}/>
-        <Route path='/friends' component={Friends}/>
+        <Route path='/companies' component={Companies}/>
         <Route path='/register' component={Register}/>
         </div>
     );
