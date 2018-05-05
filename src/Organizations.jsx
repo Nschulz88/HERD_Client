@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {getVolunteers} from './friends-data-svc';
 
-class Companies extends Component {
+class Organizations extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -13,11 +13,15 @@ class Companies extends Component {
   }
   render() {
     return (
-        <div class = "companies">Companies:
+        <div class = "organizations">Organizations
+
+          <div class = "box">
+          </div>
+
         </div>
     );
   }
 
 }
 
-export default Companies;
+export default Organizations;
