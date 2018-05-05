@@ -23,7 +23,7 @@ class App extends Component {
 
   render() {
     return (
-        <div class = "Logo"> <a href = '/'><img class="image" src = {"https://image.ibb.co/fNO8on/HerdLogo.png"}></img></a> <p class="titles"><a href='/login'>Login</a> | <a href='/register'>Register</a> | <a href='/organizations'>Organizations</a></p>
+        <div class = "Logo"> <a href = '/'><img class="image" src = {"https://i.imgur.com/PHCgaoD.png"}></img></a> <p class="titles"><a href='/login'>Login</a> | <a href='/register'>Register</a> | <a href='/organizations'>Organizations</a></p>
         <Route exact path='/' component={Home}/>
         <Route path='/login' component={Login}/>
         <Route path='/organizations' component={Organizations}/>
