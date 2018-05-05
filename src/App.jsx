@@ -22,7 +22,7 @@ class App extends Component {
 
   render() {
     return (
-        <div class = "Logo">HERD. <p class="titles"><Link to='/login'>Login</Link> | <Link to='/register'>Register</Link> | <Link to='/companies'>Companies</Link></p>
+        <div className="Logo">HERD. <p class="titles"><Link to='/login'>Login</Link> | <Link to='/register'>Register</Link> | <Link to='/companies'>Companies</Link></p>
         <Route exact path='/' component={Home}/>
         <Route path='/login' component={Login}/>
         <Route path='/companies' component={Companies}/>
