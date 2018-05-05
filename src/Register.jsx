@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Login_Register.css";
 
-
+var pass_obj = {}
 
 class Register extends Component {
   constructor(props, context) {
@@ -10,15 +10,14 @@ class Register extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
-    this.toggleEnable = this.toggleEnable.bind(this);
+    this.handlePass = this.handlePass.bind(this);
 
     this.state = {
       username: '',
-      password: '',
       full_name: '',
       organization: '',
-      password_conf: '',
       vol_org: '',
+      hashed_pass: '',
     };
   }
 
@@ -29,24 +28,23 @@ class Register extends Component {
     });
   }
 
+  handlePass(e){
+    var key = e.target.id
+    pass_obj[key] = e.target.value
+    if(pass_obj.password === pass_obj.password_conf){
+      this.setState({hashed_pass: pass_obj.password_conf})
+    }
+  }
+
   handleRadio(e) {
     this.setState({
       vol_org: e.target.id
     });
   }
 
-  toggleEnable(){
-    var disable = "true"
-    if(this.state.password === this.state.password_conf && this.state.password_conf !== ''){
-      disable = "false"
-    }
-    return disable
-  }
-
 
   render() {
     console.log(this.state)
-    console.log(this.toggleEnable())
     return (
       <div className="Login">
           <div className="login-content">
@@ -103,21 +101,21 @@ class Register extends Component {
                   placeholder="Password"
                   id="password"
                   value={this.state.password}
-                  onChange={this.handleChange}
+                  onChange={this.handlePass}
                 />
                 <FormControl
                   type="password"
                   id="password_conf"
                   placeholder="Password Confirmation"
                   value={this.state.password_conf}
-                  onChange={this.handleChange}
+                  onChange={this.handlePass}
                 />
               </FormGroup>
                 <Button
                   block
                   bsSize="large"
                   type="submit"
-                  disabled={this.toggleEnable()}
+                  disabled={!this.state.hashed_pass}
                 >
                   Register
                 </Button>
