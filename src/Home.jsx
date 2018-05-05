@@ -31,9 +31,9 @@ onMapClicked = (props) => {
         style={{
           width: '90%',
           height: '90%',
-          position: 'relative',
-          marginTop: 50,
-          marginLeft: 60,
+          position: 'fixed',
+          marginTop: 40,
+          marginLeft: 30,
           borderRadius: 10
           }}
         zoom={14}>
