@@ -24,17 +24,32 @@ class Register extends Component {
   }
 
   registerOrganizer(e){
-    axios({
-      method: 'post',
-      url: '/organizers',
-      data: {
-        username          : this.state.username,
-        full_name         : this.state.full_name,
-        organization      : this.state.organization,
-        vol_org           : this.state.vol_org,
-        unhashed_pass     : this.state.unhashed_pass,
-      }
-    });
+    if (this.state.vol_org === 'org'){
+      console.log('organizer!')
+      axios({
+        method: 'post',
+        url: '/organizers',
+        data: {
+          username          : this.state.username,
+          full_name         : this.state.full_name,
+          organization      : this.state.organization,
+          vol_org           : this.state.vol_org,
+          unhashed_pass     : this.state.unhashed_pass,
+        }
+      });
+    } else {
+      console.log('volunteers!')
+      axios({
+        method: 'post',
+        url: '/volunteers',
+        data: {
+          username          : this.state.username,
+          full_name         : this.state.full_name,
+          vol_org           : this.state.vol_org,
+          unhashed_pass     : this.state.unhashed_pass,
+        }
+      });
+    }
   }
 
   handleChange(e) {

@@ -10,30 +10,37 @@ class Login extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleRadio = this.handleRadio.bind(this);
 
     this.state={
     email: '',
-    password: ''
+    password: '',
+    vol_org: '',
     };
   }
 
   login(e){
-    axios.get('http://localhost:3000/', {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    axios({
+        method: 'post',
+        url: '/login',
+        data: {
+          username      : this.state.email,
+          password      : this.state.password,
+          vol_org       : this.state.vol_org
+        }
+      });
   }
 
   handleChange(e) {
     var key = e.target.id
     this.setState({
       [key]: e.target.value
+    });
+  }
+
+  handleRadio(e) {
+    this.setState({
+      vol_org: e.target.id
     });
   }
 
@@ -53,6 +60,20 @@ class Login extends Component {
             </div>
             <form onSubmit={this.login.bind(this)}>
               <FormGroup name="login" bsSize="large">
+                <FormControl
+                    type="radio"
+                    name="optradio"
+                    id="vol"
+                    value={this.state.vol_org}
+                    onChange={this.handleRadio}
+                />Volunteer
+                <FormControl
+                  type="radio"
+                  id="org"
+                  name="optradio"
+                  value={this.state.vol_org}
+                  onChange={this.handleRadio}
+                />Organizer
                 <FormControl
                   value={this.state.email}
                   type="email"
