@@ -23,8 +23,14 @@ body {
   color: white;
 }
 
+a {
+  color: white;
+  font-size: 0.5em;
+}
+
 a:visited {
-  text-decoration: none; color:white;
+  text-decoration: none;
+  color:white;
 }
 
 .organizations {
@@ -57,5 +63,3 @@ body .image:hover {
   color: #337ab7;
   text-align: center;
 }
-
-
