@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Login_Register.css";
+import axios from 'axios';
 
 var pass_obj = {}
 
@@ -17,8 +18,21 @@ class Register extends Component {
       full_name: '',
       organization: '',
       vol_org: '',
-      hashed_pass: '',
+      unhashed_pass: '',
     };
+  }
+
+  register(e){
+    axios.post('/user', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   handleChange(e) {
@@ -32,7 +46,7 @@ class Register extends Component {
     var key = e.target.id
     pass_obj[key] = e.target.value
     if(pass_obj.password === pass_obj.password_conf){
-      this.setState({hashed_pass: pass_obj.password_conf})
+      this.setState({unhashed_pass: pass_obj.password_conf})
     }
   }
 
@@ -56,7 +70,7 @@ class Register extends Component {
                 <h4>Become a HERD. member</h4>
               </div>
             </div>
-            <form>
+            <form onSubmit={this.register.bind(this)}>
               <FormGroup
                 name="vol_org"
                 bsSize="small"
@@ -115,7 +129,7 @@ class Register extends Component {
                   block
                   bsSize="large"
                   type="submit"
-                  disabled={!this.state.hashed_pass}
+                  disabled={!this.state.unhashed_pass}
                 >
                   Register
                 </Button>
