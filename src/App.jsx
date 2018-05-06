@@ -17,7 +17,7 @@ class App extends Component {
       <div>
         <div className="navBar">
           <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
-          <p className="titles"><a href='/login'>Login</a> | <a href='/register'>Register</a> | <a href='/organizations'>Organizations</a></p>
+          <p className="titles"><a href='/login'>Login</a> | <a href='/register'>Register</a> | <a href='/organizations'>Organizations</a> | <a href='/events'>Events</a></p>
         </div>
        <Route exact path='/' component={MapApp}/>
        <Route path='/login' component={Login}/>

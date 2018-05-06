@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Login_Register.css";
 import axios from 'axios';
+import TimePicker from 'react-bootstrap-datetimepicker';
+import Moment from 'react-moment';
 
 var pass_obj = {}
 
@@ -10,6 +12,7 @@ class Register extends Component {
     super(props, context);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleTimePicker = this.handleTimePicker.bind(this);
 
     this.state = {
       location: '',
@@ -23,14 +26,29 @@ class Register extends Component {
     };
   }
 
-  register(e){
-    axios.get('http://localhost:3001/volunteers', {
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
+  createEvent(e){
+    axios({
+      method: 'post',
+      url: '/events',
+      data: {
+        location          : this.state.location,
+        organization      : this.state.organization,
+        event_size        : this.state.event_size,
+        event_description : this.state.event_description,
+        criteria          : this.state.criteria,
+        event_date        : this.state.event_date,
+        event_time        : this.state.event_time,
+        duration          : this.state.duration,
+      }
+    });
+  }
+
+  handleTimePicker(e){
+    var date = Date(e).slice(4, 15)
+    var time = Date(e).slice(16, 25)
+    this.setState({
+      event_time: time,
+      event_date: date
     });
   }
 
@@ -55,7 +73,7 @@ class Register extends Component {
                 <h4>Enter your event details!</h4>
               </div>
             </div>
-            <form onSubmit={this.register.bind(this)}>
+            <form onSubmit={this.createEvent.bind(this)}>
               <FormGroup
                 name="vol_org"
                 bsSize="small"
@@ -88,27 +106,20 @@ class Register extends Component {
                   value={this.state.criteria}
                   onChange={this.handleChange}
                 />
-                <FormControl
-                  type="text"
-                  id="event_date"
-                  placeholder="Event Date"
-                  value={this.state.event_date}
-                  onChange={this.handleChange}
-                />
-                <FormControl
-                  type="text"
+                <TimePicker
+                  type="time"
                   id="event_time"
                   placeholder="Event Time"
                   value={this.state.event_time}
-                  onChange={this.handleChange}
+                  onChange={this.handleTimePicker}
                 />
                 <FormControl
-                  type="text"
+                  type="number"
                   id="duration"
                   placeholder="Duration"
                   value={this.state.duration}
                   onChange={this.handleChange}
-                />
+                /> Hours
                 <FormControl
                   type="text"
                   id="event_description"
