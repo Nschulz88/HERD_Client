@@ -10,21 +10,22 @@ class Register extends Component {
     super(props, context);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleRadio = this.handleRadio.bind(this);
+    this.handlePass = this.handlePass.bind(this);
 
     this.state = {
-      location: '',
+      username: '',
+      full_name: '',
       organization: '',
-      event_size: '',
-      event_description: '',
-      criteria: '',
-      event_date: '',
-      event_time: '',
-      duration: '',
+      vol_org: '',
+      unhashed_pass: '',
     };
   }
 
   register(e){
-    axios.get('http://localhost:3001/volunteers', {
+    axios.post('/users', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
     })
     .then(function (response) {
       console.log(response);
@@ -41,6 +42,20 @@ class Register extends Component {
     });
   }
 
+  handlePass(e){
+    var key = e.target.id
+    pass_obj[key] = e.target.value
+    if(pass_obj.password === pass_obj.password_conf){
+      this.setState({unhashed_pass: pass_obj.password_conf})
+    }
+  }
+
+  handleRadio(e) {
+    this.setState({
+      vol_org: e.target.id
+    });
+  }
+
 
   render() {
     console.log(this.state)
@@ -52,7 +67,7 @@ class Register extends Component {
                 <img src={require('./letter_H.png')} alt="logo" className="img-responsive"/>
               </div>
               <div>
-                <h4>Enter your event details!</h4>
+                <h4>Become a HERD. member</h4>
               </div>
             </div>
             <form onSubmit={this.register.bind(this)}>
@@ -61,17 +76,31 @@ class Register extends Component {
                 bsSize="small"
               >
                 <FormControl
+                    type="radio"
+                    name="optradio"
+                    id="vol"
+                    value={this.state.vol_org}
+                    onChange={this.handleRadio}
+                />Volunteer
+                <FormControl
+                  type="radio"
+                  id="org"
+                  name="optradio"
+                  value={this.state.vol_org}
+                  onChange={this.handleRadio}
+                />Organizer
+                <FormControl
                   type="text"
-                  id="location"
-                  placeholder="Location"
-                  value={this.state.location}
+                  id="full_name"
+                  placeholder="Full name"
+                  value={this.state.full_name}
                   onChange={this.handleChange}
                 />
                 <FormControl
-                  type="text"
-                  id="event_size"
-                  placeholder="Event Size"
-                  value={this.state.event_size}
+                  type="email"
+                  id="username"
+                  placeholder="E-mail"
+                  value={this.state.email}
                   onChange={this.handleChange}
                 />
                 <FormControl
@@ -82,47 +111,27 @@ class Register extends Component {
                   onChange={this.handleChange}
                 />
                 <FormControl
-                  type="text"
-                  placeholder="Criteria"
-                  id="criteria"
-                  value={this.state.criteria}
-                  onChange={this.handleChange}
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                  value={this.state.password}
+                  onChange={this.handlePass}
                 />
                 <FormControl
-                  type="text"
-                  id="event_date"
-                  placeholder="Event Date"
-                  value={this.state.event_date}
-                  onChange={this.handleChange}
-                />
-                <FormControl
-                  type="text"
-                  id="event_time"
-                  placeholder="Event Time"
-                  value={this.state.event_time}
-                  onChange={this.handleChange}
-                />
-                <FormControl
-                  type="text"
-                  id="duration"
-                  placeholder="Duration"
-                  value={this.state.duration}
-                  onChange={this.handleChange}
-                />
-                <FormControl
-                  type="text"
-                  id="event_description"
-                  placeholder="Event Description"
-                  value={this.state.event_description}
-                  onChange={this.handleChange}
+                  type="password"
+                  id="password_conf"
+                  placeholder="Password Confirmation"
+                  value={this.state.password_conf}
+                  onChange={this.handlePass}
                 />
               </FormGroup>
                 <Button
                   block
                   bsSize="large"
                   type="submit"
-                  disabled={!this.state.event_description}
-                >Create Event
+                  disabled={!this.state.unhashed_pass}
+                >
+                  Register
                 </Button>
             </form>
             <div class="login-footer">
