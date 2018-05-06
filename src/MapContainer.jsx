@@ -84,7 +84,7 @@ export default class MapContainer extends Component {
         '<h3>' + event.location +'</h3>'+
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
         '<div><strong>Description: </strong>' + event.event_description +'</div>'+
-        '<div><strong>Date: </strong>' + event.event_date +'</div>'+
+        '<div><strong>Date: </strong>' + Date(event.event_date) +'</div>'+
         '<a href="/events/' + event.id + '">View more details</a>'+
         '</div>';
         const infowindow = new google.maps.InfoWindow({
