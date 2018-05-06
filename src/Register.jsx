@@ -26,18 +26,15 @@ class Register extends Component {
   registerOrganizer(e){
     axios({
       method: 'post',
-      url: 'http://localhost:3001/organizers',
+      url: '/organizers',
       data: {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
+        username          : this.state.username,
+        full_name         : this.state.full_name,
+        organization      : this.state.organization,
+        vol_org           : this.state.vol_org,
+        unhashed_pass     : this.state.unhashed_pass,
       }
     });
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
 
   handleChange(e) {
