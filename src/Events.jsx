@@ -3,7 +3,7 @@ import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Login_Register.css";
 import axios from 'axios';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react' 
+import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import TimePicker from 'react-bootstrap-datetimepicker';
 
 class Register extends Component {
@@ -16,6 +16,7 @@ class Register extends Component {
 
     this.state = {
       location: '',
+      GMaps_API_location: '',
       organization: '',
       event_size: '',
       event_description: '',
@@ -23,6 +24,7 @@ class Register extends Component {
       event_date: '',
       event_time: '',
       duration: '',
+      address: '',
     };
   }
 
@@ -31,7 +33,8 @@ class Register extends Component {
       method: 'post',
       url: '/events',
       data: {
-        location          : this.state.location,
+        location          : this.state.address,
+        GMaps_API_location: this.state.GMaps_API_location,
         organization      : this.state.organization,
         event_size        : this.state.event_size,
         event_description : this.state.event_description,
@@ -66,7 +69,7 @@ class Register extends Component {
   handleSelect = (address) => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(latLng => this.setState({GMaps_API_location: latLng}))
       .catch(error => console.error('Error', error))
   }
 

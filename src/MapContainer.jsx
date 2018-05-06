@@ -48,7 +48,7 @@ export default class MapContainer extends Component {
       console.log("---------->", events)
       this.setState({ events });
       console.log("--------state??-->", this.state.events)
-    }) 
+    })
       .then(() => {
         this.loadMap()
       })
@@ -59,7 +59,7 @@ export default class MapContainer extends Component {
       throw err;
     })
   }
-  
+
   loadMap() {
     if (this.props && this.props.google) { // checks to make sure that props have been passed
       console.log("I am logging this.props in the loadMap():", this.props)
@@ -77,10 +77,10 @@ export default class MapContainer extends Component {
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
       console.log("CHECK this.state.events", this.state.events)
 
-   
+
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
-        const contentString = '<div id="infoWindowContent">'+ 
+        const contentString = '<div id="infoWindowContent">'+
         '<h3>' + event.location +'</h3>'+
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
         '<div><strong>Description: </strong>' + event.event_description +'</div>'+
@@ -91,7 +91,7 @@ export default class MapContainer extends Component {
           content: contentString
         });
         const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
-          position: {lat: event.GMaps_API_location.results[0].geometry.location.lat, lng: event.GMaps_API_location.results[0].geometry.location.lng}, // sets position of each marker
+          position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
           map: this.map,
           title: event.event_description, // the title of the marker is set to the name of the location
           animation: google.maps.Animation.DROP
