@@ -1,34 +1,30 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import './App.css';
 
 import Login from "./Login";
 import Organizations from './Organizations';
-import Home from "./Home";
 import Register from "./Register";
 import Events from "./Events";
-import Users from "./Users";
+import MapApp from './MapApp'
+
+
 
 class App extends Component {
- constructor(props) {
-   super(props)
-
-   this.state = {
-     title: 'Find your HERD.'
-   };
-
- }
 
  render() {
    return (
-       <div className = "Logo"> <a href = '/'><img class="image" src = {"https://i.imgur.com/PHCgaoD.png"}></img></a> <p class="titles"><a href='/login'>Login</a> | <a href='/register'>Register</a> | <a href='/events'>Events</a> | <a href='/organizations'>Organizations</a></p>
-       <Route exact path='/' component={Home}/>
+      <div>
+        <div className="navBar">
+          <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
+          <p className="titles"><a href='/login'>Login</a> | <a href='/register'>Register</a> | <a href='/organizations'>Organizations</a></p>
+        </div>
+       <Route exact path='/' component={MapApp}/>
        <Route path='/login' component={Login}/>
        <Route path='/organizations' component={Organizations}/>
        <Route path='/register' component={Register}/>
        <Route path='/events' component={Events}/>
-       <Route path='/users' component={Users}/>
-       </div>
+      </div>
    );
  }
 }
