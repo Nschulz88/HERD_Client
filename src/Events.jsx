@@ -1,16 +1,137 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Button, FormGroup, FormControl } from "react-bootstrap";
+import "./Login_Register.css";
+import axios from 'axios';
 
+var pass_obj = {}
 
-class Events extends Component {
+class Register extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      location: '',
+      organization: '',
+      event_size: '',
+      event_description: '',
+      criteria: '',
+      event_date: '',
+      event_time: '',
+      duration: '',
+    };
+  }
+
+  register(e){
+    axios.get('http://localhost:3001/volunteers', {
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  handleChange(e) {
+    var key = e.target.id
+    this.setState({
+      [key]: e.target.value
+    });
+  }
+
 
   render() {
-    console.log('Login', this.props);
+    console.log(this.state)
     return (
-      <div>
-        <h1 class="Event">Event</h1>
+      <div className="Login">
+          <div className="login-content">
+            <div className="login-header">
+              <div className="avatar">
+                <img src={require('./letter_H.png')} alt="logo" className="img-responsive"/>
+              </div>
+              <div>
+                <h4>Enter your event details!</h4>
+              </div>
+            </div>
+            <form onSubmit={this.register.bind(this)}>
+              <FormGroup
+                name="vol_org"
+                bsSize="small"
+              >
+                <FormControl
+                  type="text"
+                  id="location"
+                  placeholder="Location"
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="event_size"
+                  placeholder="Event Size"
+                  value={this.state.event_size}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="organization"
+                  placeholder="Organization"
+                  value={this.state.organization}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  placeholder="Criteria"
+                  id="criteria"
+                  value={this.state.criteria}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="event_date"
+                  placeholder="Event Date"
+                  value={this.state.event_date}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="event_time"
+                  placeholder="Event Time"
+                  value={this.state.event_time}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="duration"
+                  placeholder="Duration"
+                  value={this.state.duration}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="event_description"
+                  placeholder="Event Description"
+                  value={this.state.event_description}
+                  onChange={this.handleChange}
+                />
+              </FormGroup>
+                <Button
+                  block
+                  bsSize="large"
+                  type="submit"
+                  disabled={!this.state.event_description}
+                >Create Event
+                </Button>
+            </form>
+            <div class="login-footer">
+              <a href="/login">I already have an account</a>
+            </div>
+          </div>
       </div>
     );
   }
 }
 
-export default Events;
+export default Register;

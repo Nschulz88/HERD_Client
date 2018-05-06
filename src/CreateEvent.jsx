@@ -12,7 +12,6 @@ class Register extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
     this.handlePass = this.handlePass.bind(this);
-    this.registerOrganizer = this.registerOrganizer.bind(this);
 
     this.state = {
       username: '',
@@ -23,21 +22,17 @@ class Register extends Component {
     };
   }
 
-  registerOrganizer(e){
-    axios({
-      method: 'post',
-      url: 'http://localhost:3001/organizers',
-      data: {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
-      }
+  register(e){
+    axios.post('/users', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
 
   handleChange(e) {
@@ -75,7 +70,7 @@ class Register extends Component {
                 <h4>Become a HERD. member</h4>
               </div>
             </div>
-            <form onSubmit={this.registerOrganizer.bind(this)}>
+            <form onSubmit={this.register.bind(this)}>
               <FormGroup
                 name="vol_org"
                 bsSize="small"

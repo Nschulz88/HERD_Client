@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "./Login_Register.css";
+import axios from 'axios';
 
 
 
@@ -14,6 +15,19 @@ class Login extends Component {
     email: '',
     password: ''
     };
+  }
+
+  login(e){
+    axios.get('http://localhost:3000/', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   handleChange(e) {
@@ -37,7 +51,7 @@ class Login extends Component {
                 <h4>Join your HERD.</h4>
               </div>
             </div>
-            <form>
+            <form onSubmit={this.login.bind(this)}>
               <FormGroup name="login" bsSize="large">
                 <FormControl
                   value={this.state.email}
