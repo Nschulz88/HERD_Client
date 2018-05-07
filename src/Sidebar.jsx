@@ -36,7 +36,7 @@ class Module extends React.Component {
   }
 
   render() {
-    var sidebarContent = <b>Sidebar content
+    var sidebarContent = (
 
         <div id="infoWindowContent">
         <h3>event.location</h3>
@@ -46,7 +46,9 @@ class Module extends React.Component {
         <a class="details" href='/events/'>View more details</a>
         </div>
 
-      </b>;
+        )
+
+
     var sidebarProps = {
       sidebar: this.state.sidebarOpen,
       docked: this.state.sidebarDocked,
@@ -71,7 +73,7 @@ class Module extends React.Component {
     WebkitTransition: '-webkit-transform .3s ease-out',
     willChange: 'transform',
     overflowY: 'auto',
-    backgroundColor: 'blue',
+    backgroundColor: 	'#00AAE4'
   },
   content: {
     position: 'absolute',
@@ -105,7 +107,7 @@ class Module extends React.Component {
 
     return (
       <Sidebar sidebar={sidebarContent}
-               style={sideStyle}
+               styles={sideStyle}
                open={this.state.sidebarOpen}
                docked={this.state.sidebarDocked}
                onSetOpen={this.onSetSidebarOpen}>
