@@ -6,7 +6,8 @@ import Login from "./Login";
 import Organizations from './Organizations';
 import Register from "./Register";
 import Events from "./Events";
-import MapApp from './MapApp'
+import MapApp from './MapApp';
+import Module from './Sidebar';
 
 
 
@@ -24,7 +25,8 @@ class App extends Component {
        <Route path='/login' component={Login}/>
        <Route path='/organizations' component={Organizations}/>
        <Route path='/register' component={Register}/>
-       <Route path='/events' component={Events}/>
+       <Route exact path='/events' component={Events}/>
+       <Route path='/events/:id' component={Module}/>
       </div>
    );
  }

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {getVolunteers} from './friends-data-svc';
 
 class Organizations extends Component {
   constructor(props){

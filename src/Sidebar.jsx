@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Sidebar from 'react-sidebar';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
-class App extends React.Component {
+class Module extends React.Component {
 
   constructor(props) {
     super(props);
@@ -36,15 +36,25 @@ class App extends React.Component {
   }
 
   render() {
-    var sidebarContent = <b>Sidebar content</b>;
+    var sidebarContent = <b>Sidebar content
+
+        <div id="infoWindowContent">
+        <h3>event.location</h3>
+        <div><strong>Volunteers needed: </strong>event.event_size</div>
+        <div><strong>Description:</strong>event.event_description</div>
+        <div><strong>Date: </strong>Date(event.event_date)</div>
+        <a class="details" href='/events/'>View more details</a>
+        </div>
+
+      </b>;
     var sidebarProps = {
       sidebar: this.state.sidebarOpen,
       docked: this.state.sidebarDocked,
       onSetOpen: this.onSetSidebarOpen
     };
 
-    var sideStyle = {
-  root: {
+  var sideStyle = {
+    root: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -94,8 +104,8 @@ class App extends React.Component {
 };
 
     return (
-      <Sidebar style={sideStyle}
-               sidebar={sidebarContent}
+      <Sidebar sidebar={sidebarContent}
+               style={sideStyle}
                open={this.state.sidebarOpen}
                docked={this.state.sidebarDocked}
                onSetOpen={this.onSetSidebarOpen}>
@@ -104,4 +114,4 @@ class App extends React.Component {
   }
 };
 
-export default App;
+export default Module;

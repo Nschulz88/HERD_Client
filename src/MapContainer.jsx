@@ -19,7 +19,6 @@ export default class MapContainer extends Component {
         { name: "Canada Place", id: 5, event_size: 200, event_description: "Give out popcourn", criteria: 'Must be able to lift, bro', event_date: '2016-06-23', location: {lat: 49.2888248, lng: -123.1111209} }
       ]
     };
-
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
   }
@@ -77,7 +76,6 @@ export default class MapContainer extends Component {
       })
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
       console.log("CHECK this.state.events", this.state.events)
-
 
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
