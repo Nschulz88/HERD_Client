@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import './App.css';
 
 export default class MapContainer extends Component {
   constructor (props) {
@@ -85,7 +86,7 @@ export default class MapContainer extends Component {
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
         '<div><strong>Description: </strong>' + event.event_description +'</div>'+
         '<div><strong>Date: </strong>' + Date(event.event_date) +'</div>'+
-        '<a href="/events/' + event.id + '">View more details</a>'+
+        '<a class="details" href="/events/' + event.id + '">View more details</a>'+
         '</div>';
         const infowindow = new google.maps.InfoWindow({
           content: contentString

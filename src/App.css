@@ -23,6 +23,14 @@ body {
   color: white;
 }
 
+.details {
+  font-size: 12px;
+}
+
+.details:visited {
+  color: blue;
+}
+
 a {
   color: white;
   font-size: 0.5em;
