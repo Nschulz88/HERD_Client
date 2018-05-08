@@ -8,19 +8,15 @@ export default class MapContainer extends Component {
     super(props);
     this.state = {
       showingInfoWindow: true,
+      showSideBox: false,
       activeMarker: {},
       selectedPlace: {},
       events: undefined,
-      locations: [
-        { name: "Lighthouse Labs", id: 1, event_size: 60, event_description: "Teach stuff", criteria: 'Must be smart', event_date: '2016-06-23', location: {lat: 49.2819163, lng: -123.10831740000003} },
-        { name: "BC Place", id: 2, event_size: 100, event_description: "Hand out flyers", criteria: 'Must be able to climb lots of staris', event_date: '2016-06-23', location: {lat: 49.27675, lng: -123.11199899999997} },
-        { name: "BC Childrens Hospital", id: 3, event_size: 20, event_description: "Give out gifts to kids", criteria: 'Must have police clearance', event_date: '2016-06-23', location: {lat: 49.24462140000001, lng: -123.12588640000001} },
-        { name: "Stanley Park", id: 4, event_size: 63, event_description: "Give athletes water", criteria: 'Bring sunscreen it will be hot!', event_date: '2016-06-23', location: {lat: 49.6412336, lng: -123.14425219999998} },
-        { name: "Canada Place", id: 5, event_size: 200, event_description: "Give out popcourn", criteria: 'Must be able to lift, bro', event_date: '2016-06-23', location: {lat: 49.2888248, lng: -123.1111209} }
-      ]
+      spec_event: undefined,
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
+    this.toggleSideBox = this.toggleSideBox.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -40,6 +36,23 @@ export default class MapContainer extends Component {
     }
   }
 
+  toggleSideBox = (props) => {
+    const { showSideBox } = this.state;
+    console.log("these are my props in toggleSideBox", props);
+    axios.get(`/events/${props}`)
+    .then(res => {
+      console.log("this is my res.data", res.data);
+      this.setState( {
+        spec_event : res.data,
+        showSideBox : !showSideBox
+      });
+      console.log("--------state??-->", this.state.spec_event)
+    })
+    .catch(err =>{
+      throw err;
+    })
+  }
+
   componentWillMount() {
     console.log("THIS LOooDED!!")
     axios.get(`/events`)
@@ -49,12 +62,9 @@ export default class MapContainer extends Component {
       this.setState({ events });
       console.log("--------state??-->", this.state.events)
     })
-      .then(() => {
-        this.loadMap()
-      })
-      .catch(err => {
-        throw err;
-      })
+    .then(() => {
+      this.loadMap()
+    })
     .catch(err =>{
       throw err;
     })
@@ -76,6 +86,10 @@ export default class MapContainer extends Component {
       })
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
       console.log("CHECK this.state.events", this.state.events)
+      this.map.addListener('click', () => {
+        console.log("mapppppitude");
+        this.setState( {spec_event : undefined});
+      });
 
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
@@ -84,7 +98,7 @@ export default class MapContainer extends Component {
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
         '<div><strong>Description: </strong>' + event.event_description +'</div>'+
         '<div><strong>Date: </strong>' + Date(event.event_date) +'</div>'+
-        '<a class="details" href="/events/' + event.id + '">View more details</a>'+
+        '<div class="details"' + event.id + '">View more details</div>'+
         '</div>';
         const infowindow = new google.maps.InfoWindow({
           content: contentString
@@ -93,20 +107,64 @@ export default class MapContainer extends Component {
           position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
           map: this.map,
           title: event.event_description, // the title of the marker is set to the name of the location
-          animation: google.maps.Animation.DROP
+          animation: google.maps.Animation.DROP,
+          eventID: event.id
         });
-        marker.addListener('click', function() {
+        marker.addListener('click', () => {
+
           infowindow.open(this.map, marker);
+
+          const details = document.querySelector('#infoWindowContent .details');
+          
+          details.addEventListener('click', () => {
+            // console.log("These are my props:", event.id)
+            this.toggleSideBox(event.id);
+          })
         });
+
       }
     }
   }
 
   render() {
     return ( // in our return function you must return a div with ref='map' and style.
-      <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
-        loading map...
+      <div>
+        <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
+          loading map...
+        </div>
+        { <Sidebox thisEvent={ this.state.spec_event } />}
+
       </div>
     )
+  }
+}
+
+
+class Sidebox extends Component {
+  constructor(props) {
+    super(props)
+
+  } 
+
+  // componentWillMount() {
+  //   console.log("This is my props in ComponentDidMount!", this.props.thisEvent[0])
+  // }
+
+  render() {
+    if (!this.props.thisEvent) {
+      return <div className="sideBox" style={{right: '-50%'}}></div>
+    } else {
+      return (
+        <div className="sideBox">
+          <div>
+            <h3>{this.props.thisEvent[0].location}</h3>
+            <div><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
+            <div><strong>Description: </strong>{this.props.thisEvent[0].event_description}</div>
+            <div><strong>Date: </strong>{Date(this.props.thisEvent[0].event_date)}</div>
+            <h3 className="details">Sign Up Here!!!! </h3>
+          </div>
+        </div>
+      )
+    }
   }
 }

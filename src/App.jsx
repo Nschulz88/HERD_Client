@@ -8,6 +8,7 @@ import Register from "./Register";
 import Events from "./Events";
 import MapApp from './MapApp';
 import Module from './Sidebar';
+import Userprofile from './Userprofile';
 
 
 
@@ -18,7 +19,7 @@ class App extends Component {
       <div>
         <div className="navBar">
           <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
-          <p className="titles"><a href='/login'>Login |</a><a href='/register'> Register |</a><a href='/organizations'> Organizations |</a><a href='/events'> Events</a></p>
+          <p className="titles"><a href='/login'>Login |</a><a href='/register'> Register |</a><a href='/organizations'> Organizations | </a><a href='/events'> Events</a></p>
         </div>
         <br></br>
        <Route exact path='/' component={MapApp}/>
@@ -27,6 +28,7 @@ class App extends Component {
        <Route path='/register' component={Register}/>
        <Route exact path='/events' component={Events}/>
        <Route path='/events/:id' component={Module}/>
+       <Route path='/user/:id' component={Userprofile}/>
       </div>
    );
  }

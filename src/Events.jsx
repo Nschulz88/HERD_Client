@@ -42,7 +42,8 @@ class Register extends Component {
         event_date        : this.state.event_date,
         event_time        : this.state.event_time,
         duration          : this.state.duration,
-      }
+      },
+      withCredentials: true,
     });
   }
 
