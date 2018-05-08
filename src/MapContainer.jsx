@@ -96,9 +96,9 @@ export default class MapContainer extends Component {
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
         const contentString = '<div id="infoWindowContent">'+
-        '<h3>' + event.location +'</h3>'+
+        '<h3>' + event.event_description +'</h3>'+
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
-        '<div><strong>Description: </strong>' + event.event_description +'</div>'+
+        '<div><strong>Location: </strong>' + event.location +'</div>'+
         '<div><strong>Date: </strong>' + Date(event.event_date) +'</div>'+
         '<div class="details"' + event.id + '">View more details</div>'+
         '</div>';
@@ -167,9 +167,9 @@ class Sidebox extends Component {
       return (
         <div className="sideBox">
           <div>
-            <h3>{this.props.thisEvent[0].location}</h3>
+            <h3>{this.props.thisEvent[0].event_description}</h3>
             <div><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
-            <div><strong>Description: </strong>{this.props.thisEvent[0].event_description}</div>
+            <div><strong>Location: </strong>{this.props.thisEvent[0].location}</div>
             <div><strong>Date: </strong>{Date(this.props.thisEvent[0].event_date)}</div>
             <Button onClick={this.onSignUp}>Sign Up</Button>
           </div>
