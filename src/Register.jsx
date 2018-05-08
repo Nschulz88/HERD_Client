@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Button, FormGroup, FormControl, DropdownButton, MenuItem } from "react-bootstrap";
 import "./Login_Register.css";
 import axios from 'axios';
 
@@ -18,7 +18,7 @@ class Register extends Component {
       username: '',
       full_name: '',
       organization: '',
-      vol_org: '',
+      vol_org: 'vol', //set to vol as default !
       unhashed_pass: '',
     };
   }
@@ -68,6 +68,7 @@ class Register extends Component {
   }
 
   handleRadio(e) {
+    console.log("I am hitting handleRadio", e.target.id)
     this.setState({
       vol_org: e.target.id
     });
@@ -75,6 +76,16 @@ class Register extends Component {
 
 
   render() {
+
+     const organizationField = <FormControl
+     type="text"
+     id="organization"
+     placeholder="Organization"
+     value={this.state.organization}
+     onChange={this.handleChange}
+     />
+
+
     console.log(this.state)
     return (
       <div className="Login">
@@ -90,23 +101,20 @@ class Register extends Component {
             <form onSubmit={this.registerOrganizer.bind(this)}>
               <FormGroup
                 name="vol_org"
-                bsSize="small"
+                bsSize="large"
               >
+                <DropdownButton
+                bsSize="large"
+                className="form-control"
+                id='dropdownBtn'
+                onChange={this.handleRadio}
+                title={this.state.vol_org === 'vol' ? "Volunteer" : "Organizer"}
+                >
+                  <MenuItem value={this.state.vol_org} id="vol" onClick={this.handleRadio}>Volunteer</MenuItem>
+                  <MenuItem value={this.state.vol_org} id="org" onClick={this.handleRadio}>Organizer</MenuItem>
+                </DropdownButton>
                 <FormControl
-                    type="radio"
-                    name="optradio"
-                    id="vol"
-                    value={this.state.vol_org}
-                    onChange={this.handleRadio}
-                />Volunteer
-                <FormControl
-                  type="radio"
-                  id="org"
-                  name="optradio"
-                  value={this.state.vol_org}
-                  onChange={this.handleRadio}
-                />Organizer
-                <FormControl
+                  autoFocus
                   type="text"
                   id="full_name"
                   placeholder="Full name"
@@ -120,13 +128,7 @@ class Register extends Component {
                   value={this.state.email}
                   onChange={this.handleChange}
                 />
-                <FormControl
-                  type="text"
-                  id="organization"
-                  placeholder="Organization"
-                  value={this.state.organization}
-                  onChange={this.handleChange}
-                />
+                {this.state.vol_org === 'org' ? organizationField : ''}
                 <FormControl
                   type="password"
                   placeholder="Password"
@@ -151,7 +153,7 @@ class Register extends Component {
                   Register
                 </Button>
             </form>
-            <div class="login-footer">
+            <div className="login-footer">
               <a href="/login">I already have an account</a>
             </div>
           </div>

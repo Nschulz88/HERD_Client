@@ -1,7 +1,7 @@
 div.Login {		
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 80px;
+	margin-top: 60px;
 	margin-bottom: 20px;
 
 	color: black;
@@ -12,7 +12,7 @@ div.Login {
 .Login .login-content {
 	padding: 20px;
 	border-radius: 5px;
-	border: 1px solid darkslategray;
+	border: 2px solid white;
 }
 .Login .login-header {
 	border-bottom: none;   
@@ -35,8 +35,8 @@ div.Login {
 .Login .login-footer {
 	text-align: center;
 	justify-content: center;
-	margin: 25px 0px 0px;
-	font-size: 15px;
+	margin: 0px 0px 0px;
+	font-size: 35px;
 }
 .Login .login-footer a {
 	color: #999;
