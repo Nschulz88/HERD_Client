@@ -1,3 +1,131 @@
+p {
+  color: #F5F5F5;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+h1 {
+  color: #F5F5F5;
+  font-weight: bold;
+  text-align: center
+}
+
+.box {
+height: 200px;
+width: 200px;
+border: 1px white;
+}
+
 .userprofile-body {
-  background-color: lightblue;
+  background-color: #00AAE4;
+  height: 650px;
+}
+
+/*
+ * react-circular-progressbar styles
+ *
+ * All of the styles in this file are optional and configurable!
+ */
+/*
+ path {
+  stroke-dasharray: 6630;
+  stroke-dashoffset: 6630;
+  animation: dash 5s linear forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+} */
+
+.profile {
+  text-align: center;
+  margin-right: 30px;
+}
+
+.circleClass {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  margin-right: 10px;
+}
+
+.CircularProgressbar1 {
+  height: 190px;
+  width: 190px;
+}
+
+ .CircularProgressbar2{
+   height: 190px;
+   width: 190px;
+ }
+
+ .CircularProgressbar3{
+   height: 190px;
+   width: 190px;
+ }
+
+.skills {
+  margin-right: 30px;
+  margin-top: 110px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.textClass {
+   display: flex;
+   justify-content: space-around;
+   margin-right: 30px;
+   margin-top: 10px;
+ }
+
+
+.CircularProgressbar-path {
+
+  stroke-linecap: round;
+  transition: stroke-dashoffset 5s ease 0s;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: #FFA500;
+}
+
+.CircularProgressbar2 .CircularProgressbar-path {
+  stroke: #FAFA37;
+}
+
+.CircularProgressbar3 .CircularProgressbar-path {
+  stroke: #98FB98;
+}
+
+.CircularProgressbar .CircularProgressbar-trail {
+  stroke: white;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+  fill: white;
+  font-size: 20px;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+.CircularProgressbar .CircularProgressbar-background {
+  fill: #d6d6d6;
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {
+  fill: #3e98c7;
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {
+  fill: #fff;
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-path {
+  stroke: #fff;
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
+  stroke: transparent;
 }
