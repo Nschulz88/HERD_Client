@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './App.css';
+import { Button } from "react-bootstrap";
 
 export default class MapContainer extends Component {
   constructor (props) {
@@ -26,6 +27,7 @@ export default class MapContainer extends Component {
       showingInfoWindow: true
     });
   }
+
 
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -115,7 +117,7 @@ export default class MapContainer extends Component {
           infowindow.open(this.map, marker);
 
           const details = document.querySelector('#infoWindowContent .details');
-          
+
           details.addEventListener('click', () => {
             // console.log("These are my props:", event.id)
             this.toggleSideBox(event.id);
@@ -143,12 +145,20 @@ export default class MapContainer extends Component {
 class Sidebox extends Component {
   constructor(props) {
     super(props)
+    this.onSignUp = this.onSignUp.bind(this);
+  }
 
-  } 
-
-  // componentWillMount() {
-  //   console.log("This is my props in ComponentDidMount!", this.props.thisEvent[0])
-  // }
+  onSignUp(){
+    let event_id = this.props.thisEvent[0].id
+    axios({
+      method: 'post',
+      url: `/events/${event_id}`,
+      data: {
+        event_id : event_id
+      },
+      withCredentials: true,
+    });
+  }
 
   render() {
     if (!this.props.thisEvent) {
@@ -161,7 +171,7 @@ class Sidebox extends Component {
             <div><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
             <div><strong>Description: </strong>{this.props.thisEvent[0].event_description}</div>
             <div><strong>Date: </strong>{Date(this.props.thisEvent[0].event_date)}</div>
-            <h3 className="details">Sign Up Here!!!! </h3>
+            <Button onClick={this.onSignUp}>Sign Up</Button>
           </div>
         </div>
       )
