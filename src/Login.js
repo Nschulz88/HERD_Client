@@ -20,15 +20,14 @@ class Login extends Component {
   }
 
   login(e){
-    axios({
-        method: 'post',
-        url: '/login',
-        data: {
-          username      : this.state.email,
-          password      : this.state.password,
-          vol_org       : this.state.vol_org
-        }
-      });
+    e.preventDefault()
+    axios.post('/login', {
+      username      : this.state.email,
+      password      : this.state.password,
+      vol_org       : this.state.vol_org
+    }).then(result => {
+      console.log('request complete', result)
+    });
   }
 
   handleChange(e) {
