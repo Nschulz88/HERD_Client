@@ -45,7 +45,6 @@ a:visited {
   font-size: 1em;
   margin-top: 40px;
   margin-left: 25px;
-
 }
 
 body .image {
@@ -71,3 +70,24 @@ body .image:hover {
   color: #337ab7;
   text-align: center;
 }
+
+
+.sideBox {
+  margin: 0px;
+  color: #337ab7;
+  text-align: center;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.85;
+  width: 45%;
+  border: 1px solid #337ab7;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+
+  transition: right 2s;
+}
+
