@@ -24,6 +24,7 @@ class Register extends Component {
   }
 
   registerOrganizer(e){
+    e.preventDefault()
     if (this.state.vol_org === 'org'){
       console.log('organizer!')
       axios({
