@@ -96,7 +96,7 @@ class Register extends Component {
                 <img src={require('./letter_H.png')} alt="logo" className="img-responsive"/>
               </div>
               <div>
-                <h4>Become a HERD. member</h4>
+                <h4>{this.state.vol_org === 'vol' ? "Join a HERD." : "Organize a HERD."}</h4>
               </div>
             </div>
             <form onSubmit={this.registerOrganizer.bind(this)}>

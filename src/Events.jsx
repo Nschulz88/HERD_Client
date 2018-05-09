@@ -175,7 +175,7 @@ class Register extends Component {
                 >Create Event
                 </Button>
             </form>
-            <div class="login-footer">
+            <div className="login-footer">
               <a href="/login">I already have an account</a>
             </div>
           </div>
