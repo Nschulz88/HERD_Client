@@ -48,8 +48,12 @@ class Register extends Component {
   }
 
   handleTimePicker(e){
-    var date = Date(e).slice(4, 15)
-    var time = Date(e).slice(16, 25)
+    console.log(typeof e)
+    var longDate = new Date(Number(e))
+    var date = longDate.toString().slice(4,15)
+    var time = longDate.toString().slice(16,21)
+    console.log(date)
+    console.log(time)
     this.setState({
       event_time: time,
       event_date: date
@@ -125,7 +129,7 @@ class Register extends Component {
                   )}
                 </PlacesAutocomplete>
                 <FormControl
-                  type="text"
+                  type="number"
                   id="event_size"
                   placeholder="Event Size"
                   value={this.state.event_size}
