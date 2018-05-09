@@ -23,10 +23,10 @@ class Userprofile extends Component  {
       <h1 className="profile">{this.state.username} (Volunteer)</h1>
       <ul>
         <br></br><br></br>
-        <p className="details">Email: {this.state.emailAddress} </p>
-        <p className="details">Location: Vancouver, Canada</p>
-        <p className="details">Member since: DD/MM/YY</p>
-        <p className="details">Total volunteer hours: {this.state.vol_hours}</p>
+        <p className="userDetails">Email: {this.state.emailAddress} </p>
+        <p className="userDetails">Location: Vancouver, Canada</p>
+        <p className="userDetails">Member since: DD/MM/YY</p>
+        <p className="userDetails">Total volunteer hours: {this.state.vol_hours}</p>
         <p className="summary">Summary: An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p>
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
