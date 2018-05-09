@@ -96,10 +96,10 @@ export default class MapContainer extends Component {
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
         const contentString = '<div id="infoWindowContent">'+
-        '<h3>' + event.event_description +'</h3>'+
+        '<h5>' + event.event_description +'</h5>'+
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
         '<div><strong>Location: </strong>' + event.location +'</div>'+
-        '<div><strong>Date: </strong>' + Date(event.event_date) +'</div>'+
+        '<div><strong>Date: </strong>' + event.event_date +'</div>'+
         '<div class="details"' + event.id + '">View more details</div>'+
         '</div>';
         const infowindow = new google.maps.InfoWindow({
@@ -146,6 +146,7 @@ class Sidebox extends Component {
   constructor(props) {
     super(props)
     this.onSignUp = this.onSignUp.bind(this);
+    this.getTime = this.getTime.bind(this);
   }
 
   onSignUp(){
@@ -160,17 +161,27 @@ class Sidebox extends Component {
     });
   }
 
+  getTime(){
+    let timeString = (this.props.thisEvent[0].event_time).slice(0,-3)
+    let H = +timeString.substr(0, 2);
+    let h = H % 12 || 12;
+    let ampm = (H < 12 || H === 24) ? "AM" : "PM";
+    timeString = h + timeString.substr(2, 3) + ampm;
+    return timeString
+  }
+
   render() {
     if (!this.props.thisEvent) {
       return <div className="sideBox" style={{right: '-50%'}}></div>
     } else {
       return (
         <div className="sideBox">
-          <div>
-            <h3>{this.props.thisEvent[0].event_description}</h3>
-            <div><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
-            <div><strong>Location: </strong>{this.props.thisEvent[0].location}</div>
-            <div><strong>Date: </strong>{Date(this.props.thisEvent[0].event_date)}</div>
+          <div className="sideBoxInfo">
+            <h3 id="event_description">{this.props.thisEvent[0].event_description}</h3>
+            <div className="infoBits"><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
+            <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location).slice(0, -23)}</div>
+            <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
+            <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
             <Button onClick={this.onSignUp}>Sign Up</Button>
           </div>
         </div>
