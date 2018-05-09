@@ -26,7 +26,8 @@ class Login extends Component {
       password      : this.state.password,
       vol_org       : this.state.vol_org
     }).then(result => {
-      console.log('request complete', result)
+      console.log('request complete', result.data.user)
+      this.props.setUser(result.data.user)
     });
     this.props.history.push("/");
   }
@@ -55,7 +56,7 @@ class Login extends Component {
                 <img src={require('./letter_H.png')} alt="logo" className="img-responsive"/>
               </div>
               <div>
-                <h4>Join your HERD.</h4>
+                <h4>{this.state.vol_org === 'vol' ? "Join a HERD." : "Organize a HERD."}</h4>
               </div>
             </div>
             <form onSubmit={this.login.bind(this)}>
