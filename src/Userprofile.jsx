@@ -17,13 +17,17 @@ class Userprofile extends Component  {
   render() {
     return (
       <div className='userprofile-body'>
+      <img className="pic" src="https://image.ibb.co/m1Bq8n/Sam.png"/>
       <br></br>
-      <span class="box"></span>
-      <h1 className="profile">Volunteer Profile: {this.state.username}</h1>
+      <div className="box"></div>
+      <h1 className="profile">{this.state.username} (Volunteer)</h1>
       <ul>
         <br></br><br></br>
-        <p className="profile">Email address: {this.state.emailAddress} </p>
-        <p className="profile">Total volunteer hours: {this.state.vol_hours}</p>
+        <p className="details">Email: {this.state.emailAddress} </p>
+        <p className="details">Location: Vancouver, Canada</p>
+        <p className="details">Member since: DD/MM/YY</p>
+        <p className="details">Total volunteer hours: {this.state.vol_hours}</p>
+        <p className="summary">Summary: An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p>
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
     <div className="circleClass">
