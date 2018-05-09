@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
+import axios from 'axios';
 
 import Login from "./Login";
 import Organizations from './Organizations';
@@ -13,13 +14,34 @@ import Userprofile from './Userprofile';
 
 
 class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.onLogoutClick = this.onLogoutClick.bind(this);
+  }
+
+  onLogoutClick(e) {
+    e.preventDefault();
+    axios({
+      method: 'post',
+      url: '/logout',
+    });
+  }
 
  render() {
+
    return (
       <div>
         <div className="navBar">
           <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
-          <p className="titles"><a href='/login'>Login |</a><a href='/register'> Register |</a><a href='/organizations'> Organizations | </a><a href='/events'> Events</a></p>
+          <p className="titles">
+
+            <a href='/login'> Login </a> | 
+            <a href='/' onClick={this.onLogoutClick}> Logout </a> | 
+            <a href='/register'> Register </a> | 
+            <a href='/organizations'> Organizations </a> | 
+            <a href='/events'> Events</a>
+          </p>
         </div>
         <br></br>
        <Route exact path='/' component={MapApp}/>

@@ -13,7 +13,6 @@ class Register extends Component {
     this.handleRadio = this.handleRadio.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.registerOrganizer = this.registerOrganizer.bind(this);
-
     this.state = {
       username: '',
       full_name: '',
@@ -51,7 +50,9 @@ class Register extends Component {
         }
       });
     }
+    this.props.history.push("/");
   }
+ 
 
   handleChange(e) {
     var key = e.target.id
@@ -74,7 +75,6 @@ class Register extends Component {
       vol_org: e.target.id
     });
   }
-
 
   render() {
 
