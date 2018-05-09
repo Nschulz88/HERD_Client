@@ -98,8 +98,8 @@ export default class MapContainer extends Component {
         const contentString = '<div id="infoWindowContent">'+
         '<h5>' + event.event_description +'</h5>'+
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
-        '<div><strong>Location: </strong>' + event.location +'</div>'+
-        '<div><strong>Date: </strong>' + event.event_date +'</div>'+
+        '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
+        '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
         '<div class="details"' + event.id + '">View more details</div>'+
         '</div>';
         const infowindow = new google.maps.InfoWindow({
@@ -179,7 +179,7 @@ class Sidebox extends Component {
           <div className="sideBoxInfo">
             <h3 id="event_description">{this.props.thisEvent[0].event_description}</h3>
             <div className="infoBits"><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
-            <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location).slice(0, -23)}</div>
+            <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
             <Button onClick={this.onSignUp}>Sign Up</Button>
