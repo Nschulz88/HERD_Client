@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Button, FormGroup, FormControl, DropdownButton, MenuItem } from "react-bootstrap";
 import "./Login_Register.css";
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ class Login extends Component {
     this.state={
     email: '',
     password: '',
-    vol_org: '',
+    vol_org: 'vol',
     };
   }
 
@@ -28,6 +28,7 @@ class Login extends Component {
     }).then(result => {
       console.log('request complete', result)
     });
+    this.props.history.push("/");
   }
 
   handleChange(e) {
@@ -59,20 +60,16 @@ class Login extends Component {
             </div>
             <form onSubmit={this.login.bind(this)}>
               <FormGroup name="login" bsSize="large">
-                <FormControl
-                    type="radio"
-                    name="optradio"
-                    id="vol"
-                    value={this.state.vol_org}
-                    onChange={this.handleRadio}
-                />Volunteer
-                <FormControl
-                  type="radio"
-                  id="org"
-                  name="optradio"
-                  value={this.state.vol_org}
+                <DropdownButton
+                  bsSize="large"
+                  className="form-control"
+                  id='dropdownBtn'
                   onChange={this.handleRadio}
-                />Organizer
+                  title={this.state.vol_org === 'vol' ? "Volunteer" : "Organizer"}
+                  >
+                  <MenuItem value={this.state.vol_org} id="vol" onClick={this.handleRadio}>Volunteer</MenuItem>
+                  <MenuItem value={this.state.vol_org} id="org" onClick={this.handleRadio}>Organizer</MenuItem>
+                </DropdownButton>
                 <FormControl
                   value={this.state.email}
                   type="email"
@@ -96,7 +93,7 @@ class Login extends Component {
                 >Login
               </Button>
             </form>
-              <div class="login-footer">
+              <div className="login-footer">
                 <a href="/register">Or Register here</a>
               </div>
           </div>
