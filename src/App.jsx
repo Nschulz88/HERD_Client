@@ -4,11 +4,9 @@ import './App.css';
 import axios from 'axios';
 
 import Login from "./Login";
-import Organizations from './Organizations';
 import Register from "./Register";
 import Events from "./Events";
 import MapApp from './MapApp';
-import Module from './Sidebar';
 import Userprofile from './Userprofile';
 
 
@@ -67,10 +65,8 @@ class App extends Component {
         <br></br>
        <Route exact path='/' component={MapApp}/>
        <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
-       <Route path='/organizations' component={Organizations}/>
        <Route path='/register' component={Register}/>
        <Route exact path='/events' component={Events}/>
-       <Route path='/events/:id' component={Module}/>
        <Route path='/user/:id' component={Userprofile}/>
       </div>
    );
