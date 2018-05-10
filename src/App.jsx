@@ -20,16 +20,14 @@ class App extends Component {
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
-    // this.isOrganizer = this.isOrganizer.bind(this);
-
-
+  
   }
 
   onLogoutClick(e) {
     e.preventDefault();
     axios({
       method: 'post',
-      url: '/logout',
+      url: '/api/logout',
     });
     this.setState({user: null})
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
-import apiKey from "./apiKeys.json"
+import apiKey from './apiKeys.json'
+
 
 import MapContainer from './MapContainer'
 
