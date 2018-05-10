@@ -54,14 +54,13 @@ class App extends Component {
   const postEventLink = <a href='/events'> Looking for volunteers </a>
   const registerLink = <a href='/register'> Register </a>
 
-
    return (
       <div>
         <div className="navBar">
           <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
           <p className="titles">
-            {this.state.user ? <a href='/' onClick={this.onLogoutClick}> Logout </a> : <a href='/login'> Login </a>} |
-            {this.state.user ? '' : registerLink} | 
+            {this.state.user ? <a href='/' onClick={this.onLogoutClick}> Logout</a> : <a href='/login'> Login </a>} |
+            {this.state.user ? '' : registerLink} |
             {this.isOrganizer() ? postEventLink : ''}
           </p>
         </div>
