@@ -66,19 +66,45 @@ body .image:hover {
   text-align: center;
 }
 
+#event_description{
+  font-weight: 800;
+}
+
+.infoBits{
+  margin:5%;
+}
+
+.sideBoxInfo{
+  font-family: Raleway, sans-serif;
+  font-size:larger;
+  opacity: 1;
+  color:white;
+  margin-top: 20%;
+}
+
+.btn-default {
+  color: white;
+  background-color: #00BFFF;
+  border-color: #ccc;
+}
+
+.btn-default:hover {
+    color: #00BFFF;
+    background-color: white;
+    border-color: #adadad;
+}
 
 .sideBox {
   margin: 0px;
-  color: #337ab7;
+  color: #00BFFF;
   text-align: center;
-
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   background-color: black;
   opacity: 0.85;
-  width: 45%;
+  width: 35%;
   border: 1px solid #337ab7;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
