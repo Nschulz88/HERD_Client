@@ -41,7 +41,7 @@ export default class MapContainer extends Component {
   toggleSideBox = (props) => {
     const { showSideBox } = this.state;
     console.log("these are my props in toggleSideBox", props);
-    axios.get(`/events/${props}`)
+    axios.get(`/api/events/${props}`)
     .then(res => {
       console.log("this is my res.data", res.data);
       this.setState( {
@@ -57,7 +57,7 @@ export default class MapContainer extends Component {
 
   componentWillMount() {
     console.log("THIS LOooDED!!")
-    axios.get(`/events`)
+    axios.get(`/api/events`)
     .then(res => {
       const events = res.data;
       console.log("---------->", events)
@@ -153,7 +153,7 @@ class Sidebox extends Component {
     let event_id = this.props.thisEvent[0].id
     axios({
       method: 'post',
-      url: `/events/${event_id}`,
+      url: `/api/events/${event_id}`,
       data: {
         event_id : event_id
       },

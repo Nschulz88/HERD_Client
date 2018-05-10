@@ -28,7 +28,7 @@ class Register extends Component {
       console.log('organizer!')
       axios({
         method: 'post',
-        url: '/organizers',
+        url: '/api/organizers',
         data: {
           username          : this.state.username,
           full_name         : this.state.full_name,
@@ -41,7 +41,7 @@ class Register extends Component {
       console.log('volunteers!')
       axios({
         method: 'post',
-        url: '/volunteers',
+        url: '/api/volunteers',
         data: {
           username          : this.state.username,
           full_name         : this.state.full_name,

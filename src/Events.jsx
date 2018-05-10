@@ -6,7 +6,9 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import TimePicker from 'react-bootstrap-datetimepicker';
 
-class Register extends Component {
+import apiKey from "./apiKeys.json"
+
+class CreateEvent extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -31,7 +33,7 @@ class Register extends Component {
   createEvent(e){
     axios({
       method: 'post',
-      url: '/events',
+      url: '/api/events',
       data: {
         location          : this.state.address,
         GMaps_API_location: this.state.GMaps_API_location,
@@ -189,7 +191,6 @@ class Register extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyA-rvgStzujxRs4myTS1k28n3Vg_dQsUQw',
-})(Register)
+  apiKey: apiKey[process.env.NODE_ENV],
+})(CreateEvent)
 
-// export default Register

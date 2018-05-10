@@ -4,11 +4,9 @@ import './App.css';
 import axios from 'axios';
 
 import Login from "./Login";
-import Organizations from './Organizations';
 import Register from "./Register";
 import Events from "./Events";
 import MapApp from './MapApp';
-import Module from './Sidebar';
 import Userprofile from './Userprofile';
 
 
@@ -22,16 +20,14 @@ class App extends Component {
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
-    // this.isOrganizer = this.isOrganizer.bind(this);
-
-
+  
   }
 
   onLogoutClick(e) {
     e.preventDefault();
     axios({
       method: 'post',
-      url: '/logout',
+      url: '/api/logout',
     });
     this.setState({user: null})
   }
@@ -54,24 +50,21 @@ class App extends Component {
   const postEventLink = <a href='/events'> Looking for volunteers </a>
   const registerLink = <a href='/register'> Register </a>
 
-
    return (
       <div>
         <div className="navBar">
           <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
           <p className="titles">
-            {this.state.user ? <a href='/' onClick={this.onLogoutClick}> Logout </a> : <a href='/login'> Login </a>} |
-            {this.state.user ? '' : registerLink} | 
+            {this.state.user ? <a href='/' onClick={this.onLogoutClick}> Logout</a> : <a href='/login'> Login </a>} |
+            {this.state.user ? '' : registerLink} |
             {this.isOrganizer() ? postEventLink : ''}
           </p>
         </div>
         <br></br>
        <Route exact path='/' component={MapApp}/>
        <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
-       <Route path='/organizations' component={Organizations}/>
        <Route path='/register' component={Register}/>
        <Route exact path='/events' component={Events}/>
-       <Route path='/events/:id' component={Module}/>
        <Route path='/user/:id' component={Userprofile}/>
       </div>
    );
