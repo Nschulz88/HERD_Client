@@ -5,7 +5,8 @@ import axios from 'axios';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
 import TimePicker from 'react-bootstrap-datetimepicker';
-import apiKey from './apiKeys.json'
+
+import apiKey from "./apiKeys.json"
 
 class CreateEvent extends Component {
   constructor(props, context) {
@@ -192,3 +193,4 @@ class CreateEvent extends Component {
 export default GoogleApiWrapper({
   apiKey: apiKey[process.env.NODE_ENV],
 })(CreateEvent)
+
