@@ -37,14 +37,14 @@ class Userprofile extends Component  {
             />
     <div className="box"></div>
       <br></br>
-      <h1 className="profile">{this.state.username} (Volunteer)</h1>
+      <h1 className="profile">{this.state.username}</h1><h1 className="detail"> (Volunteer)</h1>
       <ul>
         <br></br><br></br>
-        <p className="userDetails">Email: {this.state.emailAddress} </p>
-        <p className="userDetails">Location: Vancouver, Canada</p>
-        <p className="userDetails">Member since: DD/MM/YY</p>
-        <p className="userDetails">Total volunteer hours: {this.state.vol_hours}</p>
-        <p className="summary">Summary: An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p>
+        <p className="userDetails">Email: </p><p className="detail">{this.state.emailAddress}</p><br></br>
+        <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><a href="/edit">Edit</a><br></br>
+        <p className="userDetails">Member since:</p><p className="detail"> DD/MM/YY</p><br></br>
+        <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.vol_hours}</p><br></br>
+        <p className="summary">Summary:</p><p className="detail">An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p><a href="/edit">Edit</a>
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
     <div className="circleClass">

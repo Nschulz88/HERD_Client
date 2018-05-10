@@ -14,9 +14,7 @@ class App extends Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      user: null
-    };
+    this.state = {};
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
