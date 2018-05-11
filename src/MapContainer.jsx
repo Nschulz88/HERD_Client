@@ -220,6 +220,7 @@ export default class MapContainer extends Component {
           map: this.map,
           title: event.event_description, // the title of the marker is set to the name of the location
           animation: google.maps.Animation.DROP,
+          icon: require('./small_pointer.png'),
           eventID: event.id
         });
         marker.addListener('click', () => {
