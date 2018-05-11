@@ -17,6 +17,14 @@ h1 {
 
 .summary {
   margin-top: 70px;
+  color: #98FB98;
+}
+
+.detail{
+  font-size: 16px;
+  margin-right: 5px;
+  font-weight: bold;
+  display: inline;
 }
 
 .pic {
@@ -34,28 +42,20 @@ h1 {
  *
  * All of the styles in this file are optional and configurable!
  */
-/*
- path {
-  stroke-dasharray: 6630;
-  stroke-dashoffset: 6630;
-  animation: dash 5s linear forwards;
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-} */
 
 .profile {
   text-align: left;
   margin-left: 30px;
+  display: inline;
+  color: #98FB98;
 }
 
 .userDetails {
   text-align: left;
   margin-left: -6px;
   font-size: 20px;
+  display: inline;
+  color: #98FB98;
 }
 
 .circleClass {
