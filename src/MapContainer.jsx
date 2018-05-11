@@ -203,7 +203,7 @@ export default class MapContainer extends Component {
         this.setState( {spec_event : undefined});
       });
 
-      var activeInfoWindow; 
+      var activeInfoWindow;
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
         const contentString = '<div id="infoWindowContent">'+
@@ -221,7 +221,7 @@ export default class MapContainer extends Component {
             scaledSize: new google.maps.Size(35, 60), // scaled size
             // origin: new google.maps.Point(0,0), // origin
             // anchor: new google.maps.Point(0, 0) // anchor
-            labelOrigin: new google.maps.Point(18,25)
+            labelOrigin: new google.maps.Point(17,23)
         };
 
         const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
@@ -231,24 +231,21 @@ export default class MapContainer extends Component {
           animation: google.maps.Animation.DROP,
           icon: icon,
           label: {
-            text: '1',
+            text: '12',
             color: 'white',
-            fontSize: "18px",
+            fontSize: "15px",
           },
           eventID: event.id
         });
-        marker.addListener('mouseover', () => {
-          if (activeInfoWindow) { activeInfoWindow.close();}
-          infowindow.open(this.map, marker);
-          activeInfoWindow = infowindow;
-          const details = document.querySelector('#infoWindowContent .details');
-          details.addEventListener('click', () => {
-            this.toggleSideBox(event.id);
-          })
+        marker.addListener('click', () =>{
+          this.toggleSideBox(event.id);
         });
-        marker.addListener('click', () => {
+        marker.addListener('mouseover', () => {
+          infowindow.open(this.map, marker);
+        });
+        marker.addListener('mouseout', () => {
           infowindow.close(this.map, marker);
-        })
+        });
       }
     }
   }
