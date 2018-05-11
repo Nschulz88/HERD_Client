@@ -215,12 +215,25 @@ export default class MapContainer extends Component {
         const infowindow = new google.maps.InfoWindow({
           content: contentString
         });
+        var icon = {
+            url: require('./small_pointer.png'), // url
+            scaledSize: new google.maps.Size(35, 60), // scaled size
+            // origin: new google.maps.Point(0,0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+            labelOrigin: new google.maps.Point(18,25)
+        };
+
         const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
           position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
           map: this.map,
           title: event.event_description, // the title of the marker is set to the name of the location
           animation: google.maps.Animation.DROP,
-          icon: require('./small_pointer.png'),
+          icon: icon,
+          label: {
+            text: '1',
+            color: 'white',
+            fontSize: "18px",
+          },
           eventID: event.id
         });
         marker.addListener('click', () => {
