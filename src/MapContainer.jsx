@@ -203,6 +203,7 @@ export default class MapContainer extends Component {
         this.setState( {spec_event : undefined});
       });
 
+      var activeInfoWindow; 
       for (let event of this.state.events) {
         console.log("IS THIS WORKING??", event)
         const contentString = '<div id="infoWindowContent">'+
@@ -236,17 +237,18 @@ export default class MapContainer extends Component {
           },
           eventID: event.id
         });
-        marker.addListener('click', () => {
-
+        marker.addListener('mouseover', () => {
+          if (activeInfoWindow) { activeInfoWindow.close();}
           infowindow.open(this.map, marker);
-
+          activeInfoWindow = infowindow;
           const details = document.querySelector('#infoWindowContent .details');
-
           details.addEventListener('click', () => {
-            // console.log("These are my props:", event.id)
             this.toggleSideBox(event.id);
           })
         });
+        marker.addListener('click', () => {
+          infowindow.close(this.map, marker);
+        })
       }
     }
   }

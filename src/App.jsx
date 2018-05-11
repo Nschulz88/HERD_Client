@@ -50,8 +50,6 @@ class App extends Component {
       user,
       userLoggedIn: true
     });
-    // console.log("Logging this.state.user", this.state.user.vol_org);
-    // localStorage.setItem('userLoggedIn', true);
     console.log("localStorage.userLoggedIn", localStorage.userLoggedIn);
   }
 
@@ -68,6 +66,7 @@ class App extends Component {
   const registerLink = <a href='/register'>Register</a>
 
 // NOTE FOR MAY 11th (by Natalie) -- would like to show username on login, but carrot acces due to different namings when user is organizer versus user is volunteer
+// ALSO I'm assuming, setUser doesnt get passed into Events and UserProfile!
   return (
     <div>
       <div className="navBar">
@@ -85,7 +84,7 @@ class App extends Component {
       <Route exact path='/' component={MapApp}/>
       <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
       <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser}/> }/>
-      <Route exact path='/events' component={Events}/>
+      <Route exact path='/events' component={Events}/> 
       <Route path='/user/:id' component={Userprofile}/>
     </div>
    );
