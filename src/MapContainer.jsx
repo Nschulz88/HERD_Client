@@ -123,7 +123,6 @@ export default class MapContainer extends Component {
             this.toggleSideBox(event.id);
           })
         });
-
       }
     }
   }
@@ -140,7 +139,6 @@ export default class MapContainer extends Component {
     )
   }
 }
-
 
 class Sidebox extends Component {
   constructor(props) {
