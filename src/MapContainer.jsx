@@ -14,10 +14,12 @@ export default class MapContainer extends Component {
       selectedPlace: {},
       events: undefined,
       spec_event: undefined,
+      showSideBox: false,
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.toggleSideBox = this.toggleSideBox.bind(this);
+    this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -38,6 +40,22 @@ export default class MapContainer extends Component {
     }
   }
 
+  toggleInfoWindow = (props) => {
+    console.log("these are my props in toggleInfoWindow", props);
+    axios.get(`/api/events/${props}`)
+    .then(res => {
+      console.log("this is my TIW res.data", res.data);
+      this.setState( {
+        spec_event : res.data,
+        showSideBox: false
+      });
+      console.log("--------TIWstate??-->", this.state)
+    })
+    .catch(err =>{
+      throw err;
+    })
+  }
+
   toggleSideBox = (props) => {
     const { showSideBox } = this.state;
     console.log("these are my props in toggleSideBox", props);
@@ -46,7 +64,7 @@ export default class MapContainer extends Component {
       console.log("this is my res.data", res.data);
       this.setState( {
         spec_event : res.data,
-        showSideBox : !showSideBox
+        showSideBox : true
       });
       console.log("--------state??-->", this.state.spec_event)
     })
@@ -200,22 +218,19 @@ export default class MapContainer extends Component {
       console.log("CHECK this.state.events", this.state.events)
       this.map.addListener('click', () => {
         console.log("mapppppitude");
-        this.setState( {spec_event : undefined});
+        this.setState( {showSideBox : false});
       });
 
       var activeInfoWindow;
       for (let event of this.state.events) {
-        console.log("IS THIS WORKING??", event)
-        const contentString = '<div id="infoWindowContent">'+
-        '<h5>' + event.event_description +'</h5>'+
-        '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
-        '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
-        '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
-        '<div class="details"' + event.id + '">View more details</div>'+
-        '</div>';
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
+        // // console.log("IS THIS WORKING??", event)
+        // // const contentString = '<div id="infoWindowContent">'+
+        // // '<h5>' + event.event_description +'</h5>'+
+        // // '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
+        // // '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
+        // // '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
+        // // '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
+        // // '</div>'
         var icon = {
             url: require('./small_pointer.png'), // url
             scaledSize: new google.maps.Size(35, 60), // scaled size
@@ -237,11 +252,29 @@ export default class MapContainer extends Component {
           },
           eventID: event.id
         });
+
+        const infowindow = new google.maps.InfoWindow({
+        //   content: contentString
+        });
+
+        marker.addListener('mouseover', () => {
+          this.toggleInfoWindow(event.id)
+          console.log("On moseover we event G??", event)
+          const contentString = '<div id="infoWindowContent">'+
+            '<h5>' + event.event_description +'</h5>'+
+            '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
+            '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
+            '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
+            '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
+            '</div>';
+          console.log(contentString)
+          infowindow.setContent(contentString)
+          infowindow.open(this.map, marker)
+          console.log(infowindow)
+        });
+
         marker.addListener('click', () =>{
           this.toggleSideBox(event.id);
-        });
-        marker.addListener('mouseover', () => {
-          infowindow.open(this.map, marker);
         });
         marker.addListener('mouseout', () => {
           infowindow.close(this.map, marker);
@@ -256,7 +289,7 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        { <Sidebox thisEvent={ this.state.spec_event } />}
+        { <Sidebox thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
 
       </div>
     )
@@ -292,7 +325,7 @@ class Sidebox extends Component {
   }
 
   render() {
-    if (!this.props.thisEvent) {
+    if (!this.props.showSideBox) {
       return <div className="sideBox" style={{right: '-50%'}}></div>
     } else {
       return (
