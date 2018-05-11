@@ -84,7 +84,117 @@ export default class MapContainer extends Component {
       const mapConfig = Object.assign({}, {
         center: {lat: 49.2827291, lng: -123.12073750000002},
         zoom: 12,
-        mapTypeId: 'roadmap' // could also be set to: Terrain, satellite, hybrid
+        mapTypeId: 'roadmap', // could also be set to: Terrain, satellite, hybrid
+        styles:[
+                {
+                    "featureType": "landscape",
+                    "stylers": [
+                        {
+                            "hue": "#FFBB00"
+                        },
+                        {
+                            "saturation": 43.400000000000006
+                        },
+                        {
+                            "lightness": 37.599999999999994
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "stylers": [
+                        {
+                            "hue": "#FFC200"
+                        },
+                        {
+                            "saturation": -61.8
+                        },
+                        {
+                            "lightness": 45.599999999999994
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "stylers": [
+                        {
+                            "hue": "#FF0300"
+                        },
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 51.19999999999999
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "stylers": [
+                        {
+                            "hue": "#FF0300"
+                        },
+                        {
+                            "saturation": -100
+                        },
+                        {
+                            "lightness": 52
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        },
+                        {
+                            "color": "#C6E2FF"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "stylers": [
+                        {
+                            "hue": "#00FF6A"
+                        },
+                        {
+                            "saturation": 22.0989010989011234
+                        },
+                        {
+                            "lightness": 11.200000000000017
+                        },
+                        {
+                            "gamma": 1
+                        }
+                    ]
+                },
+
+                {
+                  featureType: 'poi.business',
+                  stylers: [{visibility: 'off'}]
+                },
+                {
+                  featureType: 'transit',
+                  elementType: 'labels.icon',
+                  stylers: [{visibility: 'off'}]
+                }
+
+            ]
       })
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
       console.log("CHECK this.state.events", this.state.events)
@@ -106,11 +216,25 @@ export default class MapContainer extends Component {
         const infowindow = new google.maps.InfoWindow({
           content: contentString
         });
+        var icon = {
+            url: require('./small_pointer.png'), // url
+            scaledSize: new google.maps.Size(35, 60), // scaled size
+            // origin: new google.maps.Point(0,0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+            labelOrigin: new google.maps.Point(18,25)
+        };
+
         const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
           position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
           map: this.map,
           title: event.event_description, // the title of the marker is set to the name of the location
           animation: google.maps.Animation.DROP,
+          icon: icon,
+          label: {
+            text: '1',
+            color: 'white',
+            fontSize: "18px",
+          },
           eventID: event.id
         });
         marker.addListener('mouseover', () => {
