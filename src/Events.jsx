@@ -47,6 +47,7 @@ class CreateEvent extends Component {
       },
       withCredentials: true,
     });
+    this.props.history.push("/");
   }
 
   handleTimePicker(e){

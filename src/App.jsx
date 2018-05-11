@@ -14,11 +14,21 @@ class App extends Component {
   constructor(props){
     super(props);
 
-    this.state = {};
+    this.state = {
+      userLoggedIn: false
+    };
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
   
+  }
+
+  componentDidMount() {
+    this.setState({userLoggedIn:            
+      JSON.parse(localStorage.getItem("userLoggedIn"))
+    });
+    console.log("localStorage.userLoggedIn FROM COMP DID MOUNT", localStorage.userLoggedIn);
+
   }
 
   onLogoutClick(e) {
@@ -27,13 +37,22 @@ class App extends Component {
       method: 'post',
       url: '/api/logout',
     });
-    this.setState({user: null})
+    localStorage.removeItem('userLoggedIn');
+    this.setState({
+      user: null,
+      userLoggedIn: false
+    });
   }
 
   setUser(user) {
     console.log("setting user to", user);
-    this.setState({ user });
-    console.log("Logging this.state.user", this.state.user.vol_org)
+    this.setState({ 
+      user,
+      userLoggedIn: true
+    });
+    // console.log("Logging this.state.user", this.state.user.vol_org);
+    // localStorage.setItem('userLoggedIn', true);
+    console.log("localStorage.userLoggedIn", localStorage.userLoggedIn);
   }
 
   isOrganizer() {
@@ -45,26 +64,30 @@ class App extends Component {
   }
 
  render() {
-  const postEventLink = <a href='/events'> Looking for volunteers </a>
-  const registerLink = <a href='/register'> Register </a>
+  const postEventLink = <a href='/events'>Looking for volunteers</a>
+  const registerLink = <a href='/register'>Register</a>
 
-   return (
-      <div>
-        <div className="navBar">
-          <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
-          <p className="titles">
-            {this.state.user ? <a href='/' onClick={this.onLogoutClick}> Logout</a> : <a href='/login'> Login </a>} |
-            {this.state.user ? '' : registerLink} |
-            {this.isOrganizer() ? postEventLink : ''}
-          </p>
-        </div>
-        <br></br>
-       <Route exact path='/' component={MapApp}/>
-       <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
-       <Route path='/register' component={Register}/>
-       <Route exact path='/events' component={Events}/>
-       <Route path='/user/:id' component={Userprofile}/>
+// NOTE FOR MAY 11th (by Natalie) -- would like to show username on login, but carrot acces due to different namings when user is organizer versus user is volunteer
+  return (
+    <div>
+      <div className="navBar">
+        <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
+        <p className="titles">
+          {this.state.user && this.state.userLoggedIn ? <span>Hey, {this.state.user.id } good to see you! </span> : '' }
+          {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
+          {this.state.userLoggedIn ? ' ' : ' | '}
+          {this.state.userLoggedIn ? '' : registerLink}
+          {this.isOrganizer() ? '| ' : ''}
+          {this.isOrganizer() ? postEventLink : ''}
+        </p>
       </div>
+      <br></br>
+      <Route exact path='/' component={MapApp}/>
+      <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
+      <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser}/> }/>
+      <Route exact path='/events' component={Events}/>
+      <Route path='/user/:id' component={Userprofile}/>
+    </div>
    );
  }
 }

@@ -20,14 +20,15 @@ class Login extends Component {
   }
 
   login(e){
-    e.preventDefault()
+    e.preventDefault();
     axios.post('/api/login', {
       username      : this.state.email,
       password      : this.state.password,
       vol_org       : this.state.vol_org
     }).then(result => {
-      console.log('request complete', result.data.user)
-      this.props.setUser(result.data.user)
+      console.log('request complete', result.data.user);
+      localStorage.setItem('userLoggedIn', true);
+      this.props.setUser(result.data.user);
     });
     this.props.history.push("/");
   }
