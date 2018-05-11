@@ -101,7 +101,7 @@ export default class MapContainer extends Component {
         '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
         '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
         '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
-        '<div class="details"' + event.id + '">View more details</div>'+
+        '<h4 class="view-details"' + event.id + '">Click to view more details</h4>'+
         '</div>';
         const infowindow = new google.maps.InfoWindow({
           content: contentString
@@ -117,10 +117,10 @@ export default class MapContainer extends Component {
           if (activeInfoWindow) { activeInfoWindow.close();}
           infowindow.open(this.map, marker);
           activeInfoWindow = infowindow;
-          const details = document.querySelector('#infoWindowContent .details');
+          const details = document.querySelector('#infoWindowContent .view-details');
           details.addEventListener('click', () => {
             this.toggleSideBox(event.id);
-          })
+          });
         });
         marker.addListener('click', () => {
           infowindow.close(this.map, marker);
