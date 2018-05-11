@@ -28,28 +28,36 @@ class Register extends Component {
       console.log('organizer!')
       axios({
         method: 'post',
-        url: '/api/organizers',
+        url: '/api/register/organizers',
         data: {
-          username          : this.state.username,
+          username          : this.state.username,  // we should prob set this to the users email, NOT username (same as in login)
           full_name         : this.state.full_name,
           organization      : this.state.organization,
           vol_org           : this.state.vol_org,
           unhashed_pass     : this.state.unhashed_pass,
         }
-      });
+      }).then(result => {
+          console.log('positive registration of organizer - response from server', result.data.user);
+          this.props.setUser(result.data.user);
+          localStorage.setItem('userLoggedIn', true);
+        });
     } else {
-      console.log('volunteers!')
-      axios({
-        method: 'post',
-        url: '/api/volunteers',
-        data: {
-          username          : this.state.username,
-          full_name         : this.state.full_name,
-          vol_org           : this.state.vol_org,
-          unhashed_pass     : this.state.unhashed_pass,
-        }
-      });
-    }
+        axios({
+          method: 'post',
+          url: '/api/register/volunteers',
+          data: {
+            username          : this.state.username,
+            full_name         : this.state.full_name,
+            vol_org           : this.state.vol_org,
+            unhashed_pass     : this.state.unhashed_pass,
+          }
+        })
+        .then(result => {
+            console.log('positive registration of volunteer - response from server', result.data.user);
+            this.props.setUser(result.data.user);
+            localStorage.setItem('userLoggedIn', true);
+        });
+      }
     this.props.history.push("/");
   }
  
