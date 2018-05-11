@@ -30,7 +30,7 @@ class Register extends Component {
         method: 'post',
         url: '/api/register/organizers',
         data: {
-          username          : this.state.username,  // we should prob set this to the users email, NOT username (same as in login)
+          email             : this.state.email,  // we should prob set this to the users email, NOT username (same as in login)
           full_name         : this.state.full_name,
           organization      : this.state.organization,
           vol_org           : this.state.vol_org,
@@ -46,7 +46,7 @@ class Register extends Component {
           method: 'post',
           url: '/api/register/volunteers',
           data: {
-            username          : this.state.username,
+            email             : this.state.email,
             full_name         : this.state.full_name,
             vol_org           : this.state.vol_org,
             unhashed_pass     : this.state.unhashed_pass,
@@ -132,7 +132,7 @@ class Register extends Component {
                 />
                 <FormControl
                   type="email"
-                  id="username"
+                  id="email"
                   placeholder="E-mail"
                   value={this.state.email}
                   onChange={this.handleChange}
