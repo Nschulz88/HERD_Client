@@ -111,3 +111,11 @@ body .image:hover {
 
   transition: right 2s;
 }
+
+/* .mapContainer div[style*="height: 115px"] { 
+  border-radius: 20px !important; 
+  border: 1px solid red;
+} */
+.view-details {
+cursor: pointer;
+}
