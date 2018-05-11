@@ -125,7 +125,6 @@ export default class MapContainer extends Component {
         marker.addListener('click', () => {
           infowindow.close(this.map, marker);
         })
-
       }
     }
   }
@@ -142,7 +141,6 @@ export default class MapContainer extends Component {
     )
   }
 }
-
 
 class Sidebox extends Component {
   constructor(props) {
