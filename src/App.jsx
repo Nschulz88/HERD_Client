@@ -13,24 +13,32 @@ import Userprofile from './Userprofile';
 class App extends Component {
   constructor(props){
     super(props);
-
+    
     this.state = {
-      userLoggedIn: false,
-      isOrganizer: false
     };
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
     this.isOrganizer = this.isOrganizer.bind(this);
 
-  
   }
 
   componentDidMount() {
-    this.setState({userLoggedIn:            
-      JSON.parse(localStorage.getItem("userLoggedIn"))
+
+    var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
+    //var userInfo = {id: '1', email:'zzz@zzz.com', name:'zzz'};
+    var userInfo = localStorage.getItem("userInfo");
+    this.isOrganizer(JSON.parse(userInfo).vol_org);
+    console.log("ROHIT DHAND",JSON.parse(userInfo));
+   
+    this.setState({userLoggedIn:userLoggedIn, user: JSON.parse(userInfo)         
+      //JSON.parse(localStorage.getItem("userLoggedIn"))
     });
-    console.log("localStorage.userLoggedIn FROM COMP DID MOUNT", localStorage.userLoggedIn);
+    console.log(this.state.user);
+    // console.log("localStorage.userLoggedIn FROM COMP DID MOUNT", localStorage.userLoggedIn);
+    // console.log("-----------this.state.user FROM COMP DID MOUNT", this.state);
+  
+
 
   }
 
@@ -49,10 +57,11 @@ class App extends Component {
   }
 
   setUser(user) {
-    console.log("setting user to", user);
-    localStorage.setItem('userLoggedIn', true)
+  
+    localStorage.setItem('userLoggedIn', true);
+    localStorage.setItem('userInfo',JSON.stringify(user));
     this.setState({ 
-      user,
+      user: user,
       userLoggedIn: true
     });
     console.log("localStorage.userLoggedIn", localStorage.userLoggedIn);
@@ -61,7 +70,7 @@ class App extends Component {
   }
 
   isOrganizer(userType) {
-    if (userType === "org") {
+    if (userType === "org"|| userType==="organizer")  {
       this.setState({
         isOrganizer: true
       })

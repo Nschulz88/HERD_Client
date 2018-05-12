@@ -9,13 +9,14 @@ import MapContainer from './MapContainer'
 class MapApp extends Component {
   constructor (props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
 
   render() {
     return (
       <div>
-        <MapContainer google={this.props.google}/>
+        <MapContainer google={this.props.google} />
       </div>
     );
   }

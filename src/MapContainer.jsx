@@ -50,7 +50,6 @@ export default class MapContainer extends Component {
       console.log("this is my TIW res.data", res.data);
       this.setState( {
         spec_event : res.data,
-        showSideBox: false
       });
       console.log("--------TIWstate??-->", this.state)
     })
@@ -287,7 +286,6 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        //{ <Infowindow />}
         { <Sidebox forceUpdate={ this.forceUpdate } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
 
       </div>
