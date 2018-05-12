@@ -15,9 +15,11 @@ export default class MapContainer extends Component {
       events: undefined,
       spec_event: undefined,
     };
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.toggleSideBox = this.toggleSideBox.bind(this);
+    this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -28,6 +30,9 @@ export default class MapContainer extends Component {
     });
   }
 
+  forceUpdateHandler(){
+      this.forceUpdate();
+  };
 
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -38,20 +43,26 @@ export default class MapContainer extends Component {
     }
   }
 
-  toggleSideBox = (props) => {
-    const { showSideBox } = this.state;
-    console.log("these are my props in toggleSideBox", props);
+  toggleInfoWindow = (props) => {
+    console.log("these are my props in toggleInfoWindow", props);
     axios.get(`/api/events/${props}`)
     .then(res => {
-      console.log("this is my res.data", res.data);
+      console.log("this is my TIW res.data", res.data);
       this.setState( {
         spec_event : res.data,
-        showSideBox : !showSideBox
+        showSideBox: false
       });
-      console.log("--------state??-->", this.state.spec_event)
+      console.log("--------TIWstate??-->", this.state)
     })
     .catch(err =>{
       throw err;
+    })
+  }
+
+  toggleSideBox = () => {
+    const { showSideBox } = this.state;
+    this.setState({
+        showSideBox : true
     })
   }
 
@@ -196,60 +207,77 @@ export default class MapContainer extends Component {
 
             ]
       })
-      this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
+      let map = this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
       console.log("CHECK this.state.events", this.state.events)
       this.map.addListener('click', () => {
         console.log("mapppppitude");
-        this.setState( {spec_event : undefined});
+        this.setState( {showSideBox : false});
       });
 
-      var activeInfoWindow; 
+      var activeInfoWindow;
       for (let event of this.state.events) {
-        console.log("IS THIS WORKING??", event)
-        const contentString = '<div id="infoWindowContent">'+
-        '<h5>' + event.event_description +'</h5>'+
-        '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
-        '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
-        '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
-        '<div class="details"' + event.id + '">View more details</div>'+
-        '</div>';
-        const infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-        var icon = {
-            url: require('./small_pointer.png'), // url
-            scaledSize: new google.maps.Size(35, 60), // scaled size
-            // origin: new google.maps.Point(0,0), // origin
-            // anchor: new google.maps.Point(0, 0) // anchor
-            labelOrigin: new google.maps.Point(18,25)
-        };
+        console.log('LOOKING FOR THIS')
+        console.log(event)
+        console.log(event.event_size)
+        var event_cap = Number(event.event_size)
+        var spots_left = 0
+        let marker
 
-        const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
-          position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
-          map: this.map,
-          title: event.event_description, // the title of the marker is set to the name of the location
-          animation: google.maps.Animation.DROP,
-          icon: icon,
-          label: {
-            text: '1',
-            color: 'white',
-            fontSize: "18px",
-          },
-          eventID: event.id
-        });
-        marker.addListener('mouseover', () => {
-          if (activeInfoWindow) { activeInfoWindow.close();}
-          infowindow.open(this.map, marker);
-          activeInfoWindow = infowindow;
-          const details = document.querySelector('#infoWindowContent .details');
-          details.addEventListener('click', () => {
-            this.toggleSideBox(event.id);
-          })
-        });
-        marker.addListener('click', () => {
-          infowindow.close(this.map, marker);
-        })
-      }
+        //function getRsvps(event_id){
+          axios.get(`/api/rsvps/${event.id}`)
+            .then(res => {
+              spots_left = (event_cap - Number(res.data.length).toString())
+              var icon = {
+                url: require('./small_pointer.png'), // url
+                scaledSize: new google.maps.Size(35, 60), // scaled size
+                labelOrigin: new google.maps.Point(17,23)
+              };
+
+              spots_left = spots_left.toString()
+
+              const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
+                position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
+                map: map,
+                title: event.event_description, // the title of the marker is set to the name of the location
+                animation: google.maps.Animation.DROP,
+                icon: icon,
+                label: {
+                  text: spots_left,
+                  color: 'white',
+                  fontSize: "15px",
+                },
+                eventID: event.id
+              });
+
+              const infowindow = new google.maps.InfoWindow({
+              });
+
+              marker.addListener('mouseover', () => {
+                this.toggleInfoWindow(event.id)
+                console.log("On moseover we event G??", event)
+                const contentString = '<div id="infoWindowContent">'+
+                  '<h5>' + event.event_description +'</h5>'+
+                  '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
+                  '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
+                  '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
+                  '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
+                  '</div>';
+                console.log(contentString)
+                infowindow.setContent(contentString)
+                infowindow.open(this.map, marker)
+                console.log(infowindow)
+              });
+
+              marker.addListener('click', () =>{
+                this.toggleSideBox(event.id);
+              });
+              marker.addListener('mouseout', () => {
+                infowindow.close(this.map, marker);
+              });
+                  })
+              }
+        //getRsvps(event.id)
+      //}
     }
   }
 
@@ -259,7 +287,8 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        { <Sidebox thisEvent={ this.state.spec_event } />}
+        //{ <Infowindow />}
+        { <Sidebox forceUpdate={ this.forceUpdate } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
 
       </div>
     )
@@ -269,11 +298,15 @@ export default class MapContainer extends Component {
 class Sidebox extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
   }
 
   onSignUp(){
+    console.log('onSignUp')
+    console.log(this.props)
+    console.log(this.props.thisEvent)
     let event_id = this.props.thisEvent[0].id
     axios({
       method: 'post',
@@ -282,7 +315,10 @@ class Sidebox extends Component {
         event_id : event_id
       },
       withCredentials: true,
-    });
+    })
+    .then((res) =>{
+      this.forceUpdate()
+    })
   }
 
   getTime(){
@@ -295,7 +331,7 @@ class Sidebox extends Component {
   }
 
   render() {
-    if (!this.props.thisEvent) {
+    if (!this.props.showSideBox) {
       return <div className="sideBox" style={{right: '-50%'}}></div>
     } else {
       return (
