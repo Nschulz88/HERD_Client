@@ -287,7 +287,6 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        //{ <Infowindow />}
         { <Sidebox forceUpdate={ this.forceUpdate } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
 
       </div>
