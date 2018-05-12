@@ -56,20 +56,10 @@ export default class MapContainer extends Component {
     })
   }
 
-  toggleSideBox = (props) => {
+  toggleSideBox = () => {
     const { showSideBox } = this.state;
-    console.log("these are my props in toggleSideBox", props);
-    axios.get(`/api/events/${props}`)
-    .then(res => {
-      console.log("this is my res.data", res.data);
-      this.setState( {
-        spec_event : res.data,
+    this.setState({
         showSideBox : true
-      });
-      console.log("--------state??-->", this.state.spec_event)
-    })
-    .catch(err =>{
-      throw err;
     })
   }
 
@@ -223,19 +213,9 @@ export default class MapContainer extends Component {
 
       var activeInfoWindow;
       for (let event of this.state.events) {
-        // // console.log("IS THIS WORKING??", event)
-        // // const contentString = '<div id="infoWindowContent">'+
-        // // '<h5>' + event.event_description +'</h5>'+
-        // // '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
-        // // '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
-        // // '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
-        // // '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
-        // // '</div>'
         var icon = {
             url: require('./small_pointer.png'), // url
             scaledSize: new google.maps.Size(35, 60), // scaled size
-            // origin: new google.maps.Point(0,0), // origin
-            // anchor: new google.maps.Point(0, 0) // anchor
             labelOrigin: new google.maps.Point(17,23)
         };
 
@@ -254,7 +234,6 @@ export default class MapContainer extends Component {
         });
 
         const infowindow = new google.maps.InfoWindow({
-        //   content: contentString
         });
 
         marker.addListener('mouseover', () => {
