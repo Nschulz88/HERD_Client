@@ -25,7 +25,9 @@ class App extends Component {
   componentDidMount() {
     var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
     var userInfo = localStorage.getItem("userInfo");
-    this.isOrganizer(JSON.parse(userInfo).vol_org);
+    this.isOrganizer(JSON.parse(userInfo).vol_org)
+    console.log("ROHIT DHAND",JSON.parse(userInfo));
+
    
     this.setState({userLoggedIn:userLoggedIn, user: JSON.parse(userInfo)         
     });
@@ -80,8 +82,8 @@ class App extends Component {
           {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
           {this.state.userLoggedIn ? ' ' : ' | '}
           {this.state.userLoggedIn ? '' : registerLink}
-          {this.state.isOrganizer ? '| ' : ''}
-          {this.state.isOrganizer ? postEventLink : ''}
+          {this.state.userLoggedIn && this.state.isOrganizer ? '| ' : ''}
+          {this.state.userLoggedIn && this.state.isOrganizer ? postEventLink : ''}
         </p>
       </div>
       <br></br>
