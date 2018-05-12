@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Button, FormGroup, FormControl, DropdownButton, MenuItem } from "react-bootstrap";
 import "./Login_Register.css";
 import axios from 'axios';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
@@ -15,6 +15,7 @@ class CreateEvent extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleTimePicker = this.handleTimePicker.bind(this);
+    this.changeEventType = this.changeEventType.bind(this);
 
     this.state = {
       location: '',
@@ -44,6 +45,7 @@ class CreateEvent extends Component {
         event_date        : this.state.event_date,
         event_time        : this.state.event_time,
         duration          : this.state.duration,
+        event_type        : this.state.event_type,
       },
       withCredentials: true,
     });
@@ -60,6 +62,12 @@ class CreateEvent extends Component {
     this.setState({
       event_time: time,
       event_date: date
+    });
+  }
+
+  changeEventType(e) {
+    this.setState({
+      event_type: e.target.id
     });
   }
 
@@ -100,6 +108,17 @@ class CreateEvent extends Component {
                 name="vol_org"
                 bsSize="small"
               >
+                <DropdownButton
+                  bsSize="large"
+                  className="form-control"
+                  id='dropdownBtn'
+                  onChange={this.changeEventType}
+                  title={this.state.event_type === true ? this.state.event_type : "Event Type"}
+                  >
+                  <MenuItem value={this.state.event_type} id="Mentoring" onClick={this.changeEventType}>Mentoring</MenuItem>
+                  <MenuItem value={this.state.event_type} id="Educational" onClick={this.changeEventType}>Educational</MenuItem>
+                  <MenuItem value={this.state.event_type} id="Physical Work" onClick={this.changeEventType}>Physical Work</MenuItem>
+                </DropdownButton>
               <PlacesAutocomplete
                   value={this.state.address}
                   onChange={this.handleChangeLocation}
