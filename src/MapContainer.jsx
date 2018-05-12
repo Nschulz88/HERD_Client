@@ -14,12 +14,13 @@ export default class MapContainer extends Component {
       selectedPlace: {},
       events: undefined,
       spec_event: undefined,
-      showSideBox: false,
     };
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.toggleSideBox = this.toggleSideBox.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -30,6 +31,9 @@ export default class MapContainer extends Component {
     });
   }
 
+  forceUpdateHandler(){
+      this.forceUpdate();
+  };
 
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -54,6 +58,10 @@ export default class MapContainer extends Component {
     .catch(err =>{
       throw err;
     })
+  }
+
+  refresh = () => {
+    this.setState({refresh: true})
   }
 
   toggleSideBox = () => {
@@ -204,7 +212,7 @@ export default class MapContainer extends Component {
 
             ]
       })
-      this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
+      let map = this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
       console.log("CHECK this.state.events", this.state.events)
       this.map.addListener('click', () => {
         console.log("mapppppitude");
@@ -213,52 +221,68 @@ export default class MapContainer extends Component {
 
       var activeInfoWindow;
       for (let event of this.state.events) {
-        var icon = {
-            url: require('./small_pointer.png'), // url
-            scaledSize: new google.maps.Size(35, 60), // scaled size
-            labelOrigin: new google.maps.Point(17,23)
-        };
+        console.log('LOOKING FOR THIS')
+        console.log(event)
+        console.log(event.event_size)
+        var event_cap = Number(event.event_size)
+        var spots_left = 0
+        let marker
 
-        const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
-          position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
-          map: this.map,
-          title: event.event_description, // the title of the marker is set to the name of the location
-          animation: google.maps.Animation.DROP,
-          icon: icon,
-          label: {
-            text: '12',
-            color: 'white',
-            fontSize: "15px",
-          },
-          eventID: event.id
-        });
+        //function getRsvps(event_id){
+          axios.get(`/api/rsvps/${event.id}`)
+            .then(res => {
+              spots_left = (event_cap - Number(res.data.length).toString())
+              var icon = {
+                url: require('./small_pointer.png'), // url
+                scaledSize: new google.maps.Size(35, 60), // scaled size
+                labelOrigin: new google.maps.Point(17,23)
+              };
 
-        const infowindow = new google.maps.InfoWindow({
-        });
+              spots_left = spots_left.toString()
 
-        marker.addListener('mouseover', () => {
-          this.toggleInfoWindow(event.id)
-          console.log("On moseover we event G??", event)
-          const contentString = '<div id="infoWindowContent">'+
-            '<h5>' + event.event_description +'</h5>'+
-            '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
-            '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
-            '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
-            '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
-            '</div>';
-          console.log(contentString)
-          infowindow.setContent(contentString)
-          infowindow.open(this.map, marker)
-          console.log(infowindow)
-        });
+              const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
+                position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
+                map: map,
+                title: event.event_description, // the title of the marker is set to the name of the location
+                animation: google.maps.Animation.DROP,
+                icon: icon,
+                label: {
+                  text: spots_left,
+                  color: 'white',
+                  fontSize: "15px",
+                },
+                eventID: event.id
+              });
 
-        marker.addListener('click', () =>{
-          this.toggleSideBox(event.id);
-        });
-        marker.addListener('mouseout', () => {
-          infowindow.close(this.map, marker);
-        });
-      }
+              const infowindow = new google.maps.InfoWindow({
+              });
+
+              marker.addListener('mouseover', () => {
+                this.toggleInfoWindow(event.id)
+                console.log("On moseover we event G??", event)
+                const contentString = '<div id="infoWindowContent">'+
+                  '<h5>' + event.event_description +'</h5>'+
+                  '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
+                  '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
+                  '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
+                  '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
+                  '</div>';
+                console.log(contentString)
+                infowindow.setContent(contentString)
+                infowindow.open(this.map, marker)
+                console.log(infowindow)
+              });
+
+              marker.addListener('click', () =>{
+                this.toggleSideBox(event.id);
+              });
+              marker.addListener('mouseout', () => {
+                infowindow.close(this.map, marker);
+              });
+                  })
+              }
+        //getRsvps(event.id)
+      //}
     }
   }
 
@@ -268,7 +292,7 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        { <Sidebox thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
+        { <Sidebox forceUpdate={ this.forceUpdate } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
 
       </div>
     )
@@ -278,11 +302,13 @@ export default class MapContainer extends Component {
 class Sidebox extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
   }
 
   onSignUp(){
+    console.log(this.props)
     let event_id = this.props.thisEvent[0].id
     axios({
       method: 'post',
@@ -291,7 +317,10 @@ class Sidebox extends Component {
         event_id : event_id
       },
       withCredentials: true,
-    });
+    })
+    .then((res) =>{
+      this.forceUpdate()
+    })
   }
 
   getTime(){
