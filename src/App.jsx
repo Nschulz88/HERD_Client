@@ -15,11 +15,14 @@ class App extends Component {
     super(props);
 
     this.state = {
-      userLoggedIn: false
+      userLoggedIn: false,
+      isOrganizer: false
     };
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.isOrganizer = this.isOrganizer.bind(this);
+
   
   }
 
@@ -40,24 +43,32 @@ class App extends Component {
     localStorage.removeItem('userLoggedIn');
     this.setState({
       user: null,
-      userLoggedIn: false
+      userLoggedIn: false,
+      isOrganizer: false
     });
   }
 
   setUser(user) {
     console.log("setting user to", user);
+    localStorage.setItem('userLoggedIn', true)
     this.setState({ 
       user,
       userLoggedIn: true
     });
     console.log("localStorage.userLoggedIn", localStorage.userLoggedIn);
+    console.log("this.state.user in setUser>>>>>", this.state.user);
+
   }
 
-  isOrganizer() {
-    if (this.state.user && this.state.user.vol_org === "organizer") {
-      return true
+  isOrganizer(userType) {
+    if (userType === "org") {
+      this.setState({
+        isOrganizer: true
+      })
     } else {
-      return false
+      this.setState({
+        isOrganizer: false
+      })
     }
   }
 
@@ -72,18 +83,18 @@ class App extends Component {
       <div className="navBar">
         <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
         <p className="titles">
-          {this.state.user && this.state.userLoggedIn ? <span>Hey, {this.state.user.id } good to see you! </span> : '' }
+          {this.state.user && this.state.userLoggedIn ? <span>Hey, {this.state.user.name } good to see you! </span> : '' }
           {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
           {this.state.userLoggedIn ? ' ' : ' | '}
           {this.state.userLoggedIn ? '' : registerLink}
-          {this.isOrganizer() ? '| ' : ''}
-          {this.isOrganizer() ? postEventLink : ''}
+          {this.state.isOrganizer ? '| ' : ''}
+          {this.state.isOrganizer ? postEventLink : ''}
         </p>
       </div>
       <br></br>
       <Route exact path='/' component={MapApp}/>
-      <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
-      <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser}/> }/>
+      <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> } />
+      <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> }/>
       <Route exact path='/events' component={Events}/> 
       <Route path='/user/:id' component={Userprofile}/>
     </div>
