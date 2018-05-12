@@ -14,7 +14,7 @@ class Register extends Component {
     this.handlePass = this.handlePass.bind(this);
     this.registerOrganizer = this.registerOrganizer.bind(this);
     this.state = {
-      username: '',
+      email: '',
       full_name: '',
       organization: '',
       vol_org: 'vol', //set to vol as default !
@@ -36,11 +36,13 @@ class Register extends Component {
           vol_org           : this.state.vol_org,
           unhashed_pass     : this.state.unhashed_pass,
         }
-      }).then(result => {
-          console.log('positive registration of organizer - response from server', result.data.user);
-          this.props.setUser(result.data.user);
-          localStorage.setItem('userLoggedIn', true);
-        });
+      }).then(({data}) => {
+          console.log('positive registration of organizer - response from server', data.user);
+          this.props.setUser(data.user);
+          this.props.isOrganizer("org");
+        }).catch(err => {
+          console.log(err)
+        })
     } else {
         axios({
           method: 'post',
@@ -55,7 +57,7 @@ class Register extends Component {
         .then(result => {
             console.log('positive registration of volunteer - response from server', result.data.user);
             this.props.setUser(result.data.user);
-            localStorage.setItem('userLoggedIn', true);
+            this.props.isOrganizer("vol");
         });
       }
     this.props.history.push("/");
