@@ -9,11 +9,13 @@ export default class MapContainer extends Component {
     super(props);
     this.state = {
       showingInfoWindow: true,
+      showInfowindow: false,
       showSideBox: false,
       activeMarker: {},
       selectedPlace: {},
       events: undefined,
       spec_event: undefined,
+      loggedInAttendee: false,
     };
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -45,24 +47,33 @@ export default class MapContainer extends Component {
 
   toggleInfoWindow = (props) => {
     console.log("these are my props in toggleInfoWindow", props);
+  }
+
+  toggleSideBox = (props) => {
+    console.log('LOCAL STORAGE')
+    console.log(localStorage)
+    const { showSideBox } = this.state;
     axios.get(`/api/events/${props}`)
     .then(res => {
       console.log("this is my TIW res.data", res.data);
+      let resultsArray = res.data;
+      let loggedInAttendee = false;
+      resultsArray.forEach((e) =>{
+        if(e.vol_id === localStorage.user.id){
+          loggedInAttendee = true
+        }
+      })
+      console.log('ayyyyyyyyyyyy ^^^^^^^^^^^^^')
+      console.log('Value of loggedIn: ' + loggedInAttendee)
       this.setState( {
-        spec_event : res.data,
-        showSideBox: false
+        spec_event : resultsArray,
+        showSideBox: true,
+        loggedInAttendee: loggedInAttendee
       });
       console.log("--------TIWstate??-->", this.state)
     })
     .catch(err =>{
       throw err;
-    })
-  }
-
-  toggleSideBox = () => {
-    const { showSideBox } = this.state;
-    this.setState({
-        showSideBox : true
     })
   }
 
@@ -254,7 +265,7 @@ export default class MapContainer extends Component {
 
               marker.addListener('mouseover', () => {
                 this.toggleInfoWindow(event.id)
-                console.log("On moseover we event G??", event)
+                console.log("On moseover we this.state.spec_event G??", event)
                 const contentString = '<div id="infoWindowContent">'+
                   '<h5>' + event.event_description +'</h5>'+
                   '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
@@ -281,15 +292,15 @@ export default class MapContainer extends Component {
     }
   }
 
+  // { <Infowindow showSideBox={ this.state.showInfowindow} />}
+
   render() {
     return ( // in our return function you must return a div with ref='map' and style.
       <div>
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        //{ <Infowindow />}
-        { <Sidebox forceUpdate={ this.forceUpdate } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
-
+        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } />}
       </div>
     )
   }
@@ -304,10 +315,9 @@ class Sidebox extends Component {
   }
 
   onSignUp(){
-    console.log('onSignUp')
-    console.log(this.props)
-    console.log(this.props.thisEvent)
     let event_id = this.props.thisEvent[0].id
+    console.log('these is onSignUp props')
+    console.log(this.props)
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
@@ -316,9 +326,17 @@ class Sidebox extends Component {
       },
       withCredentials: true,
     })
-    .then((res) =>{
-      this.forceUpdate()
+    let resultsArray = this.props.thisEvent;
+    let loggedInAttendee = false;
+    resultsArray.forEach((e) =>{
+      if(e.vol_id === this.props.thisEvent[(this.props.thisEvent - 1)]){
+        loggedInAttendee = true
+      }
     })
+    this.setState({ loggedInAttendee: true })
+    console.log('DOES THE INFO DIFFER???')
+    console.log(this.props)
+    console.log(this.state)
   }
 
   getTime(){
@@ -342,7 +360,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            <Button onClick={this.onSignUp}>Sign Up</Button>
+            {!this.props.loggedInAttendee ? <Button onClick={this.onSignUp}>Sign Up</Button> : <Button onClick={this.cancel}>Cancel</Button> }
           </div>
         </div>
       )
