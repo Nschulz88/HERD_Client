@@ -20,7 +20,6 @@ export default class MapContainer extends Component {
     this.onMapClick = this.onMapClick.bind(this);
     this.toggleSideBox = this.toggleSideBox.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
-    this.refresh = this.refresh.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -58,10 +57,6 @@ export default class MapContainer extends Component {
     .catch(err =>{
       throw err;
     })
-  }
-
-  refresh = () => {
-    this.setState({refresh: true})
   }
 
   toggleSideBox = () => {
@@ -292,6 +287,7 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
+        //{ <Infowindow />}
         { <Sidebox forceUpdate={ this.forceUpdate } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox} />}
 
       </div>
@@ -308,7 +304,9 @@ class Sidebox extends Component {
   }
 
   onSignUp(){
+    console.log('onSignUp')
     console.log(this.props)
+    console.log(this.props.thisEvent)
     let event_id = this.props.thisEvent[0].id
     axios({
       method: 'post',
