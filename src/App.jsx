@@ -13,7 +13,7 @@ import Userprofile from './Userprofile';
 class App extends Component {
   constructor(props){
     super(props);
-    
+
     this.state = {
     };
 
@@ -23,13 +23,18 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log(localStorage)
     var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
     var userInfo = localStorage.getItem("userInfo");
-    this.isOrganizer(JSON.parse(userInfo).vol_org)
-    console.log("ROHIT DHAND",JSON.parse(userInfo));
+    if(userInfo){
+      this.isOrganizer(JSON.parse(userInfo).vol_org)
+    }
+    //console.log("ROHIT DHAND",JSON.parse(userInfo));
 
-   
-    this.setState({userLoggedIn:userLoggedIn, user: JSON.parse(userInfo)         
+
+    this.setState({
+      userLoggedIn:userLoggedIn,
+      user: JSON.parse(userInfo)
     });
     console.log(this.state.user);
   }
@@ -51,7 +56,7 @@ class App extends Component {
   setUser(user) {
     localStorage.setItem('userLoggedIn', true);
     localStorage.setItem('userInfo',JSON.stringify(user));
-    this.setState({ 
+    this.setState({
       user: user,
       userLoggedIn: true
     });

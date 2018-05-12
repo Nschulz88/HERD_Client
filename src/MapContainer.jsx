@@ -56,10 +56,14 @@ export default class MapContainer extends Component {
     axios.get(`/api/events/${props}`)
     .then(res => {
       console.log("this is my TIW res.data", res.data);
+      console.log(localStorage.userInfo)
       let resultsArray = res.data;
       let loggedInAttendee = false;
+      let findUserId = JSON.parse(localStorage.getItem('userInfo'))
       resultsArray.forEach((e) =>{
-        if(e.vol_id === localStorage.user.id){
+        if(e.vol_id === findUserId.id){
+          console.log(e.vol_id)
+          console.log(localStorage.userInfo.id)
           loggedInAttendee = true
         }
       })
@@ -312,10 +316,12 @@ class Sidebox extends Component {
     this.state = {}
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
+    this.attendee = this.attendee.bind(this);
+    this.showSignUp = this.showSignUp.bind(this);
   }
 
   onSignUp(){
-    let event_id = this.props.thisEvent[0].id
+    let event_id = this.props.thisEvent[0].event_id
     console.log('these is onSignUp props')
     console.log(this.props)
     axios({
@@ -348,7 +354,28 @@ class Sidebox extends Component {
     return timeString
   }
 
+  attendee() {
+    if (this.props.loggedInAttendee){
+      return true
+    } else {
+      return false
+    }
+  }
+
+  showSignUp(){
+    console.log(localStorage)
+    let parsed = localStorage
+    let val = this.attendee()
+    if(parsed.vol_org !== 'vol' && val) {
+      return false
+    } else {
+      return true
+    }
+  }
+
   render() {
+    const signUpButton = <Button onClick={this.onSignUp}>Sign Up</Button>
+    const cancelButton = <Button onClick={this.cancel}>Cancel</Button>
     if (!this.props.showSideBox) {
       return <div className="sideBox" style={{right: '-50%'}}></div>
     } else {
@@ -360,7 +387,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            {!this.props.loggedInAttendee ? <Button onClick={this.onSignUp}>Sign Up</Button> : <Button onClick={this.cancel}>Cancel</Button> }
+            { this.showSignUp() ? signUpButton : cancelButton }
           </div>
         </div>
       )
