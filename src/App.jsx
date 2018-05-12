@@ -23,11 +23,11 @@ class App extends Component {
     this.setUser = this.setUser.bind(this);
     this.isOrganizer = this.isOrganizer.bind(this);
 
-  
+
   }
 
   componentDidMount() {
-    this.setState({userLoggedIn:            
+    this.setState({userLoggedIn:
       JSON.parse(localStorage.getItem("userLoggedIn"))
     });
     console.log("localStorage.userLoggedIn FROM COMP DID MOUNT", localStorage.userLoggedIn);
@@ -51,7 +51,7 @@ class App extends Component {
   setUser(user) {
     console.log("setting user to", user);
     localStorage.setItem('userLoggedIn', true)
-    this.setState({ 
+    this.setState({
       user,
       userLoggedIn: true
     });
@@ -92,10 +92,10 @@ class App extends Component {
         </p>
       </div>
       <br></br>
-      <Route exact path='/' component={MapApp}/>
+      <Route exact path='/' component={MapApp} passedUser={this.state.user}/>
       <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> } />
       <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> }/>
-      <Route exact path='/events' component={Events}/> 
+      <Route exact path='/events' component={Events}/>
       <Route path='/user/:id' component={Userprofile}/>
     </div>
    );
