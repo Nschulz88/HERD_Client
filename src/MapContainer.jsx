@@ -313,11 +313,14 @@ export default class MapContainer extends Component {
 class Sidebox extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      signedup : true
+    }
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
     this.attendee = this.attendee.bind(this);
     this.showSignUp = this.showSignUp.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   onSignUp(){
@@ -370,6 +373,23 @@ class Sidebox extends Component {
     } else {
       return false
     }
+  }
+
+  cancel(){
+    let event_id = this.props.thisEvent[0].event_id
+    let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
+    console.log('these is cancel props')
+    console.log(this.props)
+    console.log(vol_id)
+    axios({
+      method: 'delete',
+      url: `/api/events/${event_id}/cancel`,
+      data: {
+        vol_id : vol_id
+      },
+      withCredentials: true,
+    })
+    this.setState({ signedup: false })
   }
 
   render() {
