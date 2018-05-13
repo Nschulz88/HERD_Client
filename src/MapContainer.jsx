@@ -61,14 +61,14 @@ export default class MapContainer extends Component {
       let loggedInAttendee = false;
       let findUserId = JSON.parse(localStorage.getItem('userInfo'))
       resultsArray.forEach((e) =>{
-        if(e.vol_id === findUserId.id){
+        if(findUserId !== null && e.vol_id === findUserId.id){
           console.log(e.vol_id)
           console.log(localStorage.userInfo.id)
           loggedInAttendee = true
         }
       })
       console.log('ayyyyyyyyyyyy ^^^^^^^^^^^^^')
-      console.log('Value of loggedIn: ' + loggedInAttendee)
+      console.log('Value of loggedInAttendee: ' + loggedInAttendee)
       this.setState( {
         spec_event : resultsArray,
         showSideBox: true,
@@ -356,20 +356,19 @@ class Sidebox extends Component {
 
   attendee() {
     if (this.props.loggedInAttendee){
-      return true
-    } else {
       return false
+    } else {
+      return true
     }
   }
 
   showSignUp(){
-    console.log(localStorage)
-    let parsed = localStorage
     let val = this.attendee()
-    if(parsed.vol_org !== 'vol' && val) {
-      return false
-    } else {
+    let parsed = JSON.parse(localStorage.getItem('userInfo'))
+    if(parsed && parsed.vol_org === 'volunteer') {
       return true
+    } else {
+      return false
     }
   }
 
@@ -387,7 +386,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            { this.showSignUp() ? signUpButton : cancelButton }
+            { this.showSignUp() ? (this.attendee() ? signUpButton : cancelButton): ''}
           </div>
         </div>
       )
