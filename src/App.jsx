@@ -44,6 +44,7 @@ class App extends Component {
       url: '/api/logout',
     });
     localStorage.removeItem('userLoggedIn');
+    localStorage.removeItem('userInfo')
     this.setState({
       user: null,
       userLoggedIn: false,
