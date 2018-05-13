@@ -231,19 +231,32 @@ export default class MapContainer extends Component {
 
       var activeInfoWindow;
       for (let event of this.state.events) {
-        console.log('LOOKING FOR THIS')
-        console.log(event)
-        console.log(event.event_size)
-        var event_cap = Number(event.event_size)
-        var spots_left = 0
+        // console.log('LOOKING FOR THIS')
+        // console.log(event)
+        // console.log(event.event_size)
+        // var event_cap = Number(event.event_size)
+        // var spots_left = 0
         let marker
+        // console.log('EVENT CAP pre axios')
+        // console.log(event_cap)
 
         //function getRsvps(event_id){
           axios.get(`/api/rsvps/${event.id}`)
             .then(res => {
-              spots_left = (event_cap - Number(res.data.length).toString())
+              var event_cap = Number(event.event_size)
+              var spots_left = 0
+              console.log('this is event cap after axios')
+              console.log(event_cap)
+              spots_left = (event_cap - Number(res.data.length))
+              let pinURL = ''
+              if (spots_left > 0){
+                pinURL += 'small_pointer'
+              } else {
+                pinURL += 'red_small_pointer'
+              }
+              console.log('./'+pinURL+'.png')
               var icon = {
-                url: require('./small_pointer.png'), // url
+                url: require('./'+pinURL+'.png'), // url
                 scaledSize: new google.maps.Size(35, 60), // scaled size
                 labelOrigin: new google.maps.Point(17,23)
               };
@@ -325,8 +338,12 @@ class Sidebox extends Component {
 
   onSignUp(){
     let event_id = this.props.thisEvent[0].event_id
+    if(this.props.thisEvent[0] !== null){
+      event_id = this.props.thisEvent[0].id
+    }
     console.log('these is onSignUp props')
-    console.log(this.props)
+    console.log(this.props.thisEvent[0])
+    console.log(event_id)
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
