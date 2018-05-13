@@ -54,10 +54,11 @@ class Register extends Component {
             unhashed_pass     : this.state.unhashed_pass,
           }
         })
-        .then(result => {
-            console.log('positive registration of volunteer - response from server', result.data.user);
-            this.props.setUser(result.data.user);
-            this.props.isOrganizer("vol");
+        .then(({data}) => {
+            console.log('positive registration of volunteer - response from server', data.user);
+            localStorage.setItem('userLoggedIn', true);
+            this.props.setUser(data.user);
+            // this.props.isOrganizer("vol");
         });
       }
     this.props.history.push("/");

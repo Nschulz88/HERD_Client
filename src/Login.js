@@ -30,7 +30,7 @@ class Login extends Component {
       localStorage.setItem('userLoggedIn', true);
 
       this.props.setUser(result.data.user);
-      this.props.isOrganizer(this.state.vol_org);
+      // this.props.isOrganizer(this.state.vol_org);
     });
     this.props.history.push("/");
   }
