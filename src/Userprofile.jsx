@@ -23,18 +23,22 @@ class Userprofile extends Component  {
 
 
 componentDidMount() {
+  console.log("LOLSWOTSDGSLDGSKDGNK");
   console.log(localStorage);
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
-  axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
-  }).then(res => {
-    const volunteers = res.data;
-    console.log("theawesome",volunteers);
-    this.setState({ volunteers: volunteers });
-    console.log(this.state.volunteers[0].name)
-  })
-  .catch(err =>{
-    throw err;
-  })
+
+  if(parsedlocalstorage){
+    axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
+    }).then(res => {
+      const volunteers = res.data;
+      console.log("theawesome",volunteers);
+      this.setState({ volunteers: volunteers });
+      console.log(this.state.volunteers[0].name)
+    })
+    .catch(err =>{
+      throw err;
+    })
+  }
 }
 
 onDrop(files){
