@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CircularProgressbar from 'react-circular-progressbar';
-import ImagesUploader from 'react-images-uploader';
 import axios from 'axios';
 import 'react-images-uploader/font.css';
 import './profileStyles.css';
@@ -24,14 +23,14 @@ class Userprofile extends Component  {
 
 
 componentDidMount() {
-  axios.get('/api/volunteers/:id', {
-    id          : this.state.id,
-    vol_name    : this.state.vol_name,
-    vol_email   : this.state.vol_email,
-    vol_hours   : this.state.vol_hours
+  console.log(localStorage);
+  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
+  axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
   }).then(res => {
     const volunteers = res.data;
+    console.log("theawesome",volunteers);
     this.setState({ volunteers: volunteers });
+    console.log(this.state.volunteers[0].name)
   })
   .catch(err =>{
     throw err;
@@ -39,6 +38,7 @@ componentDidMount() {
 }
 
 onDrop(files){
+
   console.log(files);
   upload.post('/api/upload')
   .attach('profilepic', files[0])
@@ -49,6 +49,10 @@ onDrop(files){
       alert('File uploaded!');
     }
   })
+  console.log("How about this?")
+
+
+
 }
 
 
@@ -64,21 +68,21 @@ onDrop(files){
 
     return (
       <div className='userprofile-body'>
+
       <Dropzone onDrop={this.onDrop}>
         <div>
           Try dropping a file here;
         </div>
       </Dropzone>
 
-    <div className="box"></div>
       <br></br>
-      <h1 className="profile">{this.state.volunteers[0].vol_name}</h1><h1 className="detail"> (Volunteer)</h1>
+      <h1 className="profile">{this.state.volunteers[0].name}</h1><h1 className="detail"> (Volunteer)</h1>
       <ul>
         <br></br><br></br>
-        <p className="userDetails">Email: </p><p className="detail">{this.state.volunteers[0].vol_email}</p><br></br>
+        <p className="userDetails">Email: </p><p className="detail">{this.state.volunteers[0].email}</p><br></br>
         <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><a href="/edit">Edit</a><br></br>
         <p className="userDetails">Member since:</p><p className="detail"> DD/MM/YY</p><br></br>
-        <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].vol_hours}</p><br></br>
+        <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
         <p className="summary">Summary:</p><p className="detail">An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p><a href="/edit">Edit</a>
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
