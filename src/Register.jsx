@@ -39,9 +39,11 @@ class Register extends Component {
       }).then(({data}) => {
           console.log('positive registration of organizer - response from server', data.user);
           this.props.setUser(data.user);
-          this.props.isOrganizer("org");
-        }).catch(err => {
-          console.log(err)
+          localStorage.setItem('userLoggedIn', true);
+          this.props.history.push("/");
+        }).catch(error => {
+          console.log("ERRRRRRRRR",error);
+          alert("This e-mail is already registered")
         })
     } else {
         axios({
@@ -56,11 +58,14 @@ class Register extends Component {
         })
         .then(({data}) => {
             console.log('positive registration of volunteer - response from server', data.user);
-            localStorage.setItem('userLoggedIn', true);
             this.props.setUser(data.user);
+            localStorage.setItem('userLoggedIn', true);
+            this.props.history.push("/");
+        }).catch(error => {
+          console.log(error)
+          alert("This e-mail is already registered")
         });
       }
-    this.props.history.push("/");
   }
  
 
@@ -95,8 +100,6 @@ class Register extends Component {
      value={this.state.organization}
      onChange={this.handleChange}
      />
-
-
     console.log(this.state)
     return (
       <div className="Login">
