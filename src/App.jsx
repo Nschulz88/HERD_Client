@@ -15,23 +15,28 @@ class App extends Component {
     super(props);
 
     this.state = {
-      userLoggedIn: false,
-      isOrganizer: false
     };
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
     this.setUser = this.setUser.bind(this);
     this.isOrganizer = this.isOrganizer.bind(this);
-
-  
   }
 
   componentDidMount() {
-    this.setState({userLoggedIn:            
-      JSON.parse(localStorage.getItem("userLoggedIn"))
-    });
-    console.log("localStorage.userLoggedIn FROM COMP DID MOUNT", localStorage.userLoggedIn);
+    console.log(localStorage)
+    var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
+    var userInfo = localStorage.getItem("userInfo");
+    if(userInfo){
+      this.isOrganizer(JSON.parse(userInfo).vol_org)
+    }
+    //console.log("ROHIT DHAND",JSON.parse(userInfo));
 
+
+    this.setState({
+      userLoggedIn:userLoggedIn,
+      user: JSON.parse(userInfo)
+    });
+    console.log(this.state.user);
   }
 
   onLogoutClick(e) {
@@ -49,19 +54,16 @@ class App extends Component {
   }
 
   setUser(user) {
-    console.log("setting user to", user);
-    localStorage.setItem('userLoggedIn', true)
-    this.setState({ 
-      user,
+    localStorage.setItem('userLoggedIn', true);
+    localStorage.setItem('userInfo',JSON.stringify(user));
+    this.setState({
+      user: user,
       userLoggedIn: true
     });
-    console.log("localStorage.userLoggedIn", localStorage.userLoggedIn);
-    console.log("this.state.user in setUser>>>>>", this.state.user);
-
   }
 
   isOrganizer(userType) {
-    if (userType === "org") {
+    if (userType === "org"|| userType==="organizer")  {
       this.setState({
         isOrganizer: true
       })
@@ -76,8 +78,6 @@ class App extends Component {
   const postEventLink = <a href='/events'>Looking for volunteers</a>
   const registerLink = <a href='/register'>Register</a>
 
-// NOTE FOR MAY 11th (by Natalie) -- would like to show username on login, but carrot acces due to different namings when user is organizer versus user is volunteer
-// ALSO I'm assuming, setUser doesnt get passed into Events and UserProfile!
   return (
     <div>
       <div className="navBar">
@@ -87,15 +87,15 @@ class App extends Component {
           {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
           {this.state.userLoggedIn ? ' ' : ' | '}
           {this.state.userLoggedIn ? '' : registerLink}
-          {this.state.isOrganizer ? '| ' : ''}
-          {this.state.isOrganizer ? postEventLink : ''}
+          {this.state.userLoggedIn && this.state.isOrganizer ? '| ' : ''}
+          {this.state.userLoggedIn && this.state.isOrganizer ? postEventLink : ''}
         </p>
       </div>
       <br></br>
-      <Route exact path='/' component={MapApp}/>
+      <Route exact path='/' component={MapApp} passedUser={this.state.user}/>
       <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> } />
       <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> }/>
-      <Route exact path='/events' component={Events}/> 
+      <Route exact path='/events' component={Events}/>
       <Route path='/user/:id' component={Userprofile}/>
     </div>
    );
