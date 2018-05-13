@@ -61,8 +61,10 @@ class App extends Component {
     });
   }
 
-  isOrganizer(userType) {
-    if (userType === "organizer") {
+  isOrganizer() {
+    var userLoggedIn = JSON.parse(localStorage.getItem("userInfo"));
+    console.log("AAAAAAAAAAAAAAAAA", userLoggedIn)
+    if (userLoggedIn.vol_org === "organizer") {
       return true
     } else {
       return false
@@ -88,8 +90,8 @@ class App extends Component {
       </div>
       <br></br>
       <Route exact path='/' component={MapApp} passedUser={this.state.user}/>
-      <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> } />
-      <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> }/>
+      <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
+      <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser}/> }/>
       <Route exact path='/events' component={Events}/>
       <Route path='/user/:id' component={Userprofile}/>
     </div>
