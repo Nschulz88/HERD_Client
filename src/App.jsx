@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("LOCAL STORAGE IS_________", localStorage);
+    // console.log("LOCAL STORAGE IS_________", localStorage);
     var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
     var userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
@@ -34,7 +34,7 @@ class App extends Component {
       userLoggedIn: userLoggedIn, 
       user: JSON.parse(userInfo)         
     });
-    console.log(this.state.user);
+    // console.log(this.state.user);
   }
 
   onLogoutClick(e) {
@@ -63,8 +63,8 @@ class App extends Component {
 
   isOrganizer() {
     var userLoggedIn = JSON.parse(localStorage.getItem("userInfo"));
-    console.log("AAAAAAAAAAAAAAAAA", userLoggedIn)
-    if (userLoggedIn.vol_org === "organizer") {
+    // console.log("AAAAAAAAAAAAAAAAA", userLoggedIn)
+    if (userLoggedIn.vol_org === "organizer" || userLoggedIn.organization_name ) {  // N: this is hacky, but has to stay this way so nav bar displays correct after registration !!!
       return true
     } else {
       return false
@@ -86,6 +86,8 @@ class App extends Component {
           {this.state.userLoggedIn ? '' : registerLink}
           {this.state.userLoggedIn && this.isOrganizer() ? '| ' : ''}
           {this.state.userLoggedIn && this.isOrganizer() ? postEventLink : ''}
+          <br></br>
+          {this.state.user && this.isOrganizer() === false ? <span><a href={'/user/' + this.state.user.id}>My Profile</a></span> : ''}
         </p>
       </div>
       <br></br>

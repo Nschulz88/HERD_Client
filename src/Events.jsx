@@ -3,7 +3,7 @@ import { Button, FormGroup, FormControl, DropdownButton, MenuItem } from "react-
 import "./Login_Register.css";
 import axios from 'axios';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react'
+import { GoogleApiWrapper } from 'google-maps-react'
 import TimePicker from 'react-bootstrap-datetimepicker';
 
 import apiKey from "./apiKeys.json"

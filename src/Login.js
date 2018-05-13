@@ -28,10 +28,12 @@ class Login extends Component {
     }).then(result => {
       console.log('request complete', result.data.user);
       localStorage.setItem('userLoggedIn', true);
-
       this.props.setUser(result.data.user);
-    });
-    this.props.history.push("/");
+      this.props.history.push("/");
+    }).catch(error => {
+      console.log(error.response);
+      alert("Ooops... invalid username or password, please try again.")
+    })
   }
 
   handleChange(e) {
