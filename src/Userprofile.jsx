@@ -6,6 +6,9 @@ import 'react-images-uploader/font.css';
 import './profileStyles.css';
 import './Userprofile.css';
 import { Button } from "react-bootstrap";
+import Dropzone from 'react-dropzone';
+import upload from 'superagent';
+
 
 // Check out node client library
 // <img className="pic" src="https://image.ibb.co/m1Bq8n/Sam.png"/>
@@ -35,6 +38,19 @@ componentDidMount() {
   })
 }
 
+onDrop(files){
+  console.log(files);
+  upload.post('/api/upload')
+  .attach('profilepic', files[0])
+  .end((err, res) => {
+    if (err) console.log("Jellybeans", err);
+    else {
+      console.log("so uploaded fam.")
+      alert('File uploaded!');
+    }
+  })
+}
+
 
   render() {
 
@@ -48,17 +64,12 @@ componentDidMount() {
 
     return (
       <div className='userprofile-body'>
+      <Dropzone onDrop={this.onDrop}>
+        <div>
+          Try dropping a file here;
+        </div>
+      </Dropzone>
 
-      <ImagesUploader
-            url="http://localhost:3001/notmultiple"
-            optimisticPreviews
-            multiple={false}
-            onLoadEnd={(err) => {
-                if (err) {
-                    console.error(err);
-                }
-            }}
-            />
     <div className="box"></div>
       <br></br>
       <h1 className="profile">{this.state.volunteers[0].vol_name}</h1><h1 className="detail"> (Volunteer)</h1>

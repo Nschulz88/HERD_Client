@@ -28,7 +28,9 @@ class Login extends Component {
     }).then(result => {
       console.log('request complete', result.data.user);
       localStorage.setItem('userLoggedIn', true);
+
       this.props.setUser(result.data.user);
+      this.props.isOrganizer(this.state.vol_org);
     });
     this.props.history.push("/");
   }
