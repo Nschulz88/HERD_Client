@@ -23,18 +23,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(localStorage)
+    console.log("LOCAL STORAGE IS_________", localStorage);
     var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
     var userInfo = localStorage.getItem("userInfo");
-    if(userInfo){
-      this.isOrganizer(JSON.parse(userInfo).vol_org)
+    if (userInfo) {
+    this.isOrganizer(JSON.parse(userInfo).vol_org)
     }
-    //console.log("ROHIT DHAND",JSON.parse(userInfo));
-
-
+   
     this.setState({
-      userLoggedIn:userLoggedIn,
-      user: JSON.parse(userInfo)
+      userLoggedIn: userLoggedIn, 
+      user: JSON.parse(userInfo)         
     });
     console.log(this.state.user);
   }
@@ -55,22 +53,18 @@ class App extends Component {
 
   setUser(user) {
     localStorage.setItem('userLoggedIn', true);
-    localStorage.setItem('userInfo',JSON.stringify(user));
-    this.setState({
+    localStorage.setItem('userInfo', JSON.stringify(user));
+    this.setState({ 
       user: user,
       userLoggedIn: true
     });
   }
 
   isOrganizer(userType) {
-    if (userType === "org"|| userType==="organizer")  {
-      this.setState({
-        isOrganizer: true
-      })
+    if (userType === "organizer") {
+      return true
     } else {
-      this.setState({
-        isOrganizer: false
-      })
+      return false
     }
   }
 
@@ -87,12 +81,12 @@ class App extends Component {
           {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
           {this.state.userLoggedIn ? ' ' : ' | '}
           {this.state.userLoggedIn ? '' : registerLink}
-          {this.state.userLoggedIn && this.state.isOrganizer ? '| ' : ''}
-          {this.state.userLoggedIn && this.state.isOrganizer ? postEventLink : ''}
+          {this.state.userLoggedIn && this.isOrganizer() ? '| ' : ''}
+          {this.state.userLoggedIn && this.isOrganizer() ? postEventLink : ''}
         </p>
       </div>
       <br></br>
-      <Route exact path='/' component={MapApp} passedUser={this.state.user}/>
+      <Route exact path='/' component={MapApp}/>
       <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> } />
       <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser} isOrganizer={this.isOrganizer}/> }/>
       <Route exact path='/events' component={Events}/>
