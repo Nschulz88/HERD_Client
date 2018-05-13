@@ -58,7 +58,6 @@ class Register extends Component {
             console.log('positive registration of volunteer - response from server', data.user);
             localStorage.setItem('userLoggedIn', true);
             this.props.setUser(data.user);
-            // this.props.isOrganizer("vol");
         });
       }
     this.props.history.push("/");
