@@ -231,16 +231,6 @@ export default class MapContainer extends Component {
 
       var activeInfoWindow;
       for (let event of this.state.events) {
-        // console.log('LOOKING FOR THIS')
-        // console.log(event)
-        // console.log(event.event_size)
-        // var event_cap = Number(event.event_size)
-        // var spots_left = 0
-        let marker
-        // console.log('EVENT CAP pre axios')
-        // console.log(event_cap)
-
-        //function getRsvps(event_id){
           axios.get(`/api/rsvps/${event.id}`)
             .then(res => {
               var event_cap = Number(event.event_size)
@@ -283,6 +273,7 @@ export default class MapContainer extends Component {
               marker.addListener('mouseover', () => {
                 this.toggleInfoWindow(event.id)
                 console.log("On moseover we this.state.spec_event G??", event)
+                console.log(this.state.spec_event)
                 const contentString = '<div id="infoWindowContent">'+
                   '<h5>' + event.event_description +'</h5>'+
                   '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
@@ -290,10 +281,8 @@ export default class MapContainer extends Component {
                   '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
                   '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
                   '</div>';
-                console.log(contentString)
                 infowindow.setContent(contentString)
                 infowindow.open(this.map, marker)
-                console.log(infowindow)
               });
 
               marker.addListener('click', () =>{
