@@ -17,11 +17,11 @@ export default class MapContainer extends Component {
       spec_event: undefined,
       loggedInAttendee: false,
     };
-    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.toggleSideBox = this.toggleSideBox.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
+    this.loadMap = this.loadMap.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -31,10 +31,6 @@ export default class MapContainer extends Component {
       showingInfoWindow: true
     });
   }
-
-  forceUpdateHandler(){
-      this.forceUpdate();
-  };
 
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -293,8 +289,6 @@ export default class MapContainer extends Component {
               });
                   })
               }
-        //getRsvps(event.id)
-      //}
     }
   }
 
@@ -306,7 +300,7 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } />}
+        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } signUpAction={ this.signUpAction } loadMap={ this.loadMap }/>}
       </div>
     )
   }
@@ -316,7 +310,8 @@ class Sidebox extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      signedup : true
+      signedup : true,
+      loggedInAttendee: false
     }
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
@@ -330,9 +325,6 @@ class Sidebox extends Component {
     if(this.props.thisEvent[0] !== null){
       event_id = this.props.thisEvent[0].id
     }
-    console.log('these is onSignUp props')
-    console.log(this.props.thisEvent[0])
-    console.log(event_id)
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
@@ -340,6 +332,8 @@ class Sidebox extends Component {
         event_id : event_id
       },
       withCredentials: true,
+    }).then( res =>{
+      this.props.loadMap()
     })
     let resultsArray = this.props.thisEvent;
     let loggedInAttendee = false;
@@ -349,9 +343,6 @@ class Sidebox extends Component {
       }
     })
     this.setState({ loggedInAttendee: true })
-    console.log('DOES THE INFO DIFFER???')
-    console.log(this.props)
-    console.log(this.state)
   }
 
   getTime(){
@@ -384,9 +375,6 @@ class Sidebox extends Component {
   cancel(){
     let event_id = this.props.thisEvent[0].event_id
     let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
-    console.log('these is cancel props')
-    console.log(this.props)
-    console.log(vol_id)
     axios({
       method: 'delete',
       url: `/api/events/${event_id}/cancel`,
@@ -394,8 +382,11 @@ class Sidebox extends Component {
         vol_id : vol_id
       },
       withCredentials: true,
+    }).then( res =>{
+      this.props.loadMap()
     })
-    this.setState({ signedup: false })
+    this.setState({ loggedInAttendee: false })
+    //this.props.loadMap()
   }
 
   render() {
@@ -412,7 +403,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            { this.showSignUp() ? (this.attendee() ? signUpButton : cancelButton): ''}
+            { this.showSignUp() ? (this.attendee() && this.state.loggedInAttendee === false ? signUpButton : cancelButton): ''}
           </div>
         </div>
       )
