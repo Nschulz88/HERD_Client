@@ -4,7 +4,6 @@ import axios from 'axios';
 import 'react-images-uploader/font.css';
 import './profileStyles.css';
 import './Userprofile.css';
-import { Button } from "react-bootstrap";
 import Dropzone from 'react-dropzone';
 import upload from 'superagent';
 
@@ -19,6 +18,8 @@ class Userprofile extends Component  {
     this.state = {
       volunteers: [],
     };
+
+    this.defineVolunteerStatus = this.defineVolunteerStatus.bind(this);
   }
 
 
@@ -43,9 +44,7 @@ componentDidMount() {
 }
 
 onDrop(files){
-
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
-
   console.log(files);
   upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
@@ -57,15 +56,24 @@ onDrop(files){
     }
   })
   console.log("How about this?")
+}
 
-
-
+defineVolunteerStatus(hours) {
+  if (hours > 0 && hours < 20) {
+    return "bronze"
+  } if (hours > 19 && hours < 40) {
+    return "silver"
+  } if (hours > 39 && hours < 60) {
+    return "gold"
+  } if (hours > 59) {
+    return "graduated"
+  } else {
+    return "new"
+  }
 }
 
 
   render() {
-
-
     if(!this.state.volunteers.length){
       return(
         <div>
@@ -73,8 +81,8 @@ onDrop(files){
         </div>
       )}
 
-    return (
-      <div className='userprofile-body'>
+return (
+    <div className='userprofile-body'>
 
       <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
         <div>
@@ -91,6 +99,15 @@ onDrop(files){
         <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><a href="/edit">Edit</a><br></br>
         <p className="userDetails">Member since:</p><p className="detail"> DD/MM/YY</p><br></br>
         <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
+
+        <p className="userDetails">Volunteer Status:</p>
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "new" ? <img className="badge-image" src={require("./new_label.png")} alt="new-member-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "bronze" ? <img className="badge-image" src={require("./bronze_medal.png")} alt="bronze-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "silver" ? <img className="badge-image" src={require("./silver_medal.png")} alt="silver-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "graduated" ? <img className="badge-image" src={require("./new_label.png")} alt="graduated-status-icon"></img> : ''}
+        <br></br>
+
         <p className="summary">Summary:</p><p className="detail">An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p><a href="/edit">Edit</a>
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
