@@ -253,7 +253,6 @@ export default class MapContainer extends Component {
                 position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
                 map: map,
                 title: event.event_description, // the title of the marker is set to the name of the location
-                animation: google.maps.Animation.DROP,
                 icon: icon,
                 label: {
                   text: spots_left,
