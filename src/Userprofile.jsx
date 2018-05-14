@@ -45,17 +45,17 @@ componentDidMount() {
 
 onDrop(files){
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
-  console.log(files);
+  console.log("THESE ARE FILES:",files);
   upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
   .end((err, res) => {
     if (err) console.log("Jellybeans", err);
     else {
-      console.log("so uploaded fam.")
+      console.log("so uploaded fam.", res)
+      this.setState({ refresh: true })
       alert('File uploaded!');
     }
   })
-  console.log("How about this?")
 }
 
 defineVolunteerStatus(hours) {
@@ -77,20 +77,15 @@ defineVolunteerStatus(hours) {
     if(!this.state.volunteers.length){
       return(
         <div>
-          Loading...
+          You need to be logged in to view your profile.
         </div>
       )}
 
 return (
     <div className='userprofile-body'>
-
-      <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
-        <div>
-          Upload profile pic!
-        </div>
-      </Dropzone>
-
-      <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img>
+        <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
+          {this.state.volunteers[0].pic_url != undefined ? <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
+        </Dropzone>
       <br></br>
       <h1 className="profile">{this.state.volunteers[0].name}</h1><h1 className="detail"> (Volunteer)</h1>
       <ul>
@@ -107,8 +102,6 @@ return (
         {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
         {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "graduated" ? <img className="badge-image" src={require("./new_label.png")} alt="graduated-status-icon"></img> : ''}
         <br></br>
-
-        <p className="summary">Summary:</p><p className="detail">An incredibly hardworking, studious and technically astute individual. I thrive at every activity with no exceptions.</p><a href="/edit">Edit</a>
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
     <div className="circleClass">
