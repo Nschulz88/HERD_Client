@@ -86,6 +86,8 @@ class App extends Component {
           {this.state.userLoggedIn ? '' : registerLink}
           {this.state.userLoggedIn && this.isOrganizer() ? '| ' : ''}
           {this.state.userLoggedIn && this.isOrganizer() ? postEventLink : ''}
+          <br></br>
+          {this.state.user && this.isOrganizer() === false ? <span><a href={'/user/' + this.state.user.id}>My Profile</a></span> : ''}
         </p>
       </div>
       <br></br>
