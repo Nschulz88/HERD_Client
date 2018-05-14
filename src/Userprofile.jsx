@@ -26,6 +26,7 @@ componentDidMount() {
   console.log("LOLSWOTSDGSLDGSKDGNK");
   console.log(localStorage);
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
+  console.log("parsed local storage",parsedlocalstorage)
 
   if(parsedlocalstorage){
     axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
@@ -33,7 +34,7 @@ componentDidMount() {
       const volunteers = res.data;
       console.log("theawesome",volunteers);
       this.setState({ volunteers: volunteers });
-      console.log(this.state.volunteers[0].name)
+      console.log(this.state.volunteers[0].pic_url)
     })
     .catch(err =>{
       throw err;
@@ -43,8 +44,10 @@ componentDidMount() {
 
 onDrop(files){
 
+  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
+
   console.log(files);
-  upload.post('/api/upload')
+  upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
   .end((err, res) => {
     if (err) console.log("Jellybeans", err);
@@ -73,12 +76,13 @@ onDrop(files){
     return (
       <div className='userprofile-body'>
 
-      <Dropzone onDrop={this.onDrop}>
+      <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
         <div>
-          Try dropping a file here;
+          Upload profile pic!
         </div>
       </Dropzone>
 
+      <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img>
       <br></br>
       <h1 className="profile">{this.state.volunteers[0].name}</h1><h1 className="detail"> (Volunteer)</h1>
       <ul>
