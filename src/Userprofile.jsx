@@ -65,7 +65,6 @@ onDrop(files){
 
   render() {
 
-
     if(!this.state.volunteers.length){
       return(
         <div>
@@ -75,7 +74,6 @@ onDrop(files){
 
     return (
       <div className='userprofile-body'>
-
       <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
         <div>
           Upload profile pic!
