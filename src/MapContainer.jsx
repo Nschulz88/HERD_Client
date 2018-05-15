@@ -17,11 +17,11 @@ export default class MapContainer extends Component {
       spec_event: undefined,
       loggedInAttendee: false,
     };
-    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.toggleSideBox = this.toggleSideBox.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
+    this.loadMap = this.loadMap.bind(this);
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -31,10 +31,6 @@ export default class MapContainer extends Component {
       showingInfoWindow: true
     });
   }
-
-  forceUpdateHandler(){
-      this.forceUpdate();
-  };
 
   onMapClick = (props) => {
     if (this.state.showingInfoWindow) {
@@ -233,13 +229,16 @@ export default class MapContainer extends Component {
       for (let event of this.state.events) {
           axios.get(`/api/rsvps/${event.id}`)
             .then(res => {
+              console.log('rsvps axios call -----------------')
+              console.log(res)
               var event_cap = Number(event.event_size)
-              var spots_left = 0
+              var signedup = Number(res.data.length)
               console.log('this is event cap after axios')
               console.log(event_cap)
-              spots_left = (event_cap - Number(res.data.length))
+              console.log(signedup)
+              signedup = (event_cap - signedup)
               let pinURL = ''
-              if (spots_left > 0){
+              if (signedup > 0){
                 pinURL += 'small_pointer'
               } else {
                 pinURL += 'red_small_pointer'
@@ -251,16 +250,15 @@ export default class MapContainer extends Component {
                 labelOrigin: new google.maps.Point(17,23)
               };
 
-              spots_left = spots_left.toString()
+              signedup = signedup.toString()
 
               const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
                 position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
                 map: map,
                 title: event.event_description, // the title of the marker is set to the name of the location
-                animation: google.maps.Animation.DROP,
                 icon: icon,
                 label: {
-                  text: spots_left,
+                  text: signedup,
                   color: 'white',
                   fontSize: "15px",
                 },
@@ -293,8 +291,6 @@ export default class MapContainer extends Component {
               });
                   })
               }
-        //getRsvps(event.id)
-      //}
     }
   }
 
@@ -306,7 +302,7 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } />}
+        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } signUpAction={ this.signUpAction } loadMap={ this.loadMap }/>}
       </div>
     )
   }
@@ -316,7 +312,8 @@ class Sidebox extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      signedup : true
+      signedup : true,
+      loggedInAttendee: false
     }
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
@@ -327,12 +324,9 @@ class Sidebox extends Component {
 
   onSignUp(){
     let event_id = this.props.thisEvent[0].event_id
-    if(this.props.thisEvent[0] !== null){
+    if(event_id === undefined){
       event_id = this.props.thisEvent[0].id
     }
-    console.log('these is onSignUp props')
-    console.log(this.props.thisEvent[0])
-    console.log(event_id)
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
@@ -340,18 +334,17 @@ class Sidebox extends Component {
         event_id : event_id
       },
       withCredentials: true,
+    }).then( res =>{
+      this.props.loadMap()
     })
-    let resultsArray = this.props.thisEvent;
-    let loggedInAttendee = false;
-    resultsArray.forEach((e) =>{
-      if(e.vol_id === this.props.thisEvent[(this.props.thisEvent - 1)]){
-        loggedInAttendee = true
-      }
-    })
+    // let resultsArray = this.props.thisEvent;
+    // let loggedInAttendee = false;
+    // resultsArray.forEach((e) =>{
+    //   if(e.vol_id === this.props.thisEvent[(this.props.thisEvent - 1)]){
+    //     loggedInAttendee = true
+    //   }
+    // })
     this.setState({ loggedInAttendee: true })
-    console.log('DOES THE INFO DIFFER???')
-    console.log(this.props)
-    console.log(this.state)
   }
 
   getTime(){
@@ -383,10 +376,17 @@ class Sidebox extends Component {
 
   cancel(){
     let event_id = this.props.thisEvent[0].event_id
+    if(event_id === undefined){
+      event_id = this.props.thisEvent[0].id
+    }
     let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
-    console.log('these is cancel props')
-    console.log(this.props)
+    console.log('CANCEL event_id')
+    console.log(event_id)
+    console.log('CANCEL vol_id')
     console.log(vol_id)
+    console.log('CANCEL [0] and not array in that order')
+    console.log(this.props.thisEvent[0])
+    console.log(this.props.thisEvent)
     axios({
       method: 'delete',
       url: `/api/events/${event_id}/cancel`,
@@ -394,8 +394,11 @@ class Sidebox extends Component {
         vol_id : vol_id
       },
       withCredentials: true,
+    }).then( res =>{
+      this.props.loadMap()
     })
-    this.setState({ signedup: false })
+    this.setState({ loggedInAttendee: false })
+    //this.props.loadMap()
   }
 
   render() {
@@ -412,7 +415,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            { this.showSignUp() ? (this.attendee() ? signUpButton : cancelButton): ''}
+            { this.showSignUp() ? (this.attendee() && this.state.loggedInAttendee === false ? signUpButton : cancelButton): ''}
           </div>
         </div>
       )
