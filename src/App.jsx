@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { Navbar, Nav, NavItem, MenuItem, NavDropdown, Image } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 import axios from 'axios';
 
@@ -72,25 +74,27 @@ class App extends Component {
   }
 
  render() {
-  const postEventLink = <a href='/events'>Looking for volunteers</a>
-  const registerLink = <a href='/register'>Register</a>
 
   return (
     <div>
-      <div className="navBar">
-        <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
-        <p className="titles">
-          {this.state.user && this.state.userLoggedIn ? <span>Hey, {this.state.user.name } good to see you! </span> : '' }
-          {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
-          {this.state.userLoggedIn ? ' ' : ' | '}
-          {this.state.userLoggedIn ? '' : registerLink}
-          {this.state.userLoggedIn && this.isOrganizer() ? '| ' : ''}
-          {this.state.userLoggedIn && this.isOrganizer() ? postEventLink : ''}
-          <br></br>
-          {this.state.user && this.isOrganizer() === false ? <span><a href={'/user/' + this.state.user.id}>My Profile</a></span> : ''}
-        </p>
-      </div>
-      <br></br>
+      <Navbar>
+        <Navbar.Header>
+          <Navbar.Brand>
+          <a href="/"><Image responsive className='navbar-logo' src="https://i.imgur.com/PHCgaoD.png" alt="herd-logo"/></a>
+          </Navbar.Brand>
+          <Navbar.Toggle/>
+          {this.state.user && this.state.userLoggedIn ? <div>Hey, {this.state.user.name } good to see you!</div> : '' }
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav>
+            {this.state.user && this.isOrganizer() === false ? <LinkContainer to={'/user/' + this.state.user.id}><NavItem>My Profile</NavItem></LinkContainer> : ''}
+            {this.state.userLoggedIn ? '' : <LinkContainer to='/register/'><NavItem>Register</NavItem></LinkContainer>}
+            {this.state.userLoggedIn && this.isOrganizer() ? <LinkContainer to='/events/'><NavItem>Looking for volunteers</NavItem></LinkContainer> : ''}
+            {this.state.userLoggedIn ? <LinkContainer to='/' onClick={this.onLogoutClick}><NavItem>Logout</NavItem></LinkContainer> : <LinkContainer to='/login/'><NavItem>Login</NavItem></LinkContainer>}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+
       <Route exact path='/' component={MapApp} passedUser={this.state.user}/>
       <Route path='/login' render={(props) => <Login {...props} setUser={this.setUser}/> } />
       <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser}/> }/>
@@ -101,4 +105,4 @@ class App extends Component {
  }
 }
 
-export default App;
+export default App
