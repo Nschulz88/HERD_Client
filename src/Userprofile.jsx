@@ -86,7 +86,7 @@ defineVolunteerStatus(hours) {
         let eventDetails = [];
         let volunteers = this.state.volunteers;
         if(this.state.volunteers[0].hours === 0){
-          eventDetails.push(<p className="heading">Sign up for some events!</p>)
+          eventDetails.push(<p className="profile">Sign up for some events!</p>)
         } else {
           for (let item in volunteers) {
             let count = (parseInt(item)+1);
@@ -108,11 +108,11 @@ return (
           {this.state.volunteers[0].pic_url != undefined ? <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
         </Dropzone>
       <br></br>
-      <h1 className="profile">{this.state.volunteers[0].name}</h1><h1 className="detail"> (Volunteer)</h1>
+      <h1 className="profile">{this.state.volunteers[0].name}</h1>
       <ul>
         <br></br><br></br>
         <p className="userDetails">Email: </p><p className="detail">{this.state.volunteers[0].email}</p><br></br>
-        <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><a href="/edit">Edit</a><br></br>
+        <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><br></br>
         <p className="userDetails">Member since:</p><p className="detail"> DD/MM/YY</p><br></br>
         <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
 
@@ -123,7 +123,7 @@ return (
         {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
         {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "graduated" ? <img className="badge-image" src={require("./new_label.png")} alt="graduated-status-icon"></img> : ''}
         <br></br>
-        <h1 className="skills">Volunteering Distribution</h1>
+        <h1 className="skills">Distribution</h1>
     </ul>
     <div className="circleClass">
     <CircularProgressbar className="CircularProgressbar1" percentage={33.3} initialAnimation/>
