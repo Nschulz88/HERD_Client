@@ -29,10 +29,10 @@ class App extends Component {
     if (userInfo) {
     this.isOrganizer(JSON.parse(userInfo).vol_org)
     }
-   
+
     this.setState({
-      userLoggedIn: userLoggedIn, 
-      user: JSON.parse(userInfo)         
+      userLoggedIn: userLoggedIn,
+      user: JSON.parse(userInfo)
     });
     // console.log(this.state.user);
   }
@@ -55,7 +55,7 @@ class App extends Component {
   setUser(user) {
     localStorage.setItem('userLoggedIn', true);
     localStorage.setItem('userInfo', JSON.stringify(user));
-    this.setState({ 
+    this.setState({
       user: user,
       userLoggedIn: true
     });
