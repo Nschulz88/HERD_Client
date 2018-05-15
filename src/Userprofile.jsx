@@ -33,7 +33,6 @@ componentDidMount() {
       console.log("res.data",volunteers);
       this.setState({ volunteers: volunteers });
       console.log(this.state.volunteers);
-      console.log(this.state.volunteers[0].pic_url);
 
     })
     .catch(err =>{

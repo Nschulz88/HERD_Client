@@ -65,7 +65,6 @@ class App extends Component {
 
   isOrganizer() {
     var userLoggedIn = JSON.parse(localStorage.getItem("userInfo"));
-    // console.log("AAAAAAAAAAAAAAAAA", userLoggedIn)
     if (userLoggedIn.vol_org === "organizer" || userLoggedIn.organization_name ) {  // N: this is hacky, but has to stay this way so nav bar displays correct after registration !!!
       return true
     } else {
