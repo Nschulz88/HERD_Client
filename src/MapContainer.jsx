@@ -95,6 +95,7 @@ export default class MapContainer extends Component {
   }
 
   loadMap() {
+    console.log('load map function ran')
     if (this.props && this.props.google) { // checks to make sure that props have been passed
       console.log("I am logging this.props in the loadMap():", this.props)
       const {google} = this.props; // sets props equal to google
@@ -229,12 +230,12 @@ export default class MapContainer extends Component {
       for (let event of this.state.events) {
           axios.get(`/api/rsvps/${event.id}`)
             .then(res => {
-              console.log('rsvps axios call -----------------')
-              console.log(res)
               var event_cap = Number(event.event_size)
               var signedup = Number(res.data.length)
-              console.log('this is event cap after axios')
+              console.log('rsvpsrsvpsrsvpsrsvpsrsvpsrsvpsrsvpsrsvpsrsvps')
+              console.log('event_cap ')
               console.log(event_cap)
+              console.log('signedup ')
               console.log(signedup)
               signedup = (event_cap - signedup)
               let pinURL = ''
@@ -330,22 +331,55 @@ class Sidebox extends Component {
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
-      data: {
-        event_id : event_id
-      },
+      // data: {
+      //   event_id : event_id
+      // },
+      withCredentials: true,
+    }).then( res => {
+      this.props.loadMap()
+    })
+    this.setState({ loggedInAttendee: true })
+    //this.props.loadMap()
+  }
+
+  cancel(){
+    let event_id = this.props.thisEvent[0].event_id
+    if(event_id === undefined){
+      event_id = this.props.thisEvent[0].id
+    }
+    axios({
+      method: 'delete',
+      url: `/api/events/${event_id}/cancel`,
+      // data: {
+      //   event_id : event_id
+      // },
       withCredentials: true,
     }).then( res =>{
       this.props.loadMap()
     })
-    // let resultsArray = this.props.thisEvent;
-    // let loggedInAttendee = false;
-    // resultsArray.forEach((e) =>{
-    //   if(e.vol_id === this.props.thisEvent[(this.props.thisEvent - 1)]){
-    //     loggedInAttendee = true
-    //   }
-    // })
-    this.setState({ loggedInAttendee: true })
+    this.setState({ loggedInAttendee: false })
+    //this.props.loadMap()
   }
+
+  // THIS IS WHAT WE HAD WORKING
+  // cancel(){
+  //   let event_id = this.props.thisEvent[0].event_id
+  //   if(event_id === undefined){
+  //     event_id = this.props.thisEvent[0].id
+  //   }
+  //   let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
+  //   axios({
+  //     method: 'delete',
+  //     url: `/api/events/${event_id}/cancel`,
+  //     data: {
+  //       vol_id : vol_id
+  //     },
+  //     withCredentials: true,
+  //   }).then( res =>{
+  //     this.props.loadMap()
+  //   })
+  //   this.setState({ loggedInAttendee: false })
+  // }
 
   getTime(){
     let timeString = (this.props.thisEvent[0].event_time).slice(0,-3)
@@ -374,33 +408,6 @@ class Sidebox extends Component {
     }
   }
 
-  cancel(){
-    let event_id = this.props.thisEvent[0].event_id
-    if(event_id === undefined){
-      event_id = this.props.thisEvent[0].id
-    }
-    let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
-    console.log('CANCEL event_id')
-    console.log(event_id)
-    console.log('CANCEL vol_id')
-    console.log(vol_id)
-    console.log('CANCEL [0] and not array in that order')
-    console.log(this.props.thisEvent[0])
-    console.log(this.props.thisEvent)
-    axios({
-      method: 'delete',
-      url: `/api/events/${event_id}/cancel`,
-      data: {
-        vol_id : vol_id
-      },
-      withCredentials: true,
-    }).then( res =>{
-      this.props.loadMap()
-    })
-    this.setState({ loggedInAttendee: false })
-    //this.props.loadMap()
-  }
-
   render() {
     const signUpButton = <Button onClick={this.onSignUp}>Sign Up</Button>
     const cancelButton = <Button onClick={this.cancel}>Cancel</Button>
@@ -415,7 +422,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            { this.showSignUp() ? (this.attendee() && this.state.loggedInAttendee === false ? signUpButton : cancelButton): ''}
+            { this.showSignUp() ? ( this.state.loggedInAttendee === false ? signUpButton : cancelButton): ''}
           </div>
         </div>
       )
