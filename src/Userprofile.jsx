@@ -8,10 +8,6 @@ import { Button } from "react-bootstrap";
 import Dropzone from 'react-dropzone';
 import upload from 'superagent';
 
-
-// Check out node client library
-// <img className="pic" src="https://image.ibb.co/m1Bq8n/Sam.png"/>
-
 class Userprofile extends Component  {
   constructor(props) {
     super(props);
@@ -23,8 +19,7 @@ class Userprofile extends Component  {
 
 
 componentDidMount() {
-  console.log("LOLSWOTSDGSLDGSKDGNK");
-  console.log(localStorage);
+  console.log("this is local storage",localStorage);
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
   console.log("parsed local storage",parsedlocalstorage)
 
@@ -32,9 +27,11 @@ componentDidMount() {
     axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
     }).then(res => {
       const volunteers = res.data;
-      console.log("theawesome",volunteers);
+      console.log("res.data",volunteers);
       this.setState({ volunteers: volunteers });
-      console.log(this.state.volunteers[0].pic_url)
+      console.log(this.state.volunteers);
+      console.log(this.state.volunteers[0].pic_url);
+
     })
     .catch(err =>{
       throw err;
@@ -46,7 +43,7 @@ onDrop(files){
 
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
 
-  console.log(files);
+  console.log("these are files",files);
   upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
   .end((err, res) => {
@@ -57,8 +54,6 @@ onDrop(files){
     }
   })
   console.log("How about this?")
-
-
 
 }
 
@@ -71,6 +66,29 @@ onDrop(files){
           Loading...
         </div>
       )}
+
+      else{
+
+        let eventDetails = [];
+        let volunteers = this.state.volunteers;
+
+        for (let item in volunteers) {
+
+          let count = (parseInt(item)+1);
+
+          eventDetails.push(<div>
+          <p className="heading">{[count]}. {this.state.volunteers[item].event_description}</p>
+          <p className="event">Location: </p><p className="event2">{this.state.volunteers[item].location}</p><br></br>
+          <p className="event">Date: </p><p className="event2">{this.state.volunteers[item].event_date}</p><br></br>
+          <p className="event">Start Time: </p><p className="event2">{this.state.volunteers[item].event_time}</p><br></br>
+          <p className="event">Duration: </p><p className="event2">{this.state.volunteers[item].duration} hours</p><br></br>
+          <p className="event">Event Type: </p><p className="event2">{this.state.volunteers[item].event_type}</p><br></br>
+          <br></br><br></br>
+          </div>)
+        }
+
+        console.log("YOOOO",eventDetails)
+
 
     return (
       <div className='userprofile-body'>
@@ -93,17 +111,23 @@ onDrop(files){
         <h1 className="skills">Volunteering Distribution</h1>
     </ul>
     <div className="circleClass">
-    <CircularProgressbar className="CircularProgressbar1" percentage={60} initialAnimation/>
-    <CircularProgressbar className="CircularProgressbar2" percentage={30} initialAnimation/>
-    <CircularProgressbar className="CircularProgressbar3" percentage={10} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar1" percentage={33.3} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar2" percentage={33.3} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar3" percentage={33.3} initialAnimation/>
     </div>
     <div className="textClass">
     <p>Mentorship</p>
     <p>Educational</p>
     <p>Physical</p>
     </div>
+    <br></br>
+    <h1 className="upcoming">Upcoming Events</h1>
+    <br></br>
+
+    <div>{eventDetails}</div>
+
   </div>
-    );
+  )};
   }
 }
 

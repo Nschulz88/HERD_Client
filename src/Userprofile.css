@@ -12,7 +12,7 @@ h1 {
 
 .userprofile-body {
   background-color: #00AAE4;
-  height: 820px;
+  height: 840px;
 }
 
 .summary {
@@ -55,6 +55,36 @@ h1 {
   margin-left: -6px;
   font-size: 20px;
   display: inline;
+  color: #98FB98;
+}
+
+.event {
+  margin-left: 100px;
+  text-align: left;
+  font-size: 20px;
+  color: #98FB98;
+  display: inline;
+}
+
+.event2 {
+  text-align: left;
+  font-size: 12px;
+  color: white;
+  display: inline;
+}
+
+.upcoming {
+  margin-right: 5px;
+  margin-top: 90px;
+  font-size: 30px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.heading {
+  margin-left: 100px;
+  text-align: left;
+  font-size: 30px;
   color: #98FB98;
 }
 
