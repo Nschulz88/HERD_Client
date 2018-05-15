@@ -137,9 +137,8 @@ return (
     </div>
     <br></br>
     <h1 className="upcoming">Upcoming Events</h1>
-    <br></br>
 
-    <div>{eventDetails}</div>
+    <div className="eventStyle"><br></br>{eventDetails}</div>
 
   </div>
   )};
