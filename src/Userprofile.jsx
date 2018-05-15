@@ -32,8 +32,9 @@ componentDidMount() {
       const volunteers = res.data;
       console.log("res.data",volunteers);
       this.setState({ volunteers: volunteers });
-      console.log(this.state.volunteers);
-
+      console.log('------- this.state.volunteers ----------')
+      console.log(this.state.volunteers[0].hours);
+      console.log(typeof this.state.volunteers[0].hours)
     })
     .catch(err =>{
       throw err;
@@ -84,17 +85,21 @@ defineVolunteerStatus(hours) {
       else{
         let eventDetails = [];
         let volunteers = this.state.volunteers;
-        for (let item in volunteers) {
-          let count = (parseInt(item)+1);
-          eventDetails.push(<div>
-          <p className="heading">{[count]}. {this.state.volunteers[item].event_description}</p>
-          <p className="event">Location: </p><p className="event2">{this.state.volunteers[item].location}</p><br></br>
-          <p className="event">Date: </p><p className="event2">{this.state.volunteers[item].event_date}</p><br></br>
-          <p className="event">Start Time: </p><p className="event2">{this.state.volunteers[item].event_time}</p><br></br>
-          <p className="event">Duration: </p><p className="event2">{this.state.volunteers[item].duration} hours</p><br></br>
-          <p className="event">Event Type: </p><p className="event2">{this.state.volunteers[item].event_type}</p><br></br>
-          <br></br><br></br>
-          </div>)
+        if(this.state.volunteers[0].hours === 0){
+          eventDetails.push(<p className="heading">Sign up for some events!</p>)
+        } else {
+          for (let item in volunteers) {
+            let count = (parseInt(item)+1);
+            eventDetails.push(<div>
+            <p className="heading">{[count]}. {this.state.volunteers[item].event_description}</p>
+            <p className="event">Location: </p><p className="event2">{this.state.volunteers[item].location}</p><br></br>
+            <p className="event">Date: </p><p className="event2">{this.state.volunteers[item].event_date}</p><br></br>
+            <p className="event">Start Time: </p><p className="event2">{this.state.volunteers[item].event_time}</p><br></br>
+            <p className="event">Duration: </p><p className="event2">{this.state.volunteers[item].duration} hours</p><br></br>
+            <p className="event">Event Type: </p><p className="event2">{this.state.volunteers[item].event_type}</p><br></br>
+            <br></br><br></br>
+            </div>)
+          }
         }
 
 return (
