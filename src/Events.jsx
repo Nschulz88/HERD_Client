@@ -48,6 +48,7 @@ class CreateEvent extends Component {
         event_type        : this.state.event_type,
       },
       withCredentials: true,
+
     });
     this.props.history.push("/");
   }
@@ -57,12 +58,14 @@ class CreateEvent extends Component {
     var longDate = new Date(Number(e))
     var date = longDate.toString().slice(4,15)
     var time = longDate.toString().slice(16,21)
-    console.log(date)
-    console.log(time)
+    console.log("THIS IS DATE",date)
+    console.log("THIS IS TIME",time)
+
     this.setState({
       event_time: time,
-      event_date: date
+      event_date: date,
     });
+
   }
 
   changeEventType(e) {
@@ -197,7 +200,7 @@ class CreateEvent extends Component {
                   block
                   bsSize="large"
                   type="submit"
-                  disabled={!this.state.event_description}
+                  disabled={!this.state.event_description || !this.state.event_time || !this.state.event_date || !this.state.criteria || !this.state.organization || !this.state.event_size || !this.state.duration || !this.state.address || !this.state.GMaps_API_location || !this.state.event_type}
                 >Create Event
                 </Button>
             </form>
@@ -213,4 +216,3 @@ class CreateEvent extends Component {
 export default GoogleApiWrapper({
   apiKey: apiKey[process.env.NODE_ENV],
 })(CreateEvent)
-
