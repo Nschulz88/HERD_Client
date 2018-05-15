@@ -13,7 +13,10 @@ class Userprofile extends Component  {
 
     this.state = {
       volunteers: [],
-      file:null
+      file:null,
+      bar1: 33.3,
+      bar2: 33.3,
+      bar3: 33.3
     };
 
     this.defineVolunteerStatus = this.defineVolunteerStatus.bind(this);
@@ -22,19 +25,13 @@ class Userprofile extends Component  {
 
 
 componentDidMount() {
-  console.log("this is local storage",localStorage);
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
-  console.log("parsed local storage",parsedlocalstorage)
 
   if(parsedlocalstorage){
     axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
     }).then(res => {
       const volunteers = res.data;
-      console.log("res.data",volunteers);
       this.setState({ volunteers: volunteers });
-      console.log('------- this.state.volunteers ----------')
-      console.log(this.state.volunteers[0].hours);
-      console.log(typeof this.state.volunteers[0].hours)
     })
     .catch(err =>{
       throw err;
@@ -47,8 +44,6 @@ onDrop(files){
   upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
   .then((res) => {
-    console.log('did we get to promise')
-    console.log(files[0])
   })
   .then((not) => {
     this.setState({ file: files[0] })
@@ -56,7 +51,6 @@ onDrop(files){
 }
 
 onChange(files) {
-  console.log('onchange happened on change on change on change')
   this.setState({file:files.target.files[0]})
 }
 
@@ -125,9 +119,9 @@ return (
         <h1 className="skills">Distribution</h1>
     </ul>
     <div className="circleClass">
-    <CircularProgressbar className="CircularProgressbar1" percentage={33.3} initialAnimation/>
-    <CircularProgressbar className="CircularProgressbar2" percentage={33.3} initialAnimation/>
-    <CircularProgressbar className="CircularProgressbar3" percentage={33.3} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar1" percentage={this.state.bar1} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar2" percentage={this.state.bar2} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar3" percentage={this.state.bar3} initialAnimation/>
     </div>
     <div className="textClass">
     <p>Mentorship</p>

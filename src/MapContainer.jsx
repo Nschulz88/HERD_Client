@@ -27,12 +27,9 @@ export default class MapContainer extends Component {
   }
 
   attendee() {
-    console.log('this.attendee ran')
     if (this.state.loggedInAttendee){
-      console.log('returned false')
       return false
     } else {
-      console.log('returned true')
       return true
     }
   }
@@ -67,31 +64,22 @@ export default class MapContainer extends Component {
   }
 
   toggleSideBox = (props) => {
-    console.log('LOCAL STORAGE')
-    console.log(localStorage)
     const { showSideBox } = this.state;
     axios.get(`/api/events/${props}`)
     .then(res => {
-      console.log("this is my TIW res.data", res.data);
-      console.log(localStorage.userInfo)
       let resultsArray = res.data;
       let loggedInAttendee = false;
       let findUserId = JSON.parse(localStorage.getItem('userInfo'))
       resultsArray.forEach((e) =>{
         if(findUserId !== null && e.vol_id === findUserId.id){
-          console.log(e.vol_id)
-          console.log(localStorage.userInfo.id)
           loggedInAttendee = true
         }
       })
-      console.log('ayyyyyyyyyyyy ^^^^^^^^^^^^^')
-      console.log('Value of loggedInAttendee: ' + loggedInAttendee)
       this.setState( {
         spec_event : resultsArray,
         showSideBox: true,
         loggedInAttendee: loggedInAttendee
       });
-      console.log("--------TIWstate??-->", this.state)
     })
     .catch(err =>{
       throw err;
@@ -99,13 +87,10 @@ export default class MapContainer extends Component {
   }
 
   componentWillMount() {
-    console.log("THIS LOooDED!!")
     axios.get(`/api/events`)
     .then(res => {
       const events = res.data;
-      console.log("---------->", events)
       this.setState({ events });
-      console.log("--------state??-->", this.state.events)
     })
     .then(() => {
       this.loadMap()
@@ -116,9 +101,7 @@ export default class MapContainer extends Component {
   }
 
   loadMap() {
-    console.log('load map function ran')
     if (this.props && this.props.google) { // checks to make sure that props have been passed
-      console.log("I am logging this.props in the loadMap():", this.props)
       const {google} = this.props; // sets props equal to google
       const maps = google.maps; // sets maps to google maps props
 
@@ -241,9 +224,7 @@ export default class MapContainer extends Component {
             ]
       })
       let map = this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
-      console.log("CHECK this.state.events", this.state.events)
       this.map.addListener('click', () => {
-        console.log("mapppppitude");
         this.setState( {showSideBox : false});
       });
 
@@ -253,11 +234,6 @@ export default class MapContainer extends Component {
             .then(res => {
               var event_cap = Number(event.event_size)
               var signedup = Number(res.data.length)
-              console.log('rsvpsrsvpsrsvpsrsvpsrsvpsrsvpsrsvpsrsvpsrsvps')
-              console.log('event_cap ')
-              console.log(event_cap)
-              console.log('signedup ')
-              console.log(signedup)
               signedup = (event_cap - signedup)
               let pinURL = ''
               if (signedup > 0){
@@ -265,7 +241,6 @@ export default class MapContainer extends Component {
               } else {
                 pinURL += 'red_small_pointer'
               }
-              console.log('./'+pinURL+'.png')
               var icon = {
                 url: require('./'+pinURL+'.png'), // url
                 scaledSize: new google.maps.Size(35, 60), // scaled size
@@ -292,8 +267,6 @@ export default class MapContainer extends Component {
 
               marker.addListener('mouseover', () => {
                 this.toggleInfoWindow(event.id)
-                console.log("On moseover we this.state.spec_event G??", event)
-                console.log(this.state.spec_event)
                 const contentString = '<div id="infoWindowContent">'+
                   '<h5>' + event.event_description +'</h5>'+
                   '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
