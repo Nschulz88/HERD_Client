@@ -22,6 +22,27 @@ export default class MapContainer extends Component {
     this.toggleSideBox = this.toggleSideBox.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
     this.loadMap = this.loadMap.bind(this);
+    this.attendee = this.attendee.bind(this);
+    this.signUpCancel = this.signUpCancel.bind(this);
+  }
+
+  attendee() {
+    console.log('this.attendee ran')
+    if (this.state.loggedInAttendee){
+      console.log('returned false')
+      return false
+    } else {
+      console.log('returned true')
+      return true
+    }
+  }
+
+  signUpCancel(){
+    if (this.state.loggedInAttendee === false){
+      this.setState({loggedInAttendee: true})
+    } else {
+      this.setState({loggedInAttendee: false})
+    }
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -303,7 +324,7 @@ export default class MapContainer extends Component {
         <div ref="map" className="mapContainer" onClick={ this.onMarkerClick } >
           loading map...
         </div>
-        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } signUpAction={ this.signUpAction } loadMap={ this.loadMap }/>}
+        { <Sidebox forceUpdate={ this.forceUpdate } loggedInAttendee={ this.state.loggedInAttendee } thisEvent={ this.state.spec_event } showSideBox={ this.state.showSideBox } signUpAction={ this.signUpAction } loadMap={ this.loadMap } attendee={ this.attendee } signUpCancel={ this.signUpCancel }/>}
       </div>
     )
   }
@@ -318,7 +339,6 @@ class Sidebox extends Component {
     }
     this.onSignUp = this.onSignUp.bind(this);
     this.getTime = this.getTime.bind(this);
-    this.attendee = this.attendee.bind(this);
     this.showSignUp = this.showSignUp.bind(this);
     this.cancel = this.cancel.bind(this);
   }
@@ -331,15 +351,12 @@ class Sidebox extends Component {
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
-      // data: {
-      //   event_id : event_id
-      // },
       withCredentials: true,
     }).then( res => {
       this.props.loadMap()
     })
     this.setState({ loggedInAttendee: true })
-    //this.props.loadMap()
+    this.props.signUpCancel()
   }
 
   cancel(){
@@ -350,36 +367,13 @@ class Sidebox extends Component {
     axios({
       method: 'delete',
       url: `/api/events/${event_id}/cancel`,
-      // data: {
-      //   event_id : event_id
-      // },
       withCredentials: true,
     }).then( res =>{
       this.props.loadMap()
     })
     this.setState({ loggedInAttendee: false })
-    //this.props.loadMap()
+    this.props.signUpCancel()
   }
-
-  // THIS IS WHAT WE HAD WORKING
-  // cancel(){
-  //   let event_id = this.props.thisEvent[0].event_id
-  //   if(event_id === undefined){
-  //     event_id = this.props.thisEvent[0].id
-  //   }
-  //   let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
-  //   axios({
-  //     method: 'delete',
-  //     url: `/api/events/${event_id}/cancel`,
-  //     data: {
-  //       vol_id : vol_id
-  //     },
-  //     withCredentials: true,
-  //   }).then( res =>{
-  //     this.props.loadMap()
-  //   })
-  //   this.setState({ loggedInAttendee: false })
-  // }
 
   getTime(){
     let timeString = (this.props.thisEvent[0].event_time).slice(0,-3)
@@ -390,16 +384,7 @@ class Sidebox extends Component {
     return timeString
   }
 
-  attendee() {
-    if (this.props.loggedInAttendee){
-      return false
-    } else {
-      return true
-    }
-  }
-
   showSignUp(){
-    let val = this.attendee()
     let parsed = JSON.parse(localStorage.getItem('userInfo'))
     if(parsed && parsed.vol_org === 'volunteer') {
       return true
@@ -422,7 +407,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            { this.showSignUp() ? ( this.state.loggedInAttendee === false ? signUpButton : cancelButton): ''}
+            { this.showSignUp() ? (this.props.attendee() ? signUpButton : cancelButton): ''}
           </div>
         </div>
       )
