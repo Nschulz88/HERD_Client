@@ -13,10 +13,14 @@ body .image:hover {
   background-color: #00BFFF;
 }
 
+.navbar-default .navbar-brand {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
 .navbar-brand img {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+  height: 125%;
+  margin-right: 10px;
 }
 
 .mapContainer {

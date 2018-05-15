@@ -87,7 +87,7 @@ class App extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            {this.state.user && this.isOrganizer() === false ? <LinkContainer to={'/user/' + this.state.user.id}><NavItem>>My Profile</NavItem></LinkContainer> : ''}
+            {this.state.user && this.isOrganizer() === false ? <LinkContainer to={'/user/' + this.state.user.id}><NavItem>My Profile</NavItem></LinkContainer> : ''}
             {this.state.userLoggedIn ? '' : <LinkContainer to='/register/'><NavItem>Register</NavItem></LinkContainer>}
             {this.state.userLoggedIn && this.isOrganizer() ? <LinkContainer to='/events/'><NavItem>Looking for volunteers</NavItem></LinkContainer> : ''}
             {this.state.userLoggedIn ? <LinkContainer to='/' onClick={this.onLogoutClick}><NavItem>Logout</NavItem></LinkContainer> : <LinkContainer to='/login/'><NavItem>Login</NavItem></LinkContainer>}
@@ -105,4 +105,4 @@ class App extends Component {
  }
 }
 
-export default App;
+export default App
