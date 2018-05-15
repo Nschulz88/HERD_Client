@@ -32,25 +32,36 @@ class CreateEvent extends Component {
   }
 
   createEvent(e){
-    axios({
-      method: 'post',
-      url: '/api/events',
-      data: {
-        location          : this.state.address,
-        GMaps_API_location: this.state.GMaps_API_location,
-        organization      : this.state.organization,
-        event_size        : this.state.event_size,
-        event_description : this.state.event_description,
-        criteria          : this.state.criteria,
-        event_date        : this.state.event_date,
-        event_time        : this.state.event_time,
-        duration          : this.state.duration,
-        event_type        : this.state.event_type,
-      },
-      withCredentials: true,
 
-    });
-    this.props.history.push("/");
+    if(!this.state.event_date || !this.state.event_time){
+      e.preventDefault();
+      alert("Please enter a date and time for the event!");
+    }
+    else if(!this.state.event_type){
+      e.preventDefault();
+      alert("Please enter the event type!");
+    }
+    else {
+      axios({
+        method: 'post',
+        url: '/api/events',
+        data: {
+          location          : this.state.address,
+          GMaps_API_location: this.state.GMaps_API_location,
+          organization      : this.state.organization,
+          event_size        : this.state.event_size,
+          event_description : this.state.event_description,
+          criteria          : this.state.criteria,
+          event_date        : this.state.event_date,
+          event_time        : this.state.event_time,
+          duration          : this.state.duration,
+          event_type        : this.state.event_type,
+        },
+        withCredentials: true,
+
+      });
+      this.props.history.push("/");
+    }
   }
 
   handleTimePicker(e){
@@ -200,7 +211,7 @@ class CreateEvent extends Component {
                   block
                   bsSize="large"
                   type="submit"
-                  disabled={!this.state.event_description || !this.state.event_time || !this.state.event_date || !this.state.criteria || !this.state.organization || !this.state.event_size || !this.state.duration || !this.state.address || !this.state.GMaps_API_location || !this.state.event_type}
+                  disabled={!this.state.address || !this.state.event_size || !this.state.organization || !this.state.criteria || !this.state.duration}
                 >Create Event
                 </Button>
             </form>
