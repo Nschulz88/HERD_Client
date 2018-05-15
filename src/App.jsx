@@ -76,10 +76,10 @@ class App extends Component {
   const registerLink = <a href='/register'>Register</a>
 
   return (
-    <div>
-      <div className="navBar">
-        <a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a>
-        <p className="titles">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div className="container">
+        <span><a href = '/'><img className="image" src={"https://i.imgur.com/PHCgaoD.png"} alt=""></img></a></span>
+        <span className="titles">
           {this.state.user && this.state.userLoggedIn ? <span>Hey, {this.state.user.name } good to see you! </span> : '' }
           {this.state.userLoggedIn ? <a href='/' onClick={this.onLogoutClick}>Logout</a> : <a href='/login'>Login</a>}
           {this.state.userLoggedIn ? ' ' : ' | '}
@@ -88,7 +88,7 @@ class App extends Component {
           {this.state.userLoggedIn && this.isOrganizer() ? postEventLink : ''}
           <br></br>
           {this.state.user && this.isOrganizer() === false ? <span><a href={'/user/' + this.state.user.id}>My Profile</a></span> : ''}
-        </p>
+        </span>
       </div>
       <br></br>
       <Route exact path='/' component={MapApp} passedUser={this.state.user}/>
@@ -96,7 +96,7 @@ class App extends Component {
       <Route path='/register' render={(props) => <Register {...props} setUser={this.setUser}/> }/>
       <Route exact path='/events' component={Events}/>
       <Route path='/user/:id' component={Userprofile}/>
-    </div>
+    </nav>
    );
  }
 }
