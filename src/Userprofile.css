@@ -16,7 +16,7 @@ h1 {
 
 .summary {
   margin-top: 70px;
-  color: #98FB98;
+  color: #ffe0a4;
 }
 
 .detail{
@@ -50,7 +50,7 @@ h1 {
   text-align: left;
   margin-left: 30px;
   display: inline;
-  color: #98FB98;
+  color: white;
 }
 
 .eventStyle {
@@ -67,14 +67,14 @@ h1 {
   margin-left: -6px;
   font-size: 20px;
   display: inline;
-  color: #98FB98;
+  color: #ffe0a4;
 }
 
 .event {
   margin-left: 100px;
   text-align: left;
   font-size: 20px;
-  color: #98FB98;
+  color: #ffe0a4;
   display: inline;
 }
 
@@ -97,7 +97,7 @@ h1 {
   margin-left: 100px;
   text-align: left;
   font-size: 30px;
-  color: #98FB98;
+  color: #ffe0a4;
 }
 
 .circleClass {

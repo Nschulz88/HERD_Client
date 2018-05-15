@@ -113,7 +113,6 @@ return (
         <br></br><br></br>
         <p className="userDetails">Email: </p><p className="detail">{this.state.volunteers[0].email}</p><br></br>
         <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><br></br>
-        <p className="userDetails">Member since:</p><p className="detail"> DD/MM/YY</p><br></br>
         <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
 
         <p className="userDetails">Volunteer Status:</p>
