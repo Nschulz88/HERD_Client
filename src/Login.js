@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, DropdownButton, MenuItem } from "react-bootstrap";
+import { Button, FormGroup, FormControl, DropdownButton, MenuItem, Image } from "react-bootstrap";
 import "./Login_Register.css";
 import axios from 'axios';
 
@@ -57,7 +57,7 @@ class Login extends Component {
           <div className="login-content">
             <div className="login-header">
               <div className="avatar">
-                <img src={require('./letter_H.png')} alt="logo" className="img-responsive"/>
+                <Image src="https://i.imgur.com/KPVlZ8p.png" alt="logo" className="img-responsive"/>
               </div>
               <div>
                 <h4>{this.state.vol_org === 'vol' ? "Join a HERD." : "Organize a HERD."}</h4>
