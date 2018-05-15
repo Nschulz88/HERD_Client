@@ -82,10 +82,10 @@ class App extends Component {
           <a href="/"><Image responsive className='navbar-logo' src="https://i.imgur.com/PHCgaoD.png" alt="herd-logo"/></a>
           </Navbar.Brand>
           <Navbar.Toggle/>
-          {this.state.user && this.state.userLoggedIn ? <div>Hey, {this.state.user.name } good to see you!</div> : '' }
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav>
+          <Nav pullRight>
+            {this.state.user && this.state.userLoggedIn ? <NavItem><div>Hey, {this.state.user.name } good to see you!</div></NavItem> : '' }
             {this.state.user && this.isOrganizer() === false ? <LinkContainer to={'/user/' + this.state.user.id}><NavItem>My Profile</NavItem></LinkContainer> : ''}
             {this.state.userLoggedIn ? '' : <LinkContainer to='/register/'><NavItem>Register</NavItem></LinkContainer>}
             {this.state.userLoggedIn && this.isOrganizer() ? <LinkContainer to='/events/'><NavItem>Looking for volunteers</NavItem></LinkContainer> : ''}
