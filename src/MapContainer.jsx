@@ -331,9 +331,6 @@ class Sidebox extends Component {
     axios({
       method: 'post',
       url: `/api/events/${event_id}`,
-      // data: {
-      //   event_id : event_id
-      // },
       withCredentials: true,
     }).then( res => {
       this.props.loadMap()
@@ -350,9 +347,6 @@ class Sidebox extends Component {
     axios({
       method: 'delete',
       url: `/api/events/${event_id}/cancel`,
-      // data: {
-      //   event_id : event_id
-      // },
       withCredentials: true,
     }).then( res =>{
       this.props.loadMap()
@@ -360,26 +354,6 @@ class Sidebox extends Component {
     this.setState({ loggedInAttendee: false })
     //this.props.loadMap()
   }
-
-  // THIS IS WHAT WE HAD WORKING
-  // cancel(){
-  //   let event_id = this.props.thisEvent[0].event_id
-  //   if(event_id === undefined){
-  //     event_id = this.props.thisEvent[0].id
-  //   }
-  //   let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
-  //   axios({
-  //     method: 'delete',
-  //     url: `/api/events/${event_id}/cancel`,
-  //     data: {
-  //       vol_id : vol_id
-  //     },
-  //     withCredentials: true,
-  //   }).then( res =>{
-  //     this.props.loadMap()
-  //   })
-  //   this.setState({ loggedInAttendee: false })
-  // }
 
   getTime(){
     let timeString = (this.props.thisEvent[0].event_time).slice(0,-3)
