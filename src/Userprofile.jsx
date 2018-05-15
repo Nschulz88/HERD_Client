@@ -17,9 +17,11 @@ class Userprofile extends Component  {
 
     this.state = {
       volunteers: [],
+      file:null
     };
 
     this.defineVolunteerStatus = this.defineVolunteerStatus.bind(this);
+    this.onDrop = this.onDrop.bind(this);
   }
 
 
@@ -48,14 +50,18 @@ onDrop(files){
   console.log("THESE ARE FILES:",files);
   upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
-  .end((err, res) => {
-    if (err) console.log("Jellybeans", err);
-    else {
-      console.log("so uploaded fam.", res)
-      this.setState({ refresh: true })
-      alert('File uploaded!');
-    }
+  .then((res) => {
+    console.log('did we get to promise')
+    console.log(files[0])
   })
+  .then((not) => {
+    this.setState({ file: files[0] })
+  })
+}
+
+onChange(files) {
+  console.log('onchange happened on change on change on change')
+  this.setState({file:files.target.files[0]})
 }
 
 defineVolunteerStatus(hours) {

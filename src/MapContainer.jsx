@@ -229,13 +229,16 @@ export default class MapContainer extends Component {
       for (let event of this.state.events) {
           axios.get(`/api/rsvps/${event.id}`)
             .then(res => {
+              console.log('rsvps axios call -----------------')
+              console.log(res)
               var event_cap = Number(event.event_size)
-              var spots_left = 0
+              var signedup = Number(res.data.length)
               console.log('this is event cap after axios')
               console.log(event_cap)
-              spots_left = (event_cap - Number(res.data.length))
+              console.log(signedup)
+              signedup = (event_cap - signedup)
               let pinURL = ''
-              if (spots_left > 0){
+              if (signedup > 0){
                 pinURL += 'small_pointer'
               } else {
                 pinURL += 'red_small_pointer'
@@ -247,7 +250,7 @@ export default class MapContainer extends Component {
                 labelOrigin: new google.maps.Point(17,23)
               };
 
-              spots_left = spots_left.toString()
+              signedup = signedup.toString()
 
               const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
                 position: {lat: event.GMaps_API_location.lat, lng: event.GMaps_API_location.lng}, // sets position of each marker
@@ -255,7 +258,7 @@ export default class MapContainer extends Component {
                 title: event.event_description, // the title of the marker is set to the name of the location
                 icon: icon,
                 label: {
-                  text: spots_left,
+                  text: signedup,
                   color: 'white',
                   fontSize: "15px",
                 },
@@ -321,7 +324,7 @@ class Sidebox extends Component {
 
   onSignUp(){
     let event_id = this.props.thisEvent[0].event_id
-    if(this.props.thisEvent[0] !== null){
+    if(event_id === undefined){
       event_id = this.props.thisEvent[0].id
     }
     axios({
@@ -334,13 +337,13 @@ class Sidebox extends Component {
     }).then( res =>{
       this.props.loadMap()
     })
-    let resultsArray = this.props.thisEvent;
-    let loggedInAttendee = false;
-    resultsArray.forEach((e) =>{
-      if(e.vol_id === this.props.thisEvent[(this.props.thisEvent - 1)]){
-        loggedInAttendee = true
-      }
-    })
+    // let resultsArray = this.props.thisEvent;
+    // let loggedInAttendee = false;
+    // resultsArray.forEach((e) =>{
+    //   if(e.vol_id === this.props.thisEvent[(this.props.thisEvent - 1)]){
+    //     loggedInAttendee = true
+    //   }
+    // })
     this.setState({ loggedInAttendee: true })
   }
 
@@ -373,7 +376,17 @@ class Sidebox extends Component {
 
   cancel(){
     let event_id = this.props.thisEvent[0].event_id
+    if(event_id === undefined){
+      event_id = this.props.thisEvent[0].id
+    }
     let vol_id = JSON.parse(localStorage.getItem('userInfo')).id
+    console.log('CANCEL event_id')
+    console.log(event_id)
+    console.log('CANCEL vol_id')
+    console.log(vol_id)
+    console.log('CANCEL [0] and not array in that order')
+    console.log(this.props.thisEvent[0])
+    console.log(this.props.thisEvent)
     axios({
       method: 'delete',
       url: `/api/events/${event_id}/cancel`,
