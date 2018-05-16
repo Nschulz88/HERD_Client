@@ -200,6 +200,9 @@ export default class MapContainer extends Component {
                             "hue": "#00FF6A"
                         },
                         {
+                          "visibility": "simplified"
+                        },
+                        {
                             "saturation": 22.0989010989011234
                         },
                         {
