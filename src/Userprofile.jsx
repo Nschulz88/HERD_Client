@@ -13,7 +13,10 @@ class Userprofile extends Component  {
 
     this.state = {
       volunteers: [],
-      file:null
+      file:null,
+      bar1: 0,
+      bar2: 0,
+      bar3: 0
     };
 
     this.defineVolunteerStatus = this.defineVolunteerStatus.bind(this);
@@ -22,19 +25,45 @@ class Userprofile extends Component  {
 
 
 componentDidMount() {
-  console.log("this is local storage",localStorage);
-  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
-  console.log("parsed local storage",parsedlocalstorage)
+  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
 
   if(parsedlocalstorage){
     axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
     }).then(res => {
       const volunteers = res.data;
-      console.log("res.data",volunteers);
-      this.setState({ volunteers: volunteers });
-      console.log('------- this.state.volunteers ----------')
-      console.log(this.state.volunteers[0].hours);
-      console.log(typeof this.state.volunteers[0].hours)
+      console.log(res.data)
+      let bar1 = 0;
+      let bar2 = 0;
+      let bar3 = 0;
+      //calculates percentages for progress bars
+      res.data.forEach((event) => {
+        if(event.event_type === 'Mentoring'){
+          bar1 += event.duration;
+        } else if (event.event_type === 'Educational'){
+          bar2 += event.duration;
+        } else {
+          bar3 += event.duration;
+        }
+      })
+      let totalHours = (bar1 + bar2 + bar3);
+      bar1 = (bar1/totalHours) * 100
+      bar2 = (bar2/totalHours) * 100
+      bar3 = (bar3/totalHours) * 100
+
+      bar1 = Math.round(bar1);
+      bar2 = Math.round(bar2);
+      bar3 = Math.round(bar3);
+
+      if(totalHours > 0){
+        this.setState({
+          volunteers  : volunteers,
+          bar1        : bar1,
+          bar2        : bar2,
+          bar3        : bar3
+        });
+      } else {
+        this.setState({ volunteers  : volunteers })
+      }
     })
     .catch(err =>{
       throw err;
@@ -43,12 +72,10 @@ componentDidMount() {
 }
 
 onDrop(files){
-  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"))
+  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
   upload.post(`/api/upload/${parsedlocalstorage.id}`)
   .attach('profilepic', files[0])
   .then((res) => {
-    console.log('did we get to promise')
-    console.log(files[0])
   })
   .then((not) => {
     this.setState({ file: files[0] })
@@ -56,21 +83,20 @@ onDrop(files){
 }
 
 onChange(files) {
-  console.log('onchange happened on change on change on change')
-  this.setState({file:files.target.files[0]})
+  this.setState({file:files.target.files[0]});
 }
 
 defineVolunteerStatus(hours) {
   if (hours > 0 && hours < 20) {
-    return "bronze"
+    return "bronze";
   } if (hours > 19 && hours < 40) {
-    return "silver"
+    return "silver";
   } if (hours > 39 && hours < 60) {
-    return "gold"
+    return "gold";
   } if (hours > 59) {
-    return "graduated"
+    return "graduated";
   } else {
-    return "new"
+    return "new";
   }
 }
 
@@ -125,9 +151,9 @@ return (
         <h1 className="skills">Distribution</h1>
     </ul>
     <div className="circleClass">
-    <CircularProgressbar className="CircularProgressbar1" percentage={33.3} initialAnimation/>
-    <CircularProgressbar className="CircularProgressbar2" percentage={33.3} initialAnimation/>
-    <CircularProgressbar className="CircularProgressbar3" percentage={33.3} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar1" percentage={this.state.bar1} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar2" percentage={this.state.bar2} initialAnimation/>
+    <CircularProgressbar className="CircularProgressbar3" percentage={this.state.bar3} initialAnimation/>
     </div>
     <div className="textClass">
     <p>Mentorship</p>
