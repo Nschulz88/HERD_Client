@@ -378,7 +378,7 @@ class Sidebox extends Component {
           for (let item in volunteers) {
           if (this.props.thisEvent[item].pic_url){
             eventDetails.push(
-            <img className="pics" alt={this.props.thisEvent[item].name} title={this.props.thisEvent[item].name} src={this.props.thisEvent[item].pic_url}></img>
+            <a href={"/user/"+this.props.thisEvent[item].vol_id}><img className="pics" alt={this.props.thisEvent[item].name} title={this.props.thisEvent[item].name} src={this.props.thisEvent[item].pic_url}></img></a>
             )
           }
         }

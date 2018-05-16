@@ -16,7 +16,8 @@ class Userprofile extends Component  {
       file:null,
       bar1: 0,
       bar2: 0,
-      bar3: 0
+      bar3: 0,
+      currentVol : ''
     };
 
     this.defineVolunteerStatus = this.defineVolunteerStatus.bind(this);
@@ -25,8 +26,12 @@ class Userprofile extends Component  {
 
 
 componentDidMount() {
-  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
-
+  let parsedlocalstorage = this.props.match.params
+  if (typeof JSON.parse(localStorage.getItem("userInfo")) === 'number'){
+    parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
+  }
+  console.log('parsedlocalstorage')
+  console.log(parsedlocalstorage)
   if(parsedlocalstorage){
     axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
     }).then(res => {
@@ -59,10 +64,14 @@ componentDidMount() {
           volunteers  : volunteers,
           bar1        : bar1,
           bar2        : bar2,
-          bar3        : bar3
+          bar3        : bar3,
+          currentVol  : parsedlocalstorage
         });
       } else {
-        this.setState({ volunteers  : volunteers })
+        this.setState({
+          volunteers  : volunteers,
+          currentVol  : parsedlocalstorage
+        })
       }
     })
     .catch(err =>{
@@ -70,6 +79,8 @@ componentDidMount() {
     })
   }
 }
+
+
 
 onDrop(files){
   const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
@@ -83,7 +94,10 @@ onDrop(files){
 }
 
 onChange(files) {
-  this.setState({file:files.target.files[0]});
+  this.setState({
+    file:files.target.files[0],
+    currentVol: this.props.match.params
+  });
 }
 
 defineVolunteerStatus(hours) {
