@@ -71,7 +71,7 @@ div.Login {
 	transition: all 0.4s;
 	border: none;
 }
-.Login .btn:hover, .Login .btn:focus {
-	background: grey;
+.Login .btn:hover, .Login .btn:focus, .Login .btn:link {
+	background: #3fcfff;
 	outline: none;
 }
