@@ -12,7 +12,7 @@ body .image:hover {
 .navbar {
   min-height: 90px;
   background-color: #3fcfff;
-  border-bottom: none;
+  border: none;
   font-size: large;
 }
 
@@ -30,11 +30,20 @@ body .image:hover {
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
   background-color: #b2fbe0;
   border-radius: 5px;
+  font-weight: bold
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: white;
+  font-weight: bold
+
 }
 
 ul.nav {
-  margin: 15px;
+  margin: 20px;
 }
+
+
 
 .mapContainer {
   height: 80vh;
