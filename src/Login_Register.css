@@ -1,12 +1,11 @@
 div.Login {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 120px;
+	margin-top: 65px;
 	margin-bottom: 20px;
-
 	color: black;
 	width: 380px;
-	background-color: lightgray;
+	background-color: #b2fbe0;
 	border-radius: 5px;
 }
 
@@ -52,25 +51,26 @@ div.Login {
 	height: 95px;
 	border-radius: 50%;
 	z-index: 9;
-	background: #FFDEAD;
+	background: white;
 	padding: 15px;
 	box-shadow: 0px 3px 3px darkslategray;
 }
 .Login .avatar img {
 	width: 100%;
+	padding: 5px;
 }
 .Login.login-dialog {
 	margin-top: 80px;
 }
 .Login .btn {
-	color: #636363;
+	color: white;
 	border-radius: 5px;
-	background: #FFDEAD;
+	background: #3fcfff;
 	text-decoration: none;
 	transition: all 0.4s;
 	border: none;
 }
 .Login .btn:hover, .Login .btn:focus {
-	background: #D9B073;
+	background: grey;
 	outline: none;
 }

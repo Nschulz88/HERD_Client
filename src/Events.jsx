@@ -111,7 +111,7 @@ class CreateEvent extends Component {
           <div className="login-content">
             <div className="login-header">
               <div className="avatar">
-                <img src={require('./letter_H.png')} alt="logo" className="img-responsive"/>
+                <img src={require('./herd_H.png')} alt="logo" className="img-responsive"/>
               </div>
               <div>
                 <h4>Enter your event details!</h4>
