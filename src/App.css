@@ -9,6 +9,24 @@ body .image:hover {
   cursor: pointer;
 }
 
+.pics{
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+  margin: 0px 5px 0px 5px;
+  border: 2px white solid;
+  border-radius: 6px;
+}
+
+.pics:hover {
+  width: 85px;
+  height:85px;
+  transition: .5s;
+  cursor: pointer;
+  border: 2px #3fcfff solid;
+  border-radius: 6px;
+}
+
 .navbar {
   min-height: 90px;
   background-color: #3fcfff;
@@ -55,7 +73,7 @@ ul.nav {
 }
 
 .infoBits{
-  margin: 10px;
+  margin: 30px;
 }
 
 .sideBoxInfo{
@@ -88,7 +106,7 @@ ul.nav {
   right: 0;
   background-color: black;
   opacity: 0.85;
-  width: 35%;
+  width: 40%;
   border: 1px solid #337ab7;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;

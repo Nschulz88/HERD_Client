@@ -367,8 +367,19 @@ class Sidebox extends Component {
   }
 
   render() {
-    const signUpButton = <Button onClick={this.onSignUp}>Sign Up</Button>
-    const cancelButton = <Button onClick={this.cancel}>Cancel</Button>
+    const signUpButton = <p><Button className="infoBits" onClick={this.onSignUp}>Sign Up</Button></p>
+    const cancelButton = <p><Button className="infoBits" onClick={this.cancel}>Cancel</Button></p>
+
+    let eventDetails = [];
+        let volunteers = this.props.thisEvent;
+          for (let item in volunteers) {
+          if (this.props.thisEvent[item].pic_url){
+            eventDetails.push(
+            <img className="pics" alt={this.props.thisEvent[item].name} title={this.props.thisEvent[item].name} src={this.props.thisEvent[item].pic_url}></img>
+            )
+          }
+        }
+
     if (!this.props.showSideBox) {
       return <div className="sideBox" style={{right: '-50%'}}></div>
     } else {
@@ -381,6 +392,7 @@ class Sidebox extends Component {
             <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
             <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
             { this.showSignUp() ? (this.props.attendee() ? signUpButton : cancelButton): ''}
+            {eventDetails}
           </div>
         </div>
       )
