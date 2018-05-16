@@ -20,14 +20,15 @@ h1 {
 }
 
 .detail{
-  font-size: 16px;
+  font-size: 24px;
   margin-right: 5px;
   font-weight: bold;
   display: inline;
 }
 
 .badge-image {
-  height: 4em;
+  height: 5em;
+  padding-left: 5px;
 }
 
 .pic {

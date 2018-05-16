@@ -88,15 +88,15 @@ onChange(files) {
 
 defineVolunteerStatus(hours) {
   if (hours > 0 && hours < 20) {
-    return "bronze";
+    return "Bronze";
   } if (hours > 19 && hours < 40) {
-    return "silver";
+    return "Silver";
   } if (hours > 39 && hours < 60) {
-    return "gold";
+    return "Gold";
   } if (hours > 59) {
-    return "graduated";
+    return "Graduated";
   } else {
-    return "new";
+    return "New";
   }
 }
 
@@ -141,12 +141,12 @@ return (
         <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><br></br>
         <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
 
-        <p className="userDetails">Volunteer Status:</p>
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "new" ? <img className="badge-image" src={require("./new_label.png")} alt="new-member-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "bronze" ? <img className="badge-image" src={require("./bronze_medal.png")} alt="bronze-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "silver" ? <img className="badge-image" src={require("./silver_medal.png")} alt="silver-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "graduated" ? <img className="badge-image" src={require("./new_label.png")} alt="graduated-status-icon"></img> : ''}
+        <p className="userDetails">{this.defineVolunteerStatus(this.state.volunteers[0].hours)} Status: </p>
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "New" ? <img className="badge-image" src={require("./new_label.png")} alt="new-member-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Bronze" ? <img className="badge-image" src={require("./bronze_medal.png")} alt="bronze-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Silver" ? <img className="badge-image" src={require("./silver_medal.png")} alt="silver-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Graduated" ? <img className="badge-image" src={require("./graduation_cap.png")} alt="graduated-status-icon"></img> : ''}
         <br></br>
         <h1 className="skills">Distribution</h1>
     </ul>
