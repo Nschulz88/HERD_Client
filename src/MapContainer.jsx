@@ -271,11 +271,11 @@ export default class MapContainer extends Component {
               marker.addListener('mouseover', () => {
                 this.toggleInfoWindow(event.id)
                 const contentString = '<div id="infoWindowContent">'+
-                  '<h5>' + event.event_description +'</h5>'+
+                  '<h4>' + event.event_description +'</h4>'+
                   '<div><strong>Volunteers needed: </strong>' + event.event_size +'</div>'+
                   '<div><strong>Location: </strong>' + event.location +'</div>'+ //.slice(0, -23) removes Vancouver BC part
                   '<div><strong>Date: </strong>' + event.event_date.slice(0,-14) +'</div>'+
-                  '<div class="details"' + event.id + '">Click the pin for more details!</div>'+
+                  '<h5 class="details"' + event.id + '">Click the pin for more details!</h5>'+
                   '</div>';
                 infowindow.setContent(contentString)
                 infowindow.open(this.map, marker)
@@ -292,7 +292,6 @@ export default class MapContainer extends Component {
     }
   }
 
-  // { <Infowindow showSideBox={ this.state.showInfowindow} />}
 
   render() {
     return ( // in our return function you must return a div with ref='map' and style.
@@ -333,6 +332,8 @@ class Sidebox extends Component {
     })
     this.setState({ loggedInAttendee: true })
     this.props.signUpCancel()
+
+    axios.get(`/testtwilio`);
   }
 
   cancel(){
