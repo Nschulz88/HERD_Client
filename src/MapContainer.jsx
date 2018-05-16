@@ -113,6 +113,26 @@ export default class MapContainer extends Component {
         zoom: 12,
         mapTypeId: 'roadmap', // could also be set to: Terrain, satellite, hybrid
         styles:[
+          {
+              "featureType": "poi",
+              "stylers": [
+                  {
+                      "hue": "#00FF6A"
+                  },
+                  {
+                      "visibility": "on"
+                  },
+                  {
+                      "saturation": 0
+                  },
+                  {
+                      "lightness": 0
+                  },
+                  {
+                      "gamma": 0
+                  }
+              ]
+          },
                 {
                     "featureType": "landscape",
                     "stylers": [
@@ -193,27 +213,6 @@ export default class MapContainer extends Component {
                         }
                     ]
                 },
-                {
-                    "featureType": "poi",
-                    "stylers": [
-                        {
-                            "hue": "#00FF6A"
-                        },
-                        {
-                          "visibility": "simplified"
-                        },
-                        {
-                            "saturation": 22.0989010989011234
-                        },
-                        {
-                            "lightness": 11.200000000000017
-                        },
-                        {
-                            "gamma": 1
-                        }
-                    ]
-                },
-
                 {
                   featureType: 'poi.business',
                   stylers: [{visibility: 'off'}]
