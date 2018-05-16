@@ -57,7 +57,7 @@ class Login extends Component {
           <div className="login-content">
             <div className="login-header">
               <div className="avatar">
-                <Image src="https://i.imgur.com/KPVlZ8p.png" alt="logo" className="img-responsive"/>
+                <Image src={require('./herd_H.png')} alt="logo" className="img-responsive"/>
               </div>
               <div>
                 <h4>{this.state.vol_org === 'vol' ? "Join a HERD." : "Organize a HERD."}</h4>
