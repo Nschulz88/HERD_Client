@@ -28,11 +28,11 @@ class CreateEvent extends Component {
       event_time: '',
       duration: '',
       address: '',
+      phone_number: '',
     };
   }
 
   createEvent(e){
-
     if(!this.state.event_date || !this.state.event_time){
       e.preventDefault();
       alert("Please enter a date and time for the event!");
@@ -56,6 +56,7 @@ class CreateEvent extends Component {
           event_time        : this.state.event_time,
           duration          : this.state.duration,
           event_type        : this.state.event_type,
+          phone_number      : this.state.phone_number,
         },
         withCredentials: true,
 
@@ -198,12 +199,19 @@ class CreateEvent extends Component {
                   placeholder="Duration"
                   value={this.state.duration}
                   onChange={this.handleChange}
-                /> Hours
+                /><span>hours</span>
                 <FormControl
                   type="text"
                   id="event_description"
                   placeholder="Event Description"
                   value={this.state.event_description}
+                  onChange={this.handleChange}
+                />
+                <FormControl
+                  type="text"
+                  id="phone_number"
+                  placeholder="Phone Number"
+                  value={this.state.phone_number}
                   onChange={this.handleChange}
                 />
               </FormGroup>

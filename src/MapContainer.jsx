@@ -319,6 +319,7 @@ class Sidebox extends Component {
 
   onSignUp(){
     let event_id = this.props.thisEvent[0].event_id
+    let phone_number = this.props.thisEvent[0].phone_number
     if(event_id === undefined){
       event_id = this.props.thisEvent[0].id
     }
@@ -332,7 +333,10 @@ class Sidebox extends Component {
     this.setState({ loggedInAttendee: true })
     this.props.signUpCancel()
 
-    axios.get(`/testtwilio`);
+    axios.post('/api/twilio', {
+      phone_number : phone_number,
+    })
+    
   }
 
   cancel(){
