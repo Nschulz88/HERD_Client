@@ -394,16 +394,18 @@ class Sidebox extends Component {
     } else {
       return (
         <div className="sideBox">
-          <div className="sideBoxInfo">
-            <h3 id="event_description">{this.props.thisEvent[0].event_description}</h3>
-            <div className="infoBits"><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
-            <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
-            <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
-            <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
-            { this.showSignUp() ? (this.props.attendee() ? signUpButton : cancelButton): ''}
-            {eventDetails}
-          </div>
+        <div className="sideBoxInfo">
+          <h3 id="event_description">{this.props.thisEvent[0].event_description}</h3>
+          <div className="infoBits"><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
+          <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
+          <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>
+          <div className="infoBits"><strong>Time: </strong>{this.getTime()}</div>
+          <div className="infoBits"><strong>Duration: </strong>{(this.props.thisEvent[0].duration)} hours</div>
+          <div className="infoBits"><strong>Criteria: </strong>{(this.props.thisEvent[0].criteria)}</div>
+          { this.showSignUp() ? (this.props.attendee() ? signUpButton : cancelButton): ''}
+          <div className="picsDiv">{eventDetails}</div>
         </div>
+      </div> 
       )
     }
   }
