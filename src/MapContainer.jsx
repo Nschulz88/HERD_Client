@@ -395,7 +395,7 @@ class Sidebox extends Component {
       return (
         <div className="sideBox">
         <div className="sideBoxInfo">
-          <h3 id="event_description">{this.props.thisEvent[0].event_description}</h3>
+          <h3 className="event_description">{this.props.thisEvent[0].event_description}</h3>
           <div className="infoBits"><strong>Volunteers needed: </strong>{this.props.thisEvent[0].event_size}</div>
           <div className="infoBits"><strong>Location: </strong>{(this.props.thisEvent[0].location)}</div> {/*.slice(0, -23)*/}
           <div className="infoBits"><strong>Date: </strong>{(this.props.thisEvent[0].event_date).slice(0,10)}</div>

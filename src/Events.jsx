@@ -128,7 +128,7 @@ class CreateEvent extends Component {
                   className="form-control"
                   id='dropdownBtn'
                   onChange={this.changeEventType}
-                  title={this.state.event_type === true ? this.state.event_type : "Event Type"}
+                  title={this.state.event_type === undefined ? "Event type" : this.state.event_type }
                   >
                   <MenuItem value={this.state.event_type} id="Mentoring" onClick={this.changeEventType}>Mentoring</MenuItem>
                   <MenuItem value={this.state.event_type} id="Educational" onClick={this.changeEventType}>Educational</MenuItem>
@@ -196,10 +196,10 @@ class CreateEvent extends Component {
                 <FormControl
                   type="number"
                   id="duration"
-                  placeholder="Duration"
+                  placeholder="Duration in hours"
                   value={this.state.duration}
                   onChange={this.handleChange}
-                /><span>hours</span>
+                />
                 <FormControl
                   type="text"
                   id="event_description"
@@ -224,7 +224,6 @@ class CreateEvent extends Component {
                 </Button>
             </form>
             <div className="login-footer">
-              <a href="/login">I already have an account</a>
             </div>
           </div>
       </div>

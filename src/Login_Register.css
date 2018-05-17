@@ -75,3 +75,7 @@ div.Login {
 	background: #3fcfff;
 	outline: none;
 }
+
+.btn-group, .btn-group-vertical {
+	display: inline;
+}

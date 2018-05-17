@@ -80,11 +80,10 @@ ul.nav {
   text-align: center;
 }
 
-#event_description{
+.event_description{
   font-size: 2em;
   font-weight: bold;
   text-decoration: underline;
-  
 }
 
 .infoBits{
@@ -185,3 +184,21 @@ btn.signup-cancel  {
   }
 }
 
+@media (max-width: 780px) {
+  .event_description{
+    font-size: 1.4em;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 780px) {
+  .sideBoxInfo{
+    font-family: Raleway, sans-serif;
+    font-size:smaller;
+    opacity: 1;
+    color:white;
+    margin-top: 35px;
+    padding: 10px;
+  }
+}
