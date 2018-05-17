@@ -66,8 +66,6 @@ ul.nav {
   margin: 20px;
 }
 
-
-
 .mapContainer {
   height: 80vh;
   margin-left: 20px;
@@ -83,11 +81,18 @@ ul.nav {
 }
 
 #event_description{
-  font-weight: 800;
+  font-size: 2em;
+  font-weight: bold;
+  text-decoration: underline;
+  
 }
 
 .infoBits{
-  margin: 30px;
+  margin: 25px;
+}
+
+btn.signup-cancel  {
+  margin-bottom: 20px;
 }
 
 .sideBoxInfo{
@@ -95,13 +100,16 @@ ul.nav {
   font-size:larger;
   opacity: 1;
   color:white;
-  margin-top: 30px;
+  margin-top: 35px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .btn-default {
   color: white;
   background-color: #00BFFF;
   border-color: #ccc;
+  margin-bottom: 20px;
 }
 
 .btn-default:hover {
@@ -110,19 +118,70 @@ ul.nav {
     border-color: #adadad;
 }
 
-.sideBox {
-  margin: 0px;
-  color: #00BFFF;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background-color: black;
-  opacity: 0.85;
-  width: 40%;
-  border: 1px solid #337ab7;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  transition: right 1.5s;
+@media (max-width: 12450px) {
+  .sideBox {
+    margin: 0px;
+    color: #00BFFF;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0.85;
+    width: 40%;
+    border: 1px solid #337ab7;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: right 1.5s;
+  }
 }
+
+@media (max-width: 780px) {
+  .sideBox {
+    margin: 0px;
+    color: #00BFFF;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0.85;
+    width: 70%;
+    border: 1px solid #337ab7;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: right 1.5s;
+  }
+}
+
+@media (max-width: 780px) {
+  .infoBits{
+    margin: 5px;
+  }
+}
+
+@media (max-width: 780px) {
+  .pics{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-top: 10px;
+    margin: 5px;
+    border: 2px white solid;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 780px) {
+  .pics:hover {
+    width: 45px;
+    height: 45px;
+    transition: .5s;
+    cursor: pointer;
+    border: 2px #3fcfff solid;
+    border-radius: 6px;
+  }
+}
+

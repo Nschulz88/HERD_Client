@@ -376,8 +376,8 @@ class Sidebox extends Component {
   }
 
   render() {
-    const signUpButton = <p><Button className="infoBits" onClick={this.onSignUp}>Sign Up</Button></p>
-    const cancelButton = <p><Button className="infoBits" onClick={this.cancel}>Cancel</Button></p>
+    const signUpButton = <div><Button className="signup-cancel" onClick={this.onSignUp}>Sign Up</Button></div>
+    const cancelButton = <div><Button className="signup-cancel" onClick={this.cancel}>Cancel</Button></div>
 
     let eventDetails = [];
         let volunteers = this.props.thisEvent;
@@ -390,7 +390,7 @@ class Sidebox extends Component {
         }
 
     if (!this.props.showSideBox) {
-      return <div className="sideBox" style={{right: '-50%'}}></div>
+      return <div className="sideBox" style={{right: '-70%'}}></div>
     } else {
       return (
         <div className="sideBox">
