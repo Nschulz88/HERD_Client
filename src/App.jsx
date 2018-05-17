@@ -36,7 +36,6 @@ class App extends Component {
       userLoggedIn: userLoggedIn,
       user: JSON.parse(userInfo)
     });
-    // console.log(this.state.user);
   }
 
   onLogoutClick(e) {
@@ -85,10 +84,10 @@ class App extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            {this.state.user && this.state.userLoggedIn ? <NavItem><div>Hey, {this.state.user.name } good to see you!</div></NavItem> : '' }
+            {this.state.user && this.state.userLoggedIn ? <NavItem><div>Hey, {this.state.user.name }!</div></NavItem> : '' }
             {this.state.user && this.isOrganizer() === false ? <LinkContainer to={'/user/' + this.state.user.id}><NavItem>My Profile</NavItem></LinkContainer> : ''}
             {this.state.userLoggedIn ? '' : <LinkContainer to='/register/'><NavItem>Register</NavItem></LinkContainer>}
-            {this.state.userLoggedIn && this.isOrganizer() ? <LinkContainer to='/events/'><NavItem>Looking for volunteers</NavItem></LinkContainer> : ''}
+            {this.state.userLoggedIn && this.isOrganizer() ? <LinkContainer to='/events/'><NavItem>Post Event</NavItem></LinkContainer> : ''}
             {this.state.userLoggedIn ? <LinkContainer to='/' onClick={this.onLogoutClick}><NavItem>Logout</NavItem></LinkContainer> : <LinkContainer to='/login/'><NavItem>Login</NavItem></LinkContainer>}
           </Nav>
         </Navbar.Collapse>

@@ -332,9 +332,11 @@ class Sidebox extends Component {
     })
     this.setState({ loggedInAttendee: true })
     this.props.signUpCancel()
-
+    let userInfo = localStorage.getItem("userInfo");
     axios.post('/api/twilio', {
       phone_number : phone_number,
+      event_id : event_id,
+      name : JSON.parse(userInfo).name
     })
     
   }
