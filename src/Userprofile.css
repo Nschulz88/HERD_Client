@@ -61,6 +61,7 @@ h1 {
   margin-right: 2vw;
   margin-top: 30px;
   margin-bottom: 30px;
+  padding: 5px;
 }
 
 .userDetails {
@@ -72,7 +73,7 @@ h1 {
 }
 
 .event {
-  margin-left: 100px;
+  margin-left: 20px;
   text-align: left;
   font-size: 20px;
   color: #ffe0a4;
@@ -95,7 +96,7 @@ h1 {
 }
 
 .heading {
-  margin-left: 100px;
+  margin-left: 20px;
   text-align: left;
   font-size: 30px;
   color: #ffe0a4;

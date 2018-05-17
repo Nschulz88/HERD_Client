@@ -126,7 +126,7 @@ defineVolunteerStatus(hours) {
         let eventDetails = [];
         let volunteers = this.state.volunteers;
         if(this.state.volunteers[0].hours === 0){
-          eventDetails.push(<p className="profile">Sign up for some events!</p>)
+          eventDetails.push(<p className="profile-upcomingevents">Sign up for some events!</p>)
         } else {
           for (let item in volunteers) {
             let count = (parseInt(item)+1);
@@ -134,10 +134,10 @@ defineVolunteerStatus(hours) {
             <p className="heading">{[count]}. {this.state.volunteers[item].event_description}</p>
             <p className="event">Location: </p><p className="event2">{this.state.volunteers[item].location}</p><br></br>
             <p className="event">Date: </p><p className="event2">{this.state.volunteers[item].event_date}</p><br></br>
-            <p className="event">Start Time: </p><p className="event2">{this.state.volunteers[item].event_time}</p><br></br>
+            <p className="event">Start Time: </p><p className="event2">{this.state.volunteers[item].event_time.slice(0,10)}</p><br></br>
             <p className="event">Duration: </p><p className="event2">{this.state.volunteers[item].duration} hours</p><br></br>
             <p className="event">Event Type: </p><p className="event2">{this.state.volunteers[item].event_type}</p><br></br>
-            <br></br><br></br>
+            <br></br>
             </div>)
           }
         }
