@@ -7,7 +7,9 @@ Deployed at [join-the-herd.herokuapp.com](https://join-the-herd.herokuapp.com/).
 ## Screenshots
 
 ![Main Page](https://github.com/Nschulz88/HERD_Client/blob/master/docs/MainPage.png)
+
 ![Slideout](https://github.com/Nschulz88/HERD_Client/blob/master/docs/SlideOut.png)
+
 ![Forms](https://github.com/Nschulz88/HERD_Client/blob/master/docs/Forms.png)
 
 ## Important
