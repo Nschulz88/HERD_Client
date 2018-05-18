@@ -1,7 +1,8 @@
 # HERD
 ## A project to connect volunteers with each other and more opportunities to give back.
 
-This project uses Node.js, React, Bootstrap, and CSS on the front end using Axios to make ajax calls to an Express server on the backend with a PostgreSQL database
+A platform to connect volunteers with volunteering opportunities in their city. Built with Javascript/React  on the front-end and NodeJS/Express on the backend connected to a PostgreSQL Database and Amazon Web Services S3 file hosting service.  
+Deployed at [join-the-herd.herokuapp.com](https://join-the-herd.herokuapp.com/).
 
 ## Screenshots
 
@@ -18,10 +19,10 @@ This project consists of two seperate github repos:
 1. Clone each repository
 2. In separate terminal windows use command "npm install" to install all dependencies for Client and Server.
 3. In the Server terminal window use command "knex:migrate latest" to structure the database.
-4. In the Server terminal window use command "knex:seed run" to structure the database.
-5. In the Server terminal window use command "node server.js to run the database.
-6. In the Client terminal window use command "npm run start" to begin the app.
-7. The app will open automatically on your browser.
+4. Copy the example.env to a new .env and update it with your AWS Key and Token, Google Maps API Key and Twilio Key & Token.  
+4. In the Server terminal window use command "node server.js to run the database.
+5. In the Client terminal window use command "npm run start" to begin the app.
+6. The app will open automatically on your browser.
 
 ## Contributors
 [Sam Schantz](https://github.com/samvschantz)
