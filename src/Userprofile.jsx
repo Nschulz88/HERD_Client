@@ -30,13 +30,10 @@ componentDidMount() {
   if (typeof JSON.parse(localStorage.getItem("userInfo")) === 'number'){
     parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
   }
-  console.log('parsedlocalstorage')
-  console.log(parsedlocalstorage)
   if(parsedlocalstorage){
     axios.get(`/api/volunteers/${parsedlocalstorage.id}`, {
     }).then(res => {
       const volunteers = res.data;
-      console.log(res.data)
       let bar1 = 0;
       let bar2 = 0;
       let bar3 = 0;

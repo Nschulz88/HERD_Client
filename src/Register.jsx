@@ -36,12 +36,10 @@ class Register extends Component {
           unhashed_pass     : this.state.unhashed_pass,
         }
       }).then(({data}) => {
-          console.log('positive registration of organizer - response from server', data.user);
           this.props.setUser(data.user);
           localStorage.setItem('userLoggedIn', true);
           this.props.history.push("/");
         }).catch(error => {
-          console.log("ERRRRRRRRR",error);
           alert("This e-mail is already registered")
         })
     } else {
@@ -56,12 +54,10 @@ class Register extends Component {
           }
         })
         .then(({data}) => {
-            console.log('positive registration of volunteer - response from server', data.user);
             this.props.setUser(data.user);
             localStorage.setItem('userLoggedIn', true);
             this.props.history.push("/");
         }).catch(error => {
-          console.log(error)
           alert("This e-mail is already registered")
         });
       }
@@ -84,7 +80,6 @@ class Register extends Component {
   }
 
   handleRadio(e) {
-    console.log("I am hitting handleRadio", e.target.id)
     this.setState({
       vol_org: e.target.id
     });
@@ -99,7 +94,6 @@ class Register extends Component {
      value={this.state.organization}
      onChange={this.handleChange}
      />
-    console.log(this.state)
     return (
       <div className="Login">
           <div className="login-content">

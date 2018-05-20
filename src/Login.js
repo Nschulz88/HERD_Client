@@ -26,7 +26,6 @@ class Login extends Component {
       password      : this.state.password,
       vol_org       : this.state.vol_org
     }).then(result => {
-      console.log('request complete', result.data.user);
       localStorage.setItem('userLoggedIn', true);
       this.props.setUser(result.data.user);
       this.props.history.push("/");
