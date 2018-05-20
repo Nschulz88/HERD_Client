@@ -66,12 +66,9 @@ class CreateEvent extends Component {
   }
 
   handleTimePicker(e){
-    console.log(typeof e)
     var longDate = new Date(Number(e))
     var date = longDate.toString().slice(4,15)
     var time = longDate.toString().slice(16,21)
-    console.log("THIS IS DATE",date)
-    console.log("THIS IS TIME",time)
 
     this.setState({
       event_time: time,
@@ -106,7 +103,6 @@ class CreateEvent extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div className="Login">
           <div className="login-content">

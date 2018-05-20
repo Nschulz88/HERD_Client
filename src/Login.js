@@ -31,7 +31,6 @@ class Login extends Component {
       this.props.setUser(result.data.user);
       this.props.history.push("/");
     }).catch(error => {
-      console.log(error.response);
       alert("Ooops... invalid username or password, please try again.")
     })
   }
@@ -51,7 +50,6 @@ class Login extends Component {
 
 
   render() {
-    console.log('Login', this.state);
     return (
       <div className="Login">
           <div className="login-content">

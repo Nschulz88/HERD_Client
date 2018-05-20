@@ -25,7 +25,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // console.log("LOCAL STORAGE IS_________", localStorage);
     var userLoggedIn = JSON.parse(localStorage.getItem("userLoggedIn"));
     var userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
