@@ -142,7 +142,7 @@ defineVolunteerStatus(hours) {
 return (
     <div className='userprofile-body'>
         <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
-          {this.state.volunteers[0].pic_url != undefined ? <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
+          {this.state.volunteers[0].pic_url !== undefined ? <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url} alt="profile"></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
         </Dropzone>
       <br></br>
       <h1 className="profile">{this.state.volunteers[0].name}</h1>
@@ -153,11 +153,11 @@ return (
         <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
 
         <p className="userDetails">{this.defineVolunteerStatus(this.state.volunteers[0].hours)} Status: </p>
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "New" ? <img className="badge-image" src={require("./new_label.png")} alt="new-member-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Bronze" ? <img className="badge-image" src={require("./bronze_medal.png")} alt="bronze-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Silver" ? <img className="badge-image" src={require("./silver_medal.png")} alt="silver-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Graduated" ? <img className="badge-image" src={require("./graduation_cap.png")} alt="graduated-status-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "New" ? <img className="badge-image" src={require("./pictures/new_label.png")} alt="new-member-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Bronze" ? <img className="badge-image" src={require("./pictures/bronze_medal.png")} alt="bronze-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Silver" ? <img className="badge-image" src={require("./pictures/silver_medal.png")} alt="silver-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Gold" ? <img className="badge-image" src={require("./pictures/gold_medal.png")} alt="gold-medal-icon"></img> : ''}
+        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Graduated" ? <img className="badge-image" src={require("./pictures/graduation_cap.png")} alt="graduated-status-icon"></img> : ''}
         <br></br>
         <h1 className="skills">Distribution</h1>
     </ul>
@@ -175,7 +175,6 @@ return (
     <h1 className="upcoming">Upcoming Events</h1>
 
     <div className="eventStyle"><br></br>{eventDetails}</div>
-
   </div>
   )};
   }

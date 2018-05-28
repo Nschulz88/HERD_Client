@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper } from 'google-maps-react';
-import apiKey from './apiKeys.json'
+import apiKey from './.env'
 
 
 import MapContainer from './MapContainer'

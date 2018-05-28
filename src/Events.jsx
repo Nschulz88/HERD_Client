@@ -6,7 +6,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import { GoogleApiWrapper } from 'google-maps-react'
 import TimePicker from 'react-bootstrap-datetimepicker';
 
-import apiKey from "./apiKeys.json"
+import apiKey from "./.env"
 
 class CreateEvent extends Component {
   constructor(props, context) {
@@ -108,7 +108,7 @@ class CreateEvent extends Component {
           <div className="login-content">
             <div className="login-header">
               <div className="avatar">
-                <img src={require('./herd_H.png')} alt="logo" className="img-responsive"/>
+                <img src={require('./pictures/herd_H.png')} alt="logo" className="img-responsive"/>
               </div>
               <div>
                 <h4>Enter your event details!</h4>

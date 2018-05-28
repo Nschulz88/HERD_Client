@@ -64,7 +64,6 @@ export default class MapContainer extends Component {
   }
 
   toggleSideBox = (props) => {
-    const { showSideBox } = this.state;
     axios.get(`/api/events/${props}`)
     .then(res => {
       let resultsArray = res.data;
@@ -230,7 +229,6 @@ export default class MapContainer extends Component {
         this.setState( {showSideBox : false});
       });
 
-      var activeInfoWindow;
       for (let event of this.state.events) {
           axios.get(`/api/rsvps/${event.id}`)
             .then(res => {
@@ -244,7 +242,7 @@ export default class MapContainer extends Component {
                 pinURL += 'red_small_pointer'
               }
               var icon = {
-                url: require('./'+pinURL+'.png'), // url
+                url: require('./pictures/'+pinURL+'.png'), // url
                 scaledSize: new google.maps.Size(35, 60), // scaled size
                 labelOrigin: new google.maps.Point(17,23)
               };
