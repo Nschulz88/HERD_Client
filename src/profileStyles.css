@@ -213,15 +213,6 @@ button::-moz-focus-inner,input[type=button]::-moz-focus-inner,input[type=file]>i
     cursor:pointer;
     z-index: 1;
 }
-.iu-loadContainer2{
-    float: right;
-    width:200px;
-    height:200px;
-    margin-right: 70px;
-    margin-top: 60px;
-    cursor:pointer;
-    z-index: 2;
-}
 .iu-pseudobutton span{
     height:100%
 }

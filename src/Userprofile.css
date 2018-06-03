@@ -5,13 +5,56 @@ p {
 }
 
 h1 {
-  color: #F5F5F5;
+  color: black;
   font-weight: bold;
   text-align: center
 }
 
+.basic-info-cover{
+    width:100px;
+}
+#cover{
+    width: 90vw;
+    height: 200px;
+    border-radius: 5px 5px 2px 2px;
+}
+.userDeets{
+    padding-left:250px;
+}
+
+.iu-loadContainer2 {
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-left: 2vw;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.iu-loadContainer3{
+  width: 90vw;
+  margin: auto;
+  border-radius: 5px;
+  padding-top: 2vh;
+}
+
+#name{
+  font-size:40px;
+  font-weight: bold;
+}
+
 .userprofile-body {
   height: 840px;
+}
+
+.userDetailContainer {
+  color:black;
+  background: white;
+  width: 90vw;
+  margin: auto;
+  border-radius: 0px 0px 5px 5px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
 }
 
 .summary {
@@ -19,11 +62,12 @@ h1 {
   color: #ffe0a4;
 }
 
-.detail{
+.detail {
   font-size: 24px;
   margin-right: 5px;
   font-weight: bold;
   display: inline;
+  color: #868686;
 }
 
 .badge-image {
@@ -51,7 +95,7 @@ h1 {
   text-align: left;
   margin-left: 30px;
   display: inline;
-  color: white;
+  color: black;
 }
 
 .eventStyle {
@@ -69,7 +113,7 @@ h1 {
   margin-left: -6px;
   font-size: 20px;
   display: inline;
-  color: #ffe0a4;
+  color: black;
 }
 
 .event {

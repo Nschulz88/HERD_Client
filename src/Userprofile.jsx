@@ -13,6 +13,7 @@ class Userprofile extends Component  {
 
     this.state = {
       volunteers: [],
+      coverfile:null,
       file:null,
       bar1: 0,
       bar2: 0,
@@ -90,6 +91,18 @@ onDrop(files){
   })
 }
 
+onCoverDrop(files){
+  const parsedlocalstorage = JSON.parse(localStorage.getItem("userInfo"));
+  console.log(files)
+  upload.post(`/api/upload/cover/${parsedlocalstorage.id}`)
+  .attach('coverpic', files[0])
+  .then((res) => {
+  })
+  .then((not) => {
+    this.setState({ coverfile: files[0] })
+  })
+}
+
 onChange(files) {
   this.setState({
     file:files.target.files[0],
@@ -141,26 +154,24 @@ defineVolunteerStatus(hours) {
 
 return (
     <div className='userprofile-body'>
-        <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
-          {this.state.volunteers[0].pic_url != undefined ? <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
+      <div className='basic-info-cover'>
+        <Dropzone className = "iu-loadContainer3" onDrop={this.onCoverDrop}>
+            {this.state.volunteers[0].cover_photo_url != undefined ? <img id="cover" className="iu-loadContainer" src={this.state.volunteers[0].cover_photo_url}></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
         </Dropzone>
-      <br></br>
-      <h1 className="profile">{this.state.volunteers[0].name}</h1>
-      <ul>
-        <br></br><br></br>
-        <p className="userDetails">Email: </p><p className="detail">{this.state.volunteers[0].email}</p><br></br>
-        <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><br></br>
-        <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
-
-        <p className="userDetails">{this.defineVolunteerStatus(this.state.volunteers[0].hours)} Status: </p>
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "New" ? <img className="badge-image" src={require("./new_label.png")} alt="new-member-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Bronze" ? <img className="badge-image" src={require("./bronze_medal.png")} alt="bronze-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Silver" ? <img className="badge-image" src={require("./silver_medal.png")} alt="silver-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Gold" ? <img className="badge-image" src={require("./gold_medal.png")} alt="gold-medal-icon"></img> : ''}
-        {this.defineVolunteerStatus(this.state.volunteers[0].hours) === "Graduated" ? <img className="badge-image" src={require("./graduation_cap.png")} alt="graduated-status-icon"></img> : ''}
-        <br></br>
-        <h1 className="skills">Distribution</h1>
-    </ul>
+        <div className="userDetailContainer">
+          <Dropzone className = "iu-loadContainer2" onDrop={this.onDrop}>
+            {this.state.volunteers[0].pic_url != undefined ? <img className="iu-loadContainer" src={this.state.volunteers[0].pic_url}></img> : <div className="iu-loadContainer">Upload a profile picture</div>}
+          </Dropzone>
+          <br></br>
+          <ul className="userDeets">
+            <br></br><br></br>
+            <h3 className="userDetails" id="name">{this.state.volunteers[0].name}</h3><br></br>
+            <p className="userDetails">Email: </p><p className="detail">{this.state.volunteers[0].email}</p><br></br>
+            <p className="userDetails">Location: </p><p className="detail">Vancouver, Canada</p><br></br>
+            <p className="userDetails">Total volunteer hours:</p><p className="detail"> {this.state.volunteers[0].hours}</p><br></br>
+          </ul>
+        </div>
+      </div>
     <div className="circleClass">
     <CircularProgressbar className="CircularProgressbar1" percentage={this.state.bar1} initialAnimation/>
     <CircularProgressbar className="CircularProgressbar2" percentage={this.state.bar2} initialAnimation/>
